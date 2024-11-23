@@ -71,7 +71,7 @@ const GroupChatUI = () => {
   };
 
   return (
-    <div className="flex h-[80vh] font-sans bg-gray-100">
+    <div className="flex h-[80vh] font-sans bg-gray-100 shadow-lg">
       {/* Sidebar */}
       <div className="w-1/3 bg-white border-r">
         <h2 className="bg-[#25D366] text-white text-xl font-bold p-4">
