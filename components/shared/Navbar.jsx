@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { CalendarPlus2Icon, User2Icon, MessageCircleIcon } from "lucide-react";
 import Logo from "/assets/logo.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -18,7 +19,9 @@ const Navbar = () => {
     <div className="p-8 w-screen flex md:flex-row md:justify-between items-center flex-col sticky top-0 z-50 bg-white shadow-md">
       <div className="flex w-full items-center justify-between">
         <div className="w-24 h-12 flex items-center justify-center">
-          <Image src={Logo} alt="logo" width={100} height={100} />
+          <Link href="/">
+            <Image src={Logo} alt="logo" width={100} height={100} />
+          </Link>
         </div>
         <div className="w-full px-10">
           <InputWithButton />
@@ -26,15 +29,22 @@ const Navbar = () => {
       </div>
 
       <div className="lg:flex md:flex-row flex-col gap-8 hidden">
-        <Button variant={"ghost"}>
-          <MessageCircleIcon /> Chat
-        </Button>
-        <Button variant={"ghost"}>
-          <CalendarPlus2Icon /> Subscriptions
-        </Button>
-        <Button variant={"ghost"}>
-          <User2Icon /> Account
-        </Button>
+        <Link href="/chat">
+          <Button variant={"ghost"}>
+            <MessageCircleIcon /> Chat
+          </Button>
+        </Link>
+
+        <Link href="/pricing">
+          <Button variant={"ghost"}>
+            <CalendarPlus2Icon /> Subscriptions
+          </Button>
+        </Link>
+        <Link href="/account">
+          <Button variant={"ghost"}>
+            <User2Icon /> Account
+          </Button>
+        </Link>
       </div>
 
       <button className="lg:hidden block" onClick={handleToggle}>

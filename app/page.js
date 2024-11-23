@@ -1,8 +1,18 @@
+import SideBarLeft from "@/components/shared/SideBarLeft";
+import SideBarRight from "@/components/shared/SideBarRight";
+import GoogleMap from "@/components/shared/GoogleMap";
+
 export default function Home() {
   return (
-    <div className="text-wrap">
-      <h1>Eventify</h1>
-      <p>Eventify app for all your event needs</p>
+    <div >
+      <div className="flex justify-between bg-gray-200  p-8 w-full">
+          <SideBarLeft />
+          <div className="flex-grow rounded-xl overflow-hidden mx-6 " >
+
+          <GoogleMap />
+          </div>
+          <SideBarRight />
+        </div>
     </div>
   );
 }

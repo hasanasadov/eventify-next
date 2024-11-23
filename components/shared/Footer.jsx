@@ -11,7 +11,6 @@ const Footer = () => {
     <footer className=" text-black py-10">
       <div className=" px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* About Section */}
           <div>
             <h3 className="text-xl font-semibold  mb-4">About Us</h3>
             <p className="text-black text-sm">
@@ -20,11 +19,8 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Navigation Links */}
           <div>
-            <h3 className="text-xl font-semibold  mb-4">
-              Quick Links
-            </h3>
+            <h3 className="text-xl font-semibold  mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/">
@@ -49,7 +45,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Email Subscription */}
           <div>
             <h3 className="text-xl font-semibold  mb-4">
               Subscribe to Our Newsletter
@@ -58,11 +53,11 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full sm:w-auto flex-grow p-2 rounded-lg border border-gray-700 bg-gray-800 text-black focus:outline-none focus:ring focus:ring-blue-500"
+                className="w-full sm:w-auto flex-grow p-2 rounded-lg border border-gray-700  focus:outline-none focus:ring focus:ring-green-500"
               />
               <button
                 type="submit"
-                className="mt-3 sm:mt-0 sm:ml-3 bg-blue-600 hover:bg-blue-700  py-2 px-4 rounded-lg transition-all"
+                className="mt-3 sm:mt-0 sm:ml-3 text-white bg-green-600 hover:bg-green-700  py-2 px-4 rounded-lg transition-all"
               >
                 Subscribe
               </button>
@@ -71,7 +66,6 @@ const Footer = () => {
         </div>
 
         <div className="mt-10 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
-          {/* Social Links */}
           <div className="flex space-x-4">
             <a
               href="https://facebook.com"
@@ -107,7 +101,6 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Copyright */}
           <p className="text-black text-sm mt-4 md:mt-0">
             &copy; {new Date().getFullYear()} Eventify. All rights reserved.
           </p>
