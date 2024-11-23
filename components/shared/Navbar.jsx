@@ -78,16 +78,23 @@ const Navbar = () => {
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <Button className="text-3xl p-8" variant={"ghost"}>
-          <MessageCircleIcon style={{ width: "30px", height: "30px" }} /> Chat
-        </Button>
-        <Button className="text-3xl p-8" variant={"ghost"}>
-          <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} />{" "}
-          Subscriptions
-        </Button>
-        <Button className="text-3xl p-8" variant={"ghost"}>
-          <User2Icon style={{ width: "30px", height: "30px" }} /> Account
-        </Button>
+        <Link href="/chat">
+          <Button className="text-3xl p-8" variant={"ghost"}>
+            <MessageCircleIcon style={{ width: "30px", height: "30px" }} /> Chat
+          </Button>
+        </Link>
+        <Link href="/pricing">
+          <Button className="text-3xl p-8" variant={"ghost"}>
+            <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} />{" "}
+            Subscriptions
+          </Button>
+        </Link>
+        <Link href="/account">
+          <Button className="text-3xl p-8" variant={"ghost"}>
+            <User2Icon style={{ width: "30px", height: "30px" }} /> Account
+          </Button>
+        </Link>
+
         <Button
           variant={"secondary"}
           className="text-xl"
