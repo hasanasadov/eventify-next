@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <div className="flex justify-between flex-col md:flex-row bg-gray-200  p-8 w-full">
         <SideBarLeft />
-        <div className="flex-grow rounded-xl overflow-hidden mx-6 ">
+        <div className="flex-grow  min-h-[350px] rounded-xl overflow-hidden md:mx-6 my-6 md:my-0">
           <GoogleMap />
         </div>
         <SideBarRight />

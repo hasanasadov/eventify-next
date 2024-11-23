@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="p-8 w-screen flex md:flex-row md:justify-between items-center flex-col sticky top-0 z-50 bg-white shadow-md">
+    <div className="p-8 w-screen flex md:justify-between items-center  sticky top-0 z-50 bg-white shadow-md">
       <div className="flex w-full items-center justify-between">
         <div className="w-24 h-12 flex items-center justify-center">
           <Link href="/">
@@ -74,7 +74,7 @@ const Navbar = () => {
 
       {/* Hamburger Menu */}
       <div
-        className={`fixed right-0 top-0 h-full w-1/3 bg-green-500 p-8 flex flex-col gap-8 transition-transform duration-300 ${
+        className={`fixed right-0 top-0 h-full md:w-1/3  bg-green-500 p-8 flex flex-col gap-8 transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
