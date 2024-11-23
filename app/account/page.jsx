@@ -252,7 +252,7 @@ export default function LoginRegister() {
                 onClick={() => setIsFlipped(true)}
                 className="text-sm text-blue-600 hover:text-blue-800"
               >
-                Don't have an account? Sign up
+               Don&apos;t have an account? Sign up
               </button>
             </div>
           </div>
