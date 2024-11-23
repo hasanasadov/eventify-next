@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="p-8 w-screen flex  md:flex-row md:justify-between items-center flex-col sticky top-0 z-50 bg-white shadow-md">
+    <div className="p-8  w-screen  flex  md:flex-row md:justify-between items-center flex-col sticky top-0 z-50 bg-white">
       <div className="flex w-full items-center justify-between">
         <div className="w-24 h-12 flex items-center justify-center">
           <Image src={Logo} alt="logo" width={100} height={100} />
