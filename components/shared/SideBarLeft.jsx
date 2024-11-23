@@ -23,8 +23,8 @@ const SideBarLeft = () => {
       <div className=" shadow-lg flex bg-gray-100 w-full rounded-lg overflow-hidden  flex-col items-center">
         <div className="flex items-center justify-center h-16 w-full border-b border-gray-700">
           <h1 className="text-2xl">Events</h1>
+          
         </div>
-        //MAPPING
       </div>
     </div>
   );

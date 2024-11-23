@@ -7,7 +7,7 @@ const SideBarRight = () => {
         <div className="flex items-center justify-center h-16 w-full border-b border-gray-700">
           <h1 className="text-2xl font-extrabold text-blue-600">Upcoming Events</h1>
         </div>
-        //MAPPING
+        
       </div>
     </div>
   );
