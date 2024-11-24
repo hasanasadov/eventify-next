@@ -8,6 +8,12 @@ body {
 
 @layer base {
   :root {
+    --bg-light: #d3ffe7;
+    --accent-primary: #2ed47b;
+    --accent-secondary: #005c4b;
+    --text-primary: #181059;
+    --text-secondary: #8645ff;
+    --overlay: #271b89;
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;

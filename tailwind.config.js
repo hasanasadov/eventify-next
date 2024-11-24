@@ -13,6 +13,12 @@ module.exports = {
         sans: ["Inter", "Roboto", "sans-serif"],
       },
       colors: {
+        bgLight: "#D3FFE7",
+        accentPrimary: "#2ED47B",
+        accentSecondary: "#005C4B",
+        textPrimary: "#181059",
+        textSecondary: "#8645FF",
+        overlay: "#271B89",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

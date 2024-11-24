@@ -103,20 +103,28 @@ const SideBarLeft = () => {
 
   return (
     <div className="h-[40vh] md:h-[80vh] md:w-1/4 w-full rounded-3xl overflow-hidden gap-2 flex justify-between">
+      {/* Sidebar navigation buttons */}
       <div className="shadow-lg flex flex-col items-center justify-between rounded-lg overflow-hidden bg-white w-[70px] py-10">
         <div className="flex flex-col gap-3">
-          <button className="py-4 rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center">
-            <HomeIcon
-              className="h-6 w-6"
-              onClick={() => {
-                setEventsButton(true);
-                setsaveButton(false);
-                setSettingsButton(false);
-              }}
-            />
-          </button>
+          {/* Home button */}
           <button
-            className="py-4 rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center"
+            className={`py-4 rounded-full w-10 h-10 flex items-center justify-center ${
+              eventsButton ? "bg-green-500 text-white" : "bg-gray-200"
+            }`}
+            onClick={() => {
+              setEventsButton(true);
+              setsaveButton(false);
+              setSettingsButton(false);
+            }}
+          >
+            <HomeIcon className="h-6 w-6" />
+          </button>
+
+          {/* Bookmarks button */}
+          <button
+            className={`py-4 rounded-full w-10 h-10 flex items-center justify-center ${
+              saveButton ? "bg-green-500 text-white" : "bg-gray-200"
+            }`}
             onClick={() => {
               setEventsButton(false);
               setsaveButton(true);
@@ -127,32 +135,43 @@ const SideBarLeft = () => {
           </button>
         </div>
 
-        <button className="py-4 rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center">
-          <Settings2
-            className="h-6 w-6"
-            onClick={() => {
-              setEventsButton(false);
-              setsaveButton(false);
-              setSettingsButton(true);
-            }}
-          />
+        {/* Settings button */}
+        <button
+          className={`py-4 rounded-full w-10 h-10 flex items-center justify-center ${
+            settingsButton ? "bg-green-500 text-white" : "bg-gray-200"
+          }`}
+          onClick={() => {
+            setEventsButton(false);
+            setsaveButton(false);
+            setSettingsButton(true);
+          }}
+        >
+          <Settings2 className="h-6 w-6" />
         </button>
       </div>
 
+      {/* Main content */}
       <div className="shadow-lg flex bg-gray-100 w-full rounded-lg flex-col h-full">
+        {/* Header */}
         <div className="flex items-center justify-center p-4 w-full border-b h-fit border-gray-400">
-          <h1 className="text-2xl font-extrabold text-green-700">Events</h1>
+          <h1 className="text-2xl font-extrabold text-green-700">
+            {eventsButton && "Events"}
+            {saveButton && "Bookmarks"}
+            {settingsButton && "Settings"}
+          </h1>
         </div>
+
+        {/* Events Section */}
         <div
           className={`flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4 ${
-            saveButton ? "hidden" : eventsButton ? "flex" : "hidden"
-          } `}
+            eventsButton ? "flex" : "hidden"
+          }`}
         >
           {links.map((item) => (
             <Link
               href={"/events/" + item.id}
               key={item.id}
-              className="flex items-center p-4 gap-4 w-[90%] bg-gray-400 rounded-lg relative"
+              className="flex items-center p-4 gap-4 w-[90%] bg-green-300 rounded-lg relative"
             >
               <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden">
                 <img
@@ -161,7 +180,7 @@ const SideBarLeft = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex flex-col gap-1 items-start justify-center ">
+              <div className="flex flex-col gap-1 items-start justify-center">
                 <h1 className="font-semibold text-lg">{item.title}</h1>
                 <p className="text-sm text-gray-700">{item.desc}</p>
               </div>
@@ -173,17 +192,18 @@ const SideBarLeft = () => {
             </Link>
           ))}
         </div>
+
+        {/* Bookmarks Section */}
         <div
           className={`flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4 ${
             saveButton ? "flex" : "hidden"
-          } `}
+          }`}
         >
           {bookmarks.map((item) => (
             <Link
               href={"/events/" + item.id}
               key={item.id}
-              className={` items-center p-4 gap-4 w-[90%] bg-gray-400 rounded-lg relative 
-              `}
+              className="items-center p-4 gap-4 w-[90%] bg-green-300 rounded-lg relative"
             >
               <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden">
                 <img
@@ -192,10 +212,8 @@ const SideBarLeft = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex flex-col gap-1 items-start justify-center ">
-                <h1 className="font-semibold text-lg break-words">
-                  {item.title}
-                </h1>
+              <div className="flex flex-col gap-1 items-start justify-center">
+                <h1 className="font-semibold text-lg">{item.title}</h1>
                 <p className="text-sm text-gray-700">{item.desc}</p>
               </div>
               <div className="absolute flex top-2 right-2">
@@ -206,19 +224,21 @@ const SideBarLeft = () => {
             </Link>
           ))}
         </div>
+
+        {/* Settings Section */}
         <div
           className={`flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4 ${
-            saveButton ? "hidden" : eventsButton ? "hidden" : "flex"
-          } `}
+            settingsButton ? "flex" : "hidden"
+          }`}
         >
           <div className="flex flex-col gap-4 items-center w-[90%]">
-            <button className="w-full bg-gray-400 p-4 rounded-lg">
+            <button className="w-full bg-green-300 p-4 rounded-lg">
               <h1 className="text-lg font-semibold">Profile</h1>
             </button>
-            <button className="w-full bg-gray-400 p-4 rounded-lg">
+            <button className="w-full bg-green-300 p-4 rounded-lg">
               <h1 className="text-lg font-semibold">Settings</h1>
             </button>
-            <button className="w-full bg-gray-400 p-4 rounded-lg">
+            <button className="w-full bg-green-300 p-4 rounded-lg">
               <h1 className="text-lg font-semibold">Log Out</h1>
             </button>
           </div>

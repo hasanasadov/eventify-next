@@ -67,7 +67,7 @@ const SideBarRight = () => {
             <Link
               href={"/events/" + item.id}
               key={item.id}
-              className="flex items-center p-4 gap-4 w-[90%] bg-gray-400 rounded-lg relative"
+              className="flex items-center p-4 gap-4 w-[90%] bg-blue-100 rounded-lg relative"
             >
               <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden">
                 <img

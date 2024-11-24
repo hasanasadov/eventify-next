@@ -16,7 +16,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="p-8 w-screen flex md:justify-between items-center  sticky top-0 z-50 bg-white shadow-md">
+    <div
+      className="p-8 w-screen flex md:justify-between items-center sticky top-0 z-50 shadow-md"
+      style={{ backgroundColor: "var(--bg-light)" }}
+    >
       <div className="flex w-full items-center justify-between">
         <div className="w-24 h-12 flex items-center justify-center">
           <Link href="/">
@@ -30,24 +33,43 @@ const Navbar = () => {
 
       <div className="lg:flex md:flex-row flex-col gap-8 hidden">
         <Link href="/chat">
-          <Button variant={"ghost"}>
+          <Button
+            variant="ghost"
+            style={{
+              color: "var(--text-primary)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+          >
             <MessageCircleIcon /> Chat
           </Button>
         </Link>
 
         <Link href="/pricing">
-          <Button variant={"ghost"}>
+          <Button
+            variant="ghost"
+            style={{
+              color: "var(--text-primary)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+          >
             <CalendarPlus2Icon /> Subscriptions
           </Button>
         </Link>
+
         <Link href="/account">
-          <Button variant={"ghost"}>
+          <Button
+            variant="ghost"
+            style={{
+              color: "var(--text-primary)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+          >
             <User2Icon /> Account
           </Button>
         </Link>
       </div>
 
-      <button className="lg:hidden block" onClick={handleToggle}>
+      <button className="lg:hidden block text-[var(--text-primary)]" onClick={handleToggle}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -66,41 +88,56 @@ const Navbar = () => {
 
       {/* Black Overlay */}
       <div
-        className={`fixed inset-0 bg-black transition-opacity duration-300 ${
+        className={`fixed inset-0 transition-opacity duration-300 ${
           open ? "opacity-50 visible" : "opacity-0 invisible"
         }`}
+        style={{ backgroundColor: "var(--overlay)" }}
         onClick={handleToggle}
       ></div>
 
       {/* Hamburger Menu */}
       <div
-        className={`fixed right-0 top-0 h-full md:w-1/3  bg-green-500 p-8 flex flex-col gap-8 transition-transform duration-300 ${
+        className={`fixed right-0 top-0 h-full md:w-1/3 p-8 flex flex-col gap-8 transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{ backgroundColor: "var(--accent-secondary)" }}
       >
         <Link href="/chat">
           <Button
             className="text-3xl p-8"
-            variant={"ghost"}
+            style={{
+              color: "var(--bg-light)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+            variant="ghost"
             onClick={handleToggle}
           >
             <MessageCircleIcon style={{ width: "30px", height: "30px" }} /> Chat
           </Button>
         </Link>
+
         <Link href="/pricing">
           <Button
             className="text-3xl p-8"
-            variant={"ghost"}
+            style={{
+              color: "var(--bg-light)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+            variant="ghost"
             onClick={handleToggle}
           >
-            <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} />{" "}
-            Subscriptions
+            <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} /> Subscriptions
           </Button>
         </Link>
+
         <Link href="/account">
           <Button
             className="text-3xl p-8"
-            variant={"ghost"}
+            style={{
+              color: "var(--bg-light)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+            variant="ghost"
             onClick={handleToggle}
           >
             <User2Icon style={{ width: "30px", height: "30px" }} /> Account
@@ -108,8 +145,12 @@ const Navbar = () => {
         </Link>
 
         <Button
-          variant={"secondary"}
+          variant="secondary"
           className="text-xl"
+          style={{
+            color: "var(--bg-light)",
+            "--tw-bg-hover": "var(--accent-primary)",
+          }}
           onClick={handleToggle}
         >
           Close Menu
