@@ -84,7 +84,7 @@ const AuthForm = () => {
               </div>
             </form>
             <div className="sign-up-text text-center mt-6">
-              Don't have an account?{" "}
+              Don {"'"}t have an account?{" "}
               <label
                 htmlFor="flip"
                 className="text-[#7d2ae8] cursor-pointer hover:underline"
