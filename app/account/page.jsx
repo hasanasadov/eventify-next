@@ -18,7 +18,7 @@ const AuthForm = () => {
         className="hidden"
       />
 
-      <div className="cover absolute top-0 left-1/2 h-full w-1/2 z-10 transition-all ease-in-out duration-1000 transform-origin-left preserve-3d">
+      <div className="cover absolute top-0 left-1/2 h-full w-1/2 z-10 transition-all ease-in-out duration-1000 transform-origin-left preserve-3d hidden md:block">
         <div className="front absolute top-0 left-0 h-full w-full">
           <img
             src="../../../assets/images/maksi.jpg"
@@ -42,8 +42,8 @@ const AuthForm = () => {
       </div>
 
       <div className="forms w-full h-full bg-white">
-        <div className="form-content flex items-center justify-between">
-          <div className="login-form w-1/2 p-6">
+        <div className="form-content flex flex-col lg:flex-row items-center justify-between">
+          <div className="login-form w-full lg:w-1/2 p-6">
             <div className="title text-2xl font-medium text-gray-800 mb-4 relative">
               Login
               <div className="absolute left-0 bottom-0 h-[3px] w-6 bg-[#7d2ae8]"></div>
@@ -84,7 +84,7 @@ const AuthForm = () => {
               </div>
             </form>
             <div className="sign-up-text text-center mt-6">
-              Don {"'"}t have an account?{" "}
+              Don{"'"}t have an account?{" "}
               <label
                 htmlFor="flip"
                 className="text-[#7d2ae8] cursor-pointer hover:underline"
@@ -94,7 +94,10 @@ const AuthForm = () => {
             </div>
           </div>
 
-          <div className="signup-form w-1/2 p-6 hidden" id="signup-form">
+          <div
+            className="signup-form w-full lg:w-1/2 p-6 hidden lg:block"
+            id="signup-form"
+          >
             <div className="title text-2xl font-medium text-gray-800 mb-4 relative">
               Signup
               <div className="absolute left-0 bottom-0 h-[3px] w-5 bg-[#7d2ae8]"></div>
