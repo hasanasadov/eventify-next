@@ -13,7 +13,8 @@ const Pricing = () => {
       id: 1,
       name: "Starter",
       type: "Trial",
-      price: isAnnual ? "Free" : "Free",
+      monthlyPrice: "$0",
+      annualPrice: "$0", // Annual Price
       credits: "5 Credits",
       users: "1 User",
       features: [
@@ -30,7 +31,8 @@ const Pricing = () => {
       id: 2,
       name: "Value",
       type: "Fast Start",
-      price: isAnnual ? "$49" : "$49",
+      monthlyPrice: "$49",
+      annualPrice: "$499", // Annual Price
       credits: "50 Credits per month",
       users: "Unlimited users",
       features: [
@@ -47,7 +49,8 @@ const Pricing = () => {
       id: 3,
       name: "Pro",
       type: "Accelerate",
-      price: isAnnual ? "$89" : "$89",
+      monthlyPrice: "$89",
+      annualPrice: "$899", // Annual Price
       credits: "100 Credits per month",
       users: "Unlimited users",
       features: [
@@ -121,7 +124,7 @@ const Pricing = () => {
                     {plan.type}
                   </p>
                   <p className="text-[#075E54] text-4xl font-bold">
-                    {plan.price}
+                    {isAnnual ? plan.annualPrice : plan.monthlyPrice}
                   </p>
                 </div>
 
