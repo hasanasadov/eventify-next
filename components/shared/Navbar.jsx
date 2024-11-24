@@ -79,18 +79,30 @@ const Navbar = () => {
         }`}
       >
         <Link href="/chat">
-          <Button className="text-3xl p-8" variant={"ghost"}>
+          <Button
+            className="text-3xl p-8"
+            variant={"ghost"}
+            onClick={handleToggle}
+          >
             <MessageCircleIcon style={{ width: "30px", height: "30px" }} /> Chat
           </Button>
         </Link>
         <Link href="/pricing">
-          <Button className="text-3xl p-8" variant={"ghost"}>
+          <Button
+            className="text-3xl p-8"
+            variant={"ghost"}
+            onClick={handleToggle}
+          >
             <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} />{" "}
             Subscriptions
           </Button>
         </Link>
         <Link href="/account">
-          <Button className="text-3xl p-8" variant={"ghost"}>
+          <Button
+            className="text-3xl p-8"
+            variant={"ghost"}
+            onClick={handleToggle}
+          >
             <User2Icon style={{ width: "30px", height: "30px" }} /> Account
           </Button>
         </Link>
