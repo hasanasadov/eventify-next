@@ -5,6 +5,7 @@ const nextConfig = {
       "oblivicon.com",
       "static.vecteezy.com",
       "encrypted-tbn0.gstatic.com",
+      
     ],
   },
 };

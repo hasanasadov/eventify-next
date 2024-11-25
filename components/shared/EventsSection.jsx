@@ -33,7 +33,7 @@ const EventsSection = ({ eventsButton }) => {
         <Link
           href={`/events/${item.event.id}`}
           key={item.event.id}
-          className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-green-300  relative"
+          className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-green-300  relative hover:bg-green-400 rounded-lg "
         >
           <Image
             src={
@@ -41,7 +41,7 @@ const EventsSection = ({ eventsButton }) => {
                 ? item.event.poster_image_link
                 : "/default-image.jpg"
             }
-            className="rounded-lg bg-red-500"
+            className="rounded-lg w-48 h-24 bg-red-500"
             alt={item.event.title}
             width={100}
             height={100}
@@ -51,7 +51,7 @@ const EventsSection = ({ eventsButton }) => {
             {/* Event Details */}
             <div className="flex flex-col gap-1 items-start justify-center">
               <h1 className="font-semibold text-lg">{item.event.title}</h1>
-              <p className="text-[8px] text-gray-700">
+              <p className="text-sm text-gray-600 line-clamp-2">
                 {item.event.description}
               </p>
             </div>

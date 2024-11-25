@@ -2,13 +2,11 @@
 
 import { Bookmark } from "@mui/icons-material";
 import { BookmarkRemove } from "@mui/icons-material";
-import { BookmarkAdd } from "@mui/icons-material";
 import { HomeIcon } from "lucide-react";
 import { Settings2 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import EventsSection from "./EventsSection";
 const SideBarLeft = () => {
   const bookmarks = [
@@ -118,7 +116,7 @@ const SideBarLeft = () => {
             {settingsButton && "Settings"}
           </h1>
         </div>
-          
+
         <EventsSection eventsButton={eventsButton} />
 
         {/* Bookmarks Section */}
