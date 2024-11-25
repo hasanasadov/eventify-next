@@ -21,12 +21,12 @@ const Navbar = () => {
       style={{ backgroundColor: "var(--bg-light)" }}
     >
       <div className="flex w-full items-center justify-between">
-        <div className="w-24 h-12 flex items-center justify-center">
+        <div className="w-40  md:scale-150 h-12  flex items-center justify-center">
           <Link href="/">
             <Image src={Logo} alt="logo" width={100} height={100} />
           </Link>
         </div>
-        <div className="w-full px-10">
+        <div className="w-full md:px-10 px-4">
           <InputWithButton />
         </div>
       </div>
@@ -69,7 +69,10 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <button className="lg:hidden block text-[var(--text-primary)]" onClick={handleToggle}>
+      <button
+        className="lg:hidden block text-[var(--text-primary)]"
+        onClick={handleToggle}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -126,7 +129,8 @@ const Navbar = () => {
             variant="ghost"
             onClick={handleToggle}
           >
-            <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} /> Subscriptions
+            <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} />{" "}
+            Subscriptions
           </Button>
         </Link>
 
