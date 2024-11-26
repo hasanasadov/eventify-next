@@ -4,11 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { BookmarkAdd } from "@mui/icons-material"; // Assuming you're using Material-UI's BookmarkAdd icon
 import { useState, useEffect } from "react";
+import { BASE_URL } from "@/constants";
 const EventsSection = ({ eventsButton }) => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
     const fetchLinks = async () => {
-      const res = await fetch("https://eventify-az.onrender.com/events");
+      const res = await fetch(`${BASE_URL}/events`);
       const data = await res.json();
       setEvents(data);
     };

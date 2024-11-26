@@ -7,6 +7,9 @@ import { CalendarPlus2Icon, User2Icon, MessageCircleIcon } from "lucide-react";
 import Logo from "/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { Calendar1Icon } from "lucide-react";
+import { SubscriptionsOutlined } from "@mui/icons-material";
+import { MuseumOutlined } from "@mui/icons-material";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -32,6 +35,30 @@ const Navbar = () => {
       </div>
 
       <div className="lg:flex md:flex-row flex-col gap-8 hidden">
+        <Link href="/events">
+          <Button
+            variant="ghost"
+            style={{
+              color: "var(--text-primary)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+          >
+            <Calendar1Icon /> Events
+          </Button>
+        </Link>
+
+        <Link href="/venues">
+          <Button
+            variant="ghost"
+            style={{
+              color: "var(--text-primary)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+          >
+            <MuseumOutlined /> Venues
+          </Button>
+        </Link>
+
         <Link href="/chat">
           <Button
             variant="ghost"
@@ -52,7 +79,7 @@ const Navbar = () => {
               "--tw-bg-hover": "var(--accent-primary)",
             }}
           >
-            <CalendarPlus2Icon /> Subscriptions
+            <SubscriptionsOutlined /> Subscriptions
           </Button>
         </Link>
 
@@ -105,9 +132,9 @@ const Navbar = () => {
         }`}
         style={{ backgroundColor: "var(--accent-secondary)" }}
       >
-        <Link href="/chat">
+        <Link href="/events">
           <Button
-            className="text-3xl p-8"
+            className="text-2xl p-8"
             style={{
               color: "var(--bg-light)",
               "--tw-bg-hover": "var(--accent-primary)",
@@ -115,13 +142,41 @@ const Navbar = () => {
             variant="ghost"
             onClick={handleToggle}
           >
-            <MessageCircleIcon style={{ width: "30px", height: "30px" }} /> Chat
+            <Calendar1Icon style={{ width: "28px", height: "28px" }} /> Events
+          </Button>
+        </Link>
+
+        <Link href="/venues">
+          <Button
+            className="text-2xl p-8"
+            style={{
+              color: "var(--bg-light)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+            variant="ghost"
+            onClick={handleToggle}
+          >
+            <MuseumOutlined style={{ width: "28px", height: "28px" }} /> Venues
+          </Button>
+        </Link>
+
+        <Link href="/chat">
+          <Button
+            className="text-2xl p-8"
+            style={{
+              color: "var(--bg-light)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+            variant="ghost"
+            onClick={handleToggle}
+          >
+            <MessageCircleIcon style={{ width: "28px", height: "28px" }} /> Chat
           </Button>
         </Link>
 
         <Link href="/pricing">
           <Button
-            className="text-3xl p-8"
+            className="text-2xl p-8"
             style={{
               color: "var(--bg-light)",
               "--tw-bg-hover": "var(--accent-primary)",
@@ -129,14 +184,14 @@ const Navbar = () => {
             variant="ghost"
             onClick={handleToggle}
           >
-            <CalendarPlus2Icon style={{ width: "30px", height: "30px" }} />{" "}
+            <CalendarPlus2Icon style={{ width: "28px", height: "28px" }} />{" "}
             Subscriptions
           </Button>
         </Link>
 
         <Link href="/account">
           <Button
-            className="text-3xl p-8"
+            className="text-2xl p-8"
             style={{
               color: "var(--bg-light)",
               "--tw-bg-hover": "var(--accent-primary)",
@@ -144,7 +199,7 @@ const Navbar = () => {
             variant="ghost"
             onClick={handleToggle}
           >
-            <User2Icon style={{ width: "30px", height: "30px" }} /> Account
+            <User2Icon style={{ width: "28px", height: "28px" }} /> Account
           </Button>
         </Link>
 
@@ -152,7 +207,6 @@ const Navbar = () => {
           variant="secondary"
           className="text-xl"
           style={{
-            color: "var(--bg-light)",
             "--tw-bg-hover": "var(--accent-primary)",
           }}
           onClick={handleToggle}

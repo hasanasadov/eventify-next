@@ -4,11 +4,12 @@ import React from "react";
 import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { BASE_URL } from "@/constants";
 const VenuesSection = () => {
   const [venues, setVenues] = useState([]);
   useEffect(() => {
     const fetchVenues = async () => {
-      const res = await fetch("https://eventify-az.onrender.com/venues");
+      const res = await fetch(`${BASE_URL}/venues`);
       const data = await res.json();
       setVenues(data);
     };

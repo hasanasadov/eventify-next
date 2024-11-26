@@ -1,5 +1,6 @@
 "use client";
 
+import { BASE_URL } from "@/constants";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -18,7 +19,7 @@ const EventDetail = () => {
     const fetchEventDetails = async () => {
       try {
         const res = await fetch(
-          `https://eventify-az.onrender.com/events/${id}`
+          `${BASE_URL}/events/${id}`
         );
 
         if (!res.ok) {
@@ -30,7 +31,7 @@ const EventDetail = () => {
 
         // Fetch comments
         const commentsRes = await fetch(
-          `https://eventify-az.onrender.com/events/${id}/comments`
+          `${BASE_URL}/events/${id}/comments`
         );
         if (commentsRes.ok) {
           const commentsData = await commentsRes.json();
@@ -56,7 +57,7 @@ const EventDetail = () => {
 
     try {
       const res = await fetch(
-        `https://eventify-az.onrender.com/events/${id}/comments`,
+        `${BASE_URL}/events/${id}/comments`,
         {
           method: "POST",
           headers: {
@@ -87,9 +88,9 @@ const EventDetail = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-blue-500 font-semibold">
+        <div className="flex flex-col justify-center items-center min-h-screen">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
+          <p className="mt-4 text-green-500 font-semibold">
             Loading event details...
           </p>
         </div>

@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
+import { BASE_URL } from "@/constants";
 
 const VenueDetail = () => {
   const params = useParams();
@@ -19,7 +20,7 @@ const VenueDetail = () => {
     const fetchVenueDetails = async () => {
       try {
         const foundVenue = await fetch(
-          `https://eventify-az.onrender.com/venues/${id}`
+          `${BASE_URL}/venues/${id}`
         ).then((res) => res.json());
 
         if (!foundVenue) {
@@ -36,7 +37,7 @@ const VenueDetail = () => {
     const fetchEventsForThisVenue = async () => {
       try {
         const events = await fetch(
-          `https://eventify-az.onrender.com/events`
+          `${BASE_URL}/events`
         ).then((res) => res.json());
         console.log(events);
         const venueEvents = events.filter((item) => item.event.venue_id == id);
@@ -61,9 +62,9 @@ const VenueDetail = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-blue-500 font-semibold">
+        <div className="flex flex-col justify-center items-center min-h-screen">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
+          <p className="mt-4 text-green-500 font-semibold">
             Loading venue details...
           </p>
         </div>
