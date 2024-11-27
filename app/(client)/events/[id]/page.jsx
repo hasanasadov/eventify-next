@@ -105,7 +105,7 @@ const EventDetail = () => {
   const { event, location } = eventData || {};
 
   return (
-    <div className="p-6 max-w-5xl mx-auto bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 rounded-lg shadow-lg">
+    <div className="p-6 container mx-auto bg-gradient-to-r bg-white rounded-lg shadow-lg">
       <Toaster position="top-right" reverseOrder={false} />
       <div className="flex flex-col md:flex-row gap-6">
         {event?.poster_image_link ? (
