@@ -10,15 +10,15 @@ const AuthForm = () => {
   const [isFlipped, setIsFlipped] = useState(false);
   console.log(isFlipped);
   return (
-    <div className="container mx-auto my-20 relative max-w-[850px] w-full bg-white p-10 shadow-lg perspective-[2700px] transition-transform duration-1000 ease-in-out ">
+    <div className="container mx-auto my-20 relative max-w-[850px] w-full bg-white p-10 shadow-lg  ">
       <div
         className={`
           ${isFlipped ? "left-0" : "right-0"}
-        cover absolute top-0  h-full w-1/2 z-10 transition-all ease-in-out duration-1000 transform-origin-left preserve-3d hidden md:block `}
+        cover absolute top-0  h-full w-1/2 z-10 hidden md:block `}
       >
         <div
           className={`absolute top-0 left-0 h-full w-full ${
-            isFlipped ? "hidden" : "rotate-y-180"
+            isFlipped ? "hidden" : ""
           } `}
         >
           <Image
@@ -30,8 +30,8 @@ const AuthForm = () => {
         </div>
 
         <div
-          className={`absolute top-0 left-0 h-full w-full ${
-            !isFlipped ? "hidden" : "rotate-y-180"
+          className={`absolute top-0 right-0 h-full w-full ${
+            !isFlipped ? "hidden" : ""
           } `}
         >
           <Image
@@ -44,9 +44,9 @@ const AuthForm = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row items-center justify-between">
-        <LoginForm setIsFlipped={setIsFlipped} />
+        <LoginForm isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
 
-        <SignupForm setIsFlipped={setIsFlipped} />
+        <SignupForm isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
       </div>
     </div>
   );
