@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { BookmarkAdd } from "@mui/icons-material"; // Assuming you're using Material-UI's BookmarkAdd icon
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/constants";
+import { BookmarkAddOutlined } from "@mui/icons-material";
+import { Bookmark } from "@mui/icons-material";
 const EventsSection = ({ eventsButton }) => {
   const [events, setEvents] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
   useEffect(() => {
     const fetchLinks = async () => {
       const res = await fetch(`${BASE_URL}/events`);
@@ -16,9 +18,13 @@ const EventsSection = ({ eventsButton }) => {
     fetchLinks();
   }, []);
 
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   const isValidUrl = (url) => {
     try {
-      new URL(url); // Will throw if the URL is not valid
+      new URL(url);
       return true;
     } catch (e) {
       return false;
@@ -34,7 +40,7 @@ const EventsSection = ({ eventsButton }) => {
         <Link
           href={`/events/${item.event.id}`}
           key={item.event.id}
-          className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-purple-300  relative hover:bg-purple-500 rounded-lg "
+          className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-green-200  relative hover:bg-green-300 rounded-lg "
         >
           <Image
             src={
@@ -58,10 +64,25 @@ const EventsSection = ({ eventsButton }) => {
             </div>
 
             {/* Bookmark Button */}
-            <div className="absolute flex top-2 right-2">
-              <button className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center">
-                <BookmarkAdd className="h-4 w-4" />
-              </button>
+            <div className="mt-6 absolute -top-2 right-4 z-10">
+              {isFavorite ? (
+                <Bookmark
+                  style={{
+                    fontSize: 25,
+                  }}
+                  className="cursor-pointer"
+                  onClick={toggleFavorite}
+                />
+              ) : (
+                <BookmarkAddOutlined
+                  style={{
+                    color: "black",
+                    fontSize: 25,
+                  }}
+                  className="cursor-pointer"
+                  onClick={toggleFavorite}
+                />
+              )}
             </div>
           </div>
         </Link>

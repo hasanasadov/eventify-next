@@ -10,6 +10,8 @@ import Link from "next/link";
 import { Calendar1Icon } from "lucide-react";
 import { SubscriptionsOutlined } from "@mui/icons-material";
 import { MuseumOutlined } from "@mui/icons-material";
+import { FavoriteSharp } from "@mui/icons-material";
+import { FavoriteBorderOutlined } from "@mui/icons-material";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -68,6 +70,18 @@ const Navbar = () => {
             }}
           >
             <MessageCircleIcon /> Chat
+          </Button>
+        </Link>
+
+        <Link href="/favorites">
+          <Button
+            variant="ghost"
+            style={{
+              color: "var(--text-primary)",
+              "--tw-bg-hover": "var(--accent-primary)",
+            }}
+          >
+            <FavoriteBorderOutlined /> Favorites
           </Button>
         </Link>
 
