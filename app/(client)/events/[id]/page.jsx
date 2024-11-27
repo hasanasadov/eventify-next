@@ -1,6 +1,8 @@
 "use client";
 
 import { BASE_URL } from "@/constants";
+import { FavoriteBorder } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -61,7 +63,9 @@ const EventDetail = () => {
       const comment = await res.json();
       setComments((prev) => [...prev, comment]);
       setNewComment("");
-      toast.success("Comment added!");
+      toast.success("Comment added!", {
+        position: "top-center",
+      });
     } catch (err) {
       toast.error(err.message);
     }
@@ -70,7 +74,10 @@ const EventDetail = () => {
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
     toast.success(
-      isFavorite ? "Removed from favorites!" : "Added to favorites!"
+      isFavorite ? "Removed from favorites!" : "Added to favorites!",
+      {
+        position: "top-center",
+      }
     );
   };
 
@@ -106,7 +113,7 @@ const EventDetail = () => {
 
   return (
     <div className="p-6 container mx-auto bg-gradient-to-r bg-white rounded-lg shadow-lg">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col md:flex-row gap-6">
         {event?.poster_image_link ? (
           <img
@@ -119,7 +126,7 @@ const EventDetail = () => {
             <p className="text-gray-500">No Poster Available</p>
           </div>
         )}
-        <div className="bg-white p-6 flex-1 rounded-lg shadow-lg space-y-4">
+        <div className="bg-white p-6 flex-1 rounded-lg shadow-lg space-y-4 relative">
           <h1 className="text-4xl font-extrabold text-green-500 mb-4">
             {event?.title || "Event Title"}
           </h1>
@@ -149,15 +156,27 @@ const EventDetail = () => {
             <span className="font-semibold text-red-600">Likes:</span>{" "}
             {event?.num_likes || 0}
           </p>
-          <button
-            onClick={toggleFavorite}
-            className={`mt-4 px-4 py-2 rounded text-white transition ${isFavorite
-              ? "bg-red-500 hover:bg-red-600"
-              : "bg-blue-500 hover:bg-blue-600"
-              }`}
-          >
-            {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-          </button>
+          <div className="mt-6 absolute top-1 right-4">
+            {isFavorite ? (
+              <Favorite
+                style={{
+                  color: "red",
+                  fontSize: 30,
+                }}
+                className="cursor-pointer"
+                onClick={toggleFavorite}
+              />
+            ) : (
+              <FavoriteBorder
+                style={{
+                  color: "black",
+                  fontSize: 30,
+                }}
+                className="cursor-pointer"
+                onClick={toggleFavorite}
+              />
+            )}
+          </div>
         </div>
       </div>
       {location?.lat && location?.lng && (

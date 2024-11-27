@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import { BASE_URL } from "@/constants";
+import { FavoriteBorder } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 
 const VenueDetail = () => {
   const params = useParams();
@@ -52,8 +54,12 @@ const VenueDetail = () => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
+    // make toast notification on center top
     toast.success(
-      isFavorite ? "Removed from favorites!" : "Added to favorites!"
+      isFavorite ? "Removed from favorites" : "Added to favorites",
+      {
+        position: "top-center",
+      }
     );
   };
 
@@ -104,7 +110,7 @@ const VenueDetail = () => {
                 className="w-full h-full object-cover rounded-lg shadow-lg transform hover:scale-[1.005] transition-transform duration-300 ease-in-out"
               />
             </div>
-            <div className="bg-white p-6 flex-1 rounded-lg shadow-lg space-y-6">
+            <div className="bg-white p-6 flex-1 rounded-lg shadow-lg space-y-6 relative">
               <div>
                 <h2 className="text-2xl font-extrabold text-green-500 mb-4">
                   Description
@@ -112,7 +118,7 @@ const VenueDetail = () => {
                 <p className="text-sm text-gray-600">{venue.description}</p>
               </div>
 
-              <div className="flex flex-col md:flex-row justify-between gap-8">
+              <div className="flex flex-col md:flex-row justify-between gap-8 ">
                 <div className="w-full md:w-1/2 space-y-2">
                   <h3 className="text-lg font-semibold text-blue-600">
                     Working Hours
@@ -132,36 +138,43 @@ const VenueDetail = () => {
                   </h3>
                   <p className="text-sm text-gray-600">{venue.venue_type}</p>
                 </div>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-pink-600">
-                  Location
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Latitude: <span className="font-medium">{venue.lat}</span>,
-                  Longitude: <span className="font-medium">{venue.lng}</span>
-                </p>
-                <div className="mt-4">
-                  {/* Embed Google Maps or custom map here */}
+                <div className="mt-6 absolute top-0 right-4">
+                  {isFavorite ? (
+                    <Favorite
+                      style={{
+                        color: "red",
+                        fontSize: 30,
+                      }}
+                      className="cursor-pointer"
+                      onClick={toggleFavorite}
+                    />
+                  ) : (
+                    <FavoriteBorder
+                      style={{
+                        color: "black",
+                        fontSize: 30,
+                      }}
+                      className="cursor-pointer"
+                      onClick={toggleFavorite}
+                    />
+                  )}
                 </div>
-              </div>
-
-              <div className="mt-6">
-                <button
-                  onClick={toggleFavorite}
-                  className={`px-6 py-3 rounded-lg text-white font-medium shadow-md transition-all transform duration-300 ease-in-out ${
-                    isFavorite
-                      ? "bg-red-500 hover:bg-red-600"
-                      : "bg-blue-500 hover:bg-blue-600"
-                  }`}
-                >
-                  {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-                </button>
               </div>
             </div>
           </div>
-
+          {venue?.lat && venue?.lng && (
+            <div className="mt-6">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                Location
+              </h2>
+              <iframe
+                title="Google Map"
+                src={`https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${location.lat},${location.lng}&zoom=14`}
+                className="w-full h-96 rounded-lg shadow-md"
+                allowFullScreen
+              />
+            </div>
+          )}
           {/* Events Section */}
           <div className="mt-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">

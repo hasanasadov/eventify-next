@@ -25,7 +25,10 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
         .then(formik.resetForm(), toast.success("Registered successfully"))
         .catch((error) => {
           toast.error("Failed to register", error);
-          setErrorMessages(["Failed to register"]);
+          setErrorMessages(["Failed to register"]),
+            {
+              position: "top-center",
+            };
         });
     },
   });
