@@ -145,7 +145,7 @@ const EventsPage = () => {
           {!loadingMore && !hasMore && (
             <div className="text-center text-gray-600 mt-8">
               <p className="text-lg font-semibold text-gray-500">
-                🎉 You've reached the end! No more events available.
+                🎉 You{"'"}ve reached the end! No more events available.
               </p>
             </div>
           )}

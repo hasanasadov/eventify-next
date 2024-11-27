@@ -4,13 +4,12 @@ import React from "react";
 import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { BASE_URL } from "@/constants";
+import { getVenues } from "@/services/venues";
 const VenuesSection = () => {
   const [venues, setVenues] = useState([]);
   useEffect(() => {
     const fetchVenues = async () => {
-      const res = await fetch(`${BASE_URL}/venues`);
-      const data = await res.json();
+      const data = await getVenues();
       setVenues(data);
     };
     fetchVenues();
