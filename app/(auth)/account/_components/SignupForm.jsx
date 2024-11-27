@@ -1,16 +1,41 @@
+"use client";
+
+import handleRegister from "@/services/users";
 import { PasswordOutlined } from "@mui/icons-material";
 import { EmailOutlined } from "@mui/icons-material";
+import { useFormik } from "formik";
 import { User2Icon } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 
 const SignupForm = ({ isFlipped, setIsFlipped }) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitted");
-  };
+  const [errorMessages, setErrorMessages] = React.useState([]);
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      rePassword: "",
+      isOrganizer: false,
+    },
+    onSubmit: async (values) => {
+      setErrorMessages([]);
+      if (values.password !== values.rePassword) {
+        setErrorMessages(["Passwords do not match"]);
+        return;
+      }
+
+      await handleRegister(values)
+        .then(formik.resetForm(), toast.success("Registered successfully"))
+        .catch((error) => {
+          toast.error("Failed to register", error);
+          setErrorMessages(["Failed to register"]);
+        });
+    },
+  });
   return (
     <div
-      className={` w-full lg:w-1/2 p-6
+      className={` w-full lg:w-1/2 p-6 h-[520px]
     ${isFlipped ? "" : "hidden"}
     `}
     >
@@ -18,12 +43,15 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
         Signup
         <div className="absolute left-0 bottom-0 h-[3px] w-5 bg-[#7d2ae8]"></div>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <div className="mt-6">
           <div className=" flex items-center relative mb-4">
             <User2Icon className="text-[#7d2ae8] text-lg absolute left-4 w-6" />
             <input
               type="text"
+              name="username"
+              onChange={formik.handleChange}
+              value={formik.values.username}
               placeholder="Enter your username"
               className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-[#7d2ae8] transition duration-300"
               required
@@ -34,7 +62,10 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
             <EmailOutlined className="text-[#7d2ae8] text-lg absolute left-4 w-6" />
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
               className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-[#7d2ae8] transition duration-300"
               required
             />
@@ -43,6 +74,9 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
             <PasswordOutlined className="text-[#7d2ae8] text-lg absolute left-4 w-6" />
             <input
               type="password"
+              name="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
               placeholder="Enter your password"
               className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-[#7d2ae8] transition duration-300"
               required
@@ -52,6 +86,9 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
             <PasswordOutlined className="text-[#7d2ae8] text-lg absolute left-4 w-6" />
             <input
               type="password"
+              name="rePassword"
+              onChange={formik.handleChange}
+              value={formik.values.rePassword}
               placeholder="Enter your password again"
               className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-[#7d2ae8] transition duration-300"
               required
@@ -59,7 +96,13 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
           </div>
 
           <div className="is_organizer flex items-center mb-6">
-            <input type="checkbox" name="is_organizer" className="mr-2" />
+            <input
+              type="checkbox"
+              onChange={formik.handleChange}
+              checked={formik.values.isOrganizer}
+              name="isOrganizer"
+              className="rounded-md border-[#7d2ae8] w-6 h-6 mr-2"
+            />
             <label
               htmlFor="is_organizer"
               className="text-[#7d2ae8] cursor-pointer"
@@ -73,6 +116,14 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
               Organizers can also create events on our site.
             </div>
           </div>
+
+          {errorMessages.length > 0 && (
+            <div className="error-messages text-red-500">
+              {errorMessages.map((message) => (
+                <div key={message}>{message}</div>
+              ))}
+            </div>
+          )}
 
           <div className="button mt-6">
             <input

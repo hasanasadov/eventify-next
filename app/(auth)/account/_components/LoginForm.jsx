@@ -1,12 +1,37 @@
+"sue client";
+
 import { Google } from "@mui/icons-material";
 import { PasswordOutlined } from "@mui/icons-material";
+import { useFormik } from "formik";
 import { User2Icon } from "lucide-react";
+import handleLogin from "@/services/users";
 import React from "react";
 
 const LoginForm = ({ isFlipped, setIsFlipped }) => {
+  const [errorMessages, setErrorMessages] = React.useState([]);
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      setErrorMessages([]);
+      if (values.password !== values.rePassword) {
+        setErrorMessages(["Passwords do not match"]);
+        return;
+      }
+
+      await handleLogin(values)
+        .then(formik.resetForm(), toast.success("Registered successfully"))
+        .catch((error) => {
+          toast.error("Failed to register", error);
+          setErrorMessages(["Failed to register"]);
+        });
+    },
+  });
   return (
     <div
-      className={` w-full h-[520px] lg:w-1/2 p-6 ${
+      className={` w-full h-[520px] lg:w-1/2 p-6 flex flex-col justify-between ${
         isFlipped ? "hidden md:block" : ""
       } `}
     >
@@ -20,6 +45,9 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
             <User2Icon className="text-[#7d2ae8] text-lg absolute left-4 w-6" />
             <input
               type="text"
+              name="username"
+              onChange={formik.handleChange}
+              value={formik.values.username}
               placeholder="Enter your username"
               className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-[#7d2ae8] transition duration-300"
               required
@@ -29,15 +57,24 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
             <PasswordOutlined className="text-[#7d2ae8] text-lg absolute left-4 w-6" />
             <input
               type="password"
+              name="password"
+              onChange={formik.handleChange}
+              value={formik.values.password}
               placeholder="Enter your password"
               className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-[#7d2ae8] transition duration-300"
               required
             />
           </div>
+          {errorMessages.length > 0 && (
+            <div className="text-red-500 text-sm">
+              {errorMessages.map((error) => (
+                <div key={error}>{error}</div>
+              ))}
+            </div>
+          )}
           <div className="text text-sm text-purple-800">
             <a href="#">Forgot password?</a>
           </div>
-
           <div className=" mt-6">
             <button
               type="submit"
@@ -48,7 +85,10 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
           </div>
           <div className=" mt-6 flex justify-evenly  bg-slate-100  w-full py-3 px-4 cursor-pointer hover:bg-gray-300 hover:text-white transition duration-300">
             <Google />
-            <button className="cursor-pointer "> Sign In With Goole</button>
+            <button type="button" className="cursor-pointer ">
+              {" "}
+              Sign In With Goole
+            </button>
           </div>
         </div>
       </form>

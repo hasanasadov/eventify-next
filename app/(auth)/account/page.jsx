@@ -43,7 +43,7 @@ const AuthForm = () => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-between">
+        <div className="flex flex-col lg:flex-row items-center justify-between ">
           <LoginForm isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
 
           <SignupForm isFlipped={isFlipped} setIsFlipped={setIsFlipped} />
