@@ -65,6 +65,9 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      transform: {
+        "rotate-y-180": "rotateY(180deg)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
