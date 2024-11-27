@@ -34,7 +34,7 @@ const EventsSection = ({ eventsButton }) => {
         <Link
           href={`/events/${item.event.id}`}
           key={item.event.id}
-          className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-green-300  relative hover:bg-green-400 rounded-lg "
+          className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-purple-300  relative hover:bg-purple-500 rounded-lg "
         >
           <Image
             src={

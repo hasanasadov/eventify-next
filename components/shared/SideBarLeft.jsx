@@ -67,7 +67,7 @@ const SideBarLeft = () => {
       <div className="shadow-lg flex bg-gray-100 w-full rounded-lg flex-col h-full">
         {/* Header */}
         <div className="flex items-center justify-center p-4 w-full border-b h-fit border-gray-400">
-          <h1 className="text-2xl font-extrabold text-green-700">
+          <h1 className="text-2xl font-extrabold text-purple-700">
             {eventsButton && "Events"}
             {saveButton && "Bookmarks"}
             {settingsButton && "Settings"}
