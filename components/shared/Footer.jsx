@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
+import Logo from "/assets/logo.png"; // Ensure this path is correct
 import {
   FaFacebookF,
   FaTwitter,
@@ -28,14 +30,20 @@ const Footer = () => {
     <footer className="bg-white text-black py-10">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-xl font-semibold mb-4">About Us</h3>
-            <p className="text-sm">
+          {/* Logo Section */}
+          <div className="flex flex-col items-center md:items-start">
+            <Link href="/">
+              <div className="w-40 h-12 md:scale-150 flex items-center justify-center">
+                <Image src={Logo} alt="logo" width={100} height={100} />
+              </div>
+            </Link>
+            <p className="mt-4 text-sm text-center md:text-left">
               We provide high-quality services and products tailored to meet
               your needs. Join us in building a brighter future.
             </p>
           </div>
 
+          {/* Quick Links */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm">
@@ -74,6 +82,7 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Contact Section */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-3 text-sm">
@@ -97,6 +106,7 @@ const Footer = () => {
             </ul>
           </div>
 
+          {/* Newsletter Subscription */}
           <div>
             <h3 className="text-xl font-semibold mb-4">
               Subscribe to Our Newsletter
@@ -122,6 +132,7 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Footer Bottom */}
         <div className="mt-10 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-black">
             &copy; {new Date().getFullYear()} Eventify. All rights reserved.
@@ -166,6 +177,7 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Scroll to Top Button */}
         <div className="mt-6 flex justify-center">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

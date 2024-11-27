@@ -18,26 +18,18 @@ const EventDetail = () => {
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
-        const res = await fetch(
-          `${BASE_URL}/events/${id}`
-        );
-
+        const res = await fetch(`${BASE_URL}/events/${id}`);
         if (!res.ok) {
           throw new Error("Failed to fetch event details. Please try again.");
         }
-
         const event = await res.json();
         setEventData(event);
 
-        // Fetch comments
-        const commentsRes = await fetch(
-          `${BASE_URL}/events/${id}/comments`
-        );
+        const commentsRes = await fetch(`${BASE_URL}/events/${id}/comments`);
         if (commentsRes.ok) {
           const commentsData = await commentsRes.json();
           setComments(commentsData);
         }
-        console.log(commentsRes);
       } catch (err) {
         setError(err.message);
         toast.error(err.message);
@@ -56,16 +48,13 @@ const EventDetail = () => {
     }
 
     try {
-      const res = await fetch(
-        `${BASE_URL}/events/${id}/comments`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ comment: newComment }),
-        }
-      );
+      const res = await fetch(`${BASE_URL}/events/${id}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ comment: newComment }),
+      });
 
       if (!res.ok) throw new Error("Failed to add comment.");
 
@@ -118,57 +107,58 @@ const EventDetail = () => {
   return (
     <div className="p-6 max-w-5xl mx-auto bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 rounded-lg shadow-lg">
       <Toaster position="top-right" reverseOrder={false} />
-      <h1 className="text-4xl font-extrabold text-gray-800 mb-4 text-center">
-        {event?.title || "Event Title"}
-      </h1>
-      {event?.poster_image_link ? (
-        <img
-          src={event.poster_image_link}
-          alt={event?.title || "Event Poster"}
-          className="w-full max-h-[500px] object-cover rounded-lg shadow-xl mb-6"
-        />
-      ) : (
-        <div className="h-64 bg-gray-300 rounded-lg shadow-lg flex items-center justify-center mb-6">
-          <p className="text-gray-500">No Poster Available</p>
-        </div>
-      )}
-      <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
-        <p>
-          <span className="font-semibold text-blue-600">Date:</span>{" "}
-          {event?.date
-            ? new Date(event.date).toLocaleDateString()
-            : "No date available"}
-        </p>
-        <p>
-          <span className="font-semibold text-purple-600">Start Time:</span>{" "}
-          {event?.start || "Not specified"}
-        </p>
-        <p>
-          <span className="font-semibold text-pink-600">Finish Time:</span>{" "}
-          {event?.finish || "Not specified"}
-        </p>
-        <p>
-          <span className="font-semibold text-green-600">Description:</span>{" "}
-          {event?.description || "No description provided"}
-        </p>
-        <p>
-          <span className="font-semibold text-yellow-600">Event Type:</span>{" "}
-          {event?.event_type || "Type not specified"}
-        </p>
-        <p>
-          <span className="font-semibold text-red-600">Likes:</span>{" "}
-          {event?.num_likes || 0}
-        </p>
-        <button
-          onClick={toggleFavorite}
-          className={`mt-4 px-4 py-2 rounded text-white transition ${
-            isFavorite
+      <div className="flex flex-col md:flex-row gap-6">
+        {event?.poster_image_link ? (
+          <img
+            src={event.poster_image_link}
+            alt={event?.title || "Event Poster"}
+            className="w-full md:w-1/2 max-h-[500px] object-cover rounded-lg shadow-xl"
+          />
+        ) : (
+          <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg shadow-lg flex items-center justify-center">
+            <p className="text-gray-500">No Poster Available</p>
+          </div>
+        )}
+        <div className="bg-white p-6 flex-1 rounded-lg shadow-lg space-y-4">
+          <h1 className="text-4xl font-extrabold text-green-500 mb-4">
+            {event?.title || "Event Title"}
+          </h1>
+          <p>
+            <span className="font-semibold text-blue-600">Date:</span>{" "}
+            {event?.date
+              ? new Date(event.date).toLocaleDateString()
+              : "No date available"}
+          </p>
+          <p>
+            <span className="font-semibold text-purple-600">Start Time:</span>{" "}
+            {event?.start || "Not specified"}
+          </p>
+          <p>
+            <span className="font-semibold text-pink-600">Finish Time:</span>{" "}
+            {event?.finish || "Not specified"}
+          </p>
+          <p>
+            <span className="font-semibold text-green-600">Description:</span>{" "}
+            {event?.description || "No description provided"}
+          </p>
+          <p>
+            <span className="font-semibold text-yellow-600">Event Type:</span>{" "}
+            {event?.event_type || "Type not specified"}
+          </p>
+          <p>
+            <span className="font-semibold text-red-600">Likes:</span>{" "}
+            {event?.num_likes || 0}
+          </p>
+          <button
+            onClick={toggleFavorite}
+            className={`mt-4 px-4 py-2 rounded text-white transition ${isFavorite
               ? "bg-red-500 hover:bg-red-600"
               : "bg-blue-500 hover:bg-blue-600"
-          }`}
-        >
-          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-        </button>
+              }`}
+          >
+            {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+          </button>
+        </div>
       </div>
       {location?.lat && location?.lng && (
         <div className="mt-6">

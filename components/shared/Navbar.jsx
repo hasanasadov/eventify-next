@@ -20,8 +20,8 @@ const Navbar = () => {
 
   return (
     <div
-      className="p-8 w-screen flex md:justify-between items-center sticky top-0 z-50 shadow-md"
-      style={{ backgroundColor: "var(--bg-light)" }}
+      className="px-8 py-3 w-screen flex md:justify-between items-center sticky top-0 z-50 shadow-lg"
+      style={{ backgroundColor: "white" }}
     >
       <div className="flex w-full items-center justify-between">
         <div className="w-40  md:scale-150 h-12  flex items-center justify-center">

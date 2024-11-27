@@ -15,9 +15,9 @@ const SideBarLeft = () => {
   const [settingsButton, setSettingsButton] = useState(false);
 
   return (
-    <div className="h-[40vh] md:h-[80vh] md:w-1/4 w-full rounded-3xl overflow-hidden gap-2 flex justify-between">
+    <div className="h-[40vh] md:h-[80vh] md:w-1/4 w-full rounded-3xl overflow-hidden flex justify-between">
       {/* Sidebar navigation buttons */}
-      <div className="shadow-lg flex flex-col items-center justify-between rounded-lg overflow-hidden bg-purple-400 w-[70px] py-10">
+      <div className="shadow-lg flex flex-col items-center justify-between rounded-l-lg overflow-hidden bg-purple-400 w-[70px] py-10">
         <div className="flex flex-col gap-3">
           {/* Home button */}
           <button
@@ -64,7 +64,7 @@ const SideBarLeft = () => {
       </div>
 
       {/* Main content */}
-      <div className="shadow-lg flex bg-gray-100 w-full rounded-lg flex-col h-full">
+      <div className="shadow-lg flex bg-gray-200 w-full rounded-r-lg flex-col h-full">
         {/* Header */}
         <div className="flex items-center justify-center p-4 w-full border-b h-fit border-gray-400">
           <h1 className="text-2xl font-extrabold text-purple-700">

@@ -15,13 +15,10 @@ const VenueDetail = () => {
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Sample data - Replace with API data fetching as needed
   useEffect(() => {
     const fetchVenueDetails = async () => {
       try {
-        const foundVenue = await fetch(
-          `${BASE_URL}/venues/${id}`
-        ).then((res) => res.json());
+        const foundVenue = await fetch(`${BASE_URL}/venues/${id}`).then((res) => res.json());
 
         if (!foundVenue) {
           throw new Error("Venue not found!");
@@ -34,14 +31,11 @@ const VenueDetail = () => {
         setLoading(false);
       }
     };
+
     const fetchEventsForThisVenue = async () => {
       try {
-        const events = await fetch(
-          `${BASE_URL}/events`
-        ).then((res) => res.json());
-        console.log(events);
+        const events = await fetch(`${BASE_URL}/events`).then((res) => res.json());
         const venueEvents = events.filter((item) => item.event.venue_id == id);
-        console.log(venueEvents);
         setVenueEvents(venueEvents);
       } catch (err) {
         console.error(err);
@@ -54,9 +48,7 @@ const VenueDetail = () => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    toast.success(
-      isFavorite ? "Removed from favorites!" : "Added to favorites!"
-    );
+    toast.success(isFavorite ? "Removed from favorites!" : "Added to favorites!");
   };
 
   if (loading)
@@ -64,9 +56,7 @@ const VenueDetail = () => {
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="flex flex-col justify-center items-center min-h-screen">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
-          <p className="mt-4 text-green-500 font-semibold">
-            Loading venue details...
-          </p>
+          <p className="mt-4 text-green-500 font-semibold">Loading venue details...</p>
         </div>
       </div>
     );
@@ -77,10 +67,7 @@ const VenueDetail = () => {
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg">
           <p className="font-semibold">Error:</p>
           <p>{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-          >
+          <button onClick={() => window.location.reload()} className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
             Retry
           </button>
         </div>
@@ -93,7 +80,7 @@ const VenueDetail = () => {
       <div className="container mx-auto py-6">
         <div className="flex flex-col gap-6 bg-white p-6 rounded-xl shadow-lg">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-green-700">{venue.name}</h1>
+            <h1 className="text-3xl font-bold text-green-500">{venue.name}</h1>
             <Link href="/" className="text-sm text-blue-500 hover:underline">
               Back to list
             </Link>
@@ -106,76 +93,64 @@ const VenueDetail = () => {
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
-            <div className="md:w-1/2">
+            <div className="md:w-1/2 flex flex-col justify-between">
               <h2 className="text-xl font-semibold">Description</h2>
               <p className="text-sm text-gray-700">{venue.description}</p>
+
+              <div className="mt-6 flex flex-col md:flex-row justify-between gap-6">
+                <div className="w-full md:w-1/2">
+                  <h2 className="text-xl font-semibold">Working Hours</h2>
+                  <p className="text-sm text-gray-700">
+                    Open: {venue.work_hours_open} - Close: {venue.work_hours_close}
+                  </p>
+                </div>
+                <div className="w-full md:w-1/2">
+                  <h2 className="text-xl font-semibold">Venue Type</h2>
+                  <p className="text-sm text-gray-700">{venue.venue_type}</p>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <h2 className="text-xl font-semibold">Location</h2>
+                <p className="text-sm text-gray-700">
+                  Latitude: {venue.lat}, Longitude: {venue.lng}
+                </p>
+                <div className="mt-4">
+                  {/* Embed Google Maps or custom map here */}
+                </div>
+              </div>
+              <div className="mt-4">
+                <button
+                  onClick={toggleFavorite}
+                  className={`px-4 py-2 rounded text-white transition ${isFavorite ? "bg-red-500 hover:bg-red-600" : "bg-blue-500 hover:bg-blue-600"}`}
+                >
+                  {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-between gap-6">
-            <div className="w-full md:w-1/2">
-              <h2 className="text-xl font-semibold">Working Hours</h2>
-              <p className="text-sm text-gray-700">
-                Open: {venue.work_hours_open} - Close: {venue.work_hours_close}
-              </p>
-            </div>
-            <div className="w-full md:w-1/2">
-              <h2 className="text-xl font-semibold">Venue Type</h2>
-              <p className="text-sm text-gray-700">{venue.venue_type}</p>
-            </div>
-          </div>
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold">Location</h2>
-            <p className="text-sm text-gray-700">
-              Latitude: {venue.lat}, Longitude: {venue.lng}
-            </p>
-            <div className="mt-4">
-              {/* Embed Google Maps or custom map here */}
-            </div>
-          </div>
-          <div className="mt-4">
-            <button
-              onClick={toggleFavorite}
-              className={`px-4 py-2 rounded text-white transition ${
-                isFavorite
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-blue-500 hover:bg-blue-600"
-              }`}
-            >
-              {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-            </button>
           </div>
 
           {/* Events Section */}
           <div className="mt-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Upcoming Events
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Upcoming Events</h2>
             {venueEvents.length > 0 ? (
-              <ul className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {venueEvents.map((item) => (
-                  <li
-                    key={item.event.id}
-                    className="bg-gray-100 p-4 rounded-lg shadow-md"
-                  >
-                    <h3 className="text-xl font-bold">{item.event.title}</h3>
-                    <h5>{item.event.description}</h5>
-                    <p>
-                      <span className="font-semibold">Date:</span>{" "}
-                      {new Date(item.event.date).toLocaleDateString()}
+                  <div key={item.event.id} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <h3 className="text-xl font-bold text-gray-800">{item.event.title}</h3>
+                    <p className="text-sm text-gray-600 mt-2">{item.event.description}</p>
+                    <p className="mt-4">
+                      <span className="font-semibold">Date:</span> {new Date(item.event.date).toLocaleDateString()}
                     </p>
                     <p>
-                      <span className="font-semibold">Time:</span>{" "}
-                      {item.event.start} - {item.event.finish}
+                      <span className="font-semibold">Time:</span> {item.event.start} - {item.event.finish}
                     </p>
-                    <Link
-                      href={`/events/${item.event.id}`}
-                      className="text-blue-500 hover:underline"
-                    >
+                    <Link href={`/events/${item.event.id}`} className="mt-4 inline-block text-blue-500 hover:underline">
                       View Details
                     </Link>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
             ) : (
               <p>No events found for this venue.</p>
             )}
