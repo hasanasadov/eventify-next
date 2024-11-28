@@ -9,6 +9,7 @@ import { Bookmark } from "@mui/icons-material";
 const EventsSection = ({ eventsButton }) => {
   const [events, setEvents] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isHovered, setIsHovered] = useState("hidden");
   useEffect(() => {
     const fetchLinks = async () => {
       const res = await fetch(`${BASE_URL}/events`);
@@ -40,6 +41,8 @@ const EventsSection = ({ eventsButton }) => {
         <Link
           href={`/events/${item.event.id}`}
           key={item.event.id}
+          onMouseEnter={() => setIsHovered("block")}
+          onMouseLeave={() => setIsHovered("hidden")}
           className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-green-200  relative hover:bg-green-300 rounded-lg "
         >
           <Image
@@ -64,7 +67,7 @@ const EventsSection = ({ eventsButton }) => {
             </div>
 
             {/* Bookmark Button */}
-            <div className="mt-6 absolute -top-2 right-4 z-10">
+            <div className={`mt-6 absolute -top-2 right-4 z-10 ${isHovered}`}>
               {isFavorite ? (
                 <Bookmark
                   style={{
