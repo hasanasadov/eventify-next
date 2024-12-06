@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { BASE_URL } from "@/constants";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
+import EventItem from "../../events/EventItem";
 
 const VenueDetail = () => {
   const params = useParams();
@@ -183,31 +184,7 @@ const VenueDetail = () => {
             {venueEvents.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {venueEvents.map((item) => (
-                  <div
-                    key={item.event.id}
-                    className="bg-white p-6 rounded-lg border-2 hover:shadow-xl transition-shadow duration-300"
-                  >
-                    <h3 className="text-xl font-bold text-gray-800">
-                      {item.event.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-2">
-                      {item.event.description}
-                    </p>
-                    <p className="mt-4">
-                      <span className="font-semibold">Date:</span>{" "}
-                      {new Date(item.event.date).toLocaleDateString()}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Time:</span>{" "}
-                      {item.event.start} - {item.event.finish}
-                    </p>
-                    <Link
-                      href={`/events/${item.event.id}`}
-                      className="mt-4 inline-block text-blue-500 hover:underline"
-                    >
-                      View Details
-                    </Link>
-                  </div>
+                  <EventItem key={item.event.id} event={item.event} />
                 ))}
               </div>
             ) : (

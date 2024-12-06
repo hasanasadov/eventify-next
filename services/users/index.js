@@ -43,8 +43,9 @@ export async function handleLogin(values) {
 
 export async function getCurrentUser() {
   // const token = localStorage.getItem("access_token");
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtdXJhZCIsImlkIjoyOCwiZXhwIjoxNzMyOTQ3MDMwfQ.TZ6vMWR6dXzFbbKkd4XEN6V6GmdsMqH-4Ii7isjbWpM";
+  // const token =
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtdXJhZCIsImlkIjoyOCwiZXhwIjoxNzMyOTQ3MDMwfQ.TZ6vMWR6dXzFbbKkd4XEN6V6GmdsMqH-4Ii7isjbWpM";
+  // 
   try {
     const response = await fetch(`${BASE_URL}/auth/user`, {
       method: "POST",

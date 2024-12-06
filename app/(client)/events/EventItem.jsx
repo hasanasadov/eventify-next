@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const EventItem = ({ item }) => {
+const EventItem = ({ event }) => {
   const isValidUrl = (url) => {
     try {
       new URL(url);
@@ -14,18 +14,18 @@ const EventItem = ({ item }) => {
   };
   return (
     <Link
-      href={`/events/${item.event.id}`}
-      key={item.event.id}
+      href={`/events/${event.id}`}
+      key={event.id}
       className="group block bg-white rounded-lg border-2 overflow-hidden  transition-all duration-300"
     >
       <div className="relative overflow-hidden">
         <Image
           src={
-            isValidUrl(item.event.poster_image_link)
-              ? item.event.poster_image_link
+            isValidUrl(event.poster_image_link)
+              ? event.poster_image_link
               : "/default-image.jpg"
           }
-          alt={item.event.title}
+          alt={event.title}
           width={500}
           height={300}
           className="w-full h-56 object-cover group-hover:scale-[1.03] transition-transform duration-300"
@@ -37,10 +37,10 @@ const EventItem = ({ item }) => {
 
       <div className="p-4">
         <h2 className="text-lg font-semibold  group-hover:text-green-600 transition-colors duration-300">
-          {item.event.title}
+          {event.title}
         </h2>
         <p className="text-sm text-gray-600 mt-2 line-clamp-5">
-          {item.event.description}
+          {event.description}
         </p>
       </div>
     </Link>

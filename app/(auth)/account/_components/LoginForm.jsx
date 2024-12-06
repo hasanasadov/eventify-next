@@ -1,4 +1,4 @@
-"sue client";
+"use client";
 
 import { Google } from "@mui/icons-material";
 import { PasswordOutlined } from "@mui/icons-material";
@@ -15,9 +15,12 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
       password: "",
     },
     onSubmit: async (values) => {
+      console.log(values);
       setErrorMessages([]);
-
-      await handleLogin(values)
+      const formData = new FormData();
+      formData.append("username", values.username);
+      formData.append("password", values.password);
+      const res = await handleLogin(formData)
         .then(formik.resetForm(), toast.success("Registered successfully"))
         .catch((error) => {
           toast.error("Failed to register", error);
@@ -26,6 +29,8 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
               position: "top-center",
             };
         });
+      console.log("------------------");
+      console.log(res);
     },
   });
   return (
@@ -77,6 +82,7 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
           <div className=" mt-6">
             <button
               type="submit"
+              onClick={formik.handleSubmit}
               className="w-full bg-[#7d2ae8] text-white py-3 px-4 rounded-md cursor-pointer hover:bg-[#5b13b9] transition duration-300"
             >
               Log In{" "}
