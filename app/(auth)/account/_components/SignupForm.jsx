@@ -1,6 +1,6 @@
 "use client";
 
-import handleRegister from "@/services/users";
+import { handleRegister } from "@/services/users";
 import { PasswordOutlined } from "@mui/icons-material";
 import { EmailOutlined } from "@mui/icons-material";
 import { useFormik } from "formik";
@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 const SignupForm = ({ isFlipped, setIsFlipped }) => {
   const [errorMessages, setErrorMessages] = React.useState([]);
+  console.log("isFlipped", isFlipped);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -20,17 +21,24 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
     },
     onSubmit: async (values) => {
       setErrorMessages([]);
+
       if (values.password !== values.rePassword) {
         setErrorMessages(["Passwords do not match"]);
         return;
       }
 
-      await handleRegister(values)
-        .then(formik.resetForm(), toast.success("Registered successfully"))
-        .catch((error) => {
-          toast.error("Failed to register", error);
-          setErrorMessages(["Failed to register"]);
-        });
+      try {
+        const response = await handleRegister(values);
+        if (response?.detail) {
+          setErrorMessages([response.detail]);
+          return;
+        }
+        // formik.resetForm();
+      } catch (error) {
+        console.error("Error during registration:", error);
+        toast.error("Failed to register");
+        setErrorMessages(["Failed to register"]);
+      }
     },
   });
   return (
@@ -126,11 +134,13 @@ const SignupForm = ({ isFlipped, setIsFlipped }) => {
           )}
 
           <div className="button mt-6">
-            <input
+            <button
               type="submit"
-              value="Register"
               className="w-full bg-[#7d2ae8] text-white py-3 px-4 rounded-md cursor-pointer hover:bg-[#5b13b9] transition duration-300"
-            />
+            >
+              {" "}
+              Register{" "}
+            </button>
           </div>
         </div>
       </form>

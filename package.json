@@ -16,6 +16,8 @@
     "@radix-ui/react-slot": "^1.1.0",
     "Subscriptin": "link:@mui/icons-material/Subscriptin",
     "Subscription": "link:@mui/icons-material/Subscription",
+    "axios": "^1.7.8",
+    "axois": "0.0.1-security",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",

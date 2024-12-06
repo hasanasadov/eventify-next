@@ -4,7 +4,7 @@ import { Google } from "@mui/icons-material";
 import { PasswordOutlined } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { User2Icon } from "lucide-react";
-import handleLogin from "@/services/users";
+import { handleLogin } from "@/services/users";
 import React from "react";
 
 const LoginForm = ({ isFlipped, setIsFlipped }) => {
@@ -16,10 +16,6 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
     },
     onSubmit: async (values) => {
       setErrorMessages([]);
-      if (values.password !== values.rePassword) {
-        setErrorMessages(["Passwords do not match"]);
-        return;
-      }
 
       await handleLogin(values)
         .then(formik.resetForm(), toast.success("Registered successfully"))

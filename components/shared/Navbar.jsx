@@ -10,7 +10,6 @@ import Link from "next/link";
 import { Calendar1Icon } from "lucide-react";
 import { SubscriptionsOutlined } from "@mui/icons-material";
 import { MuseumOutlined } from "@mui/icons-material";
-import { FavoriteSharp } from "@mui/icons-material";
 import { FavoriteBorderOutlined } from "@mui/icons-material";
 
 const Navbar = () => {
@@ -22,13 +21,19 @@ const Navbar = () => {
 
   return (
     <div
-      className="px-8 py-3 w-screen flex md:justify-between items-center sticky top-0 z-50 shadow-lg"
+      className="px-8 py-3 w-screen flex md:justify-between items-center sticky top-0 z-50 border-b-2 border-gray-200"
       style={{ backgroundColor: "white" }}
     >
       <div className="flex w-full items-center justify-between">
         <div className="w-40  md:scale-150 h-12  flex items-center justify-center">
           <Link href="/">
-            <Image src={Logo} alt="logo" width={100} height={100} />
+            <Image
+              src={Logo}
+              alt="logo"
+              width={100}
+              height={100}
+              className="contrast-50 brightness-50"
+            />
           </Link>
         </div>
         <div className="w-full md:px-10 px-4">

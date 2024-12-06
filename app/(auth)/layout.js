@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "../globals.css";
 import { ArrowBack } from "@mui/icons-material";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "Eventify",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
         <div className="bg-purple-600 w-screen h-screen flex items-center justify-center p-6">
           {children}
         </div>
+        <Toaster />
       </body>
     </html>
   );

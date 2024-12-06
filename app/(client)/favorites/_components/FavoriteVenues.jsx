@@ -63,7 +63,7 @@ const FavoriteVenues = () => {
   }, [displayedVenues, hasMore, loadingMore]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 py-8 px-6">
+    <div className="min-h-screen bg-gradient-to-r  py-8 px-6">
       {isLoading ? (
         <div className="flex flex-col justify-center items-center min-h-screen">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
