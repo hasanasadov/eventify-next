@@ -96,7 +96,7 @@ const EventDetail = () => {
   if (error)
     return (
       <div className="flex justify-center items-center min-h-screen bg-red-50">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg">
+        <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
           <p className="font-semibold">Error:</p>
           <p>{error}</p>
           <button
@@ -112,21 +112,21 @@ const EventDetail = () => {
   const { event, location } = eventData || {};
 
   return (
-    <div className="p-6 container mx-auto bg-gradient-to-r bg-white rounded-lg shadow-lg">
+    <div className="p-6 container mx-auto bg-gradient-to-r bg-white rounded-lg border-2">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col md:flex-row gap-6">
         {event?.poster_image_link ? (
           <img
             src={event.poster_image_link}
             alt={event?.title || "Event Poster"}
-            className="w-full md:w-1/2 max-h-[500px] object-cover rounded-lg shadow-xl"
+            className="w-full md:w-1/2 max-h-[500px] object-cover rounded-lg border-2"
           />
         ) : (
-          <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg shadow-lg flex items-center justify-center">
+          <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
             <p className="text-gray-500">No Poster Available</p>
           </div>
         )}
-        <div className="bg-white p-6 flex-1 rounded-lg shadow-lg space-y-4 relative">
+        <div className="bg-white p-6 flex-1 rounded-lg border-2 space-y-4 relative">
           <h1 className="text-4xl font-extrabold text-green-500 mb-4">
             {event?.title || "Event Title"}
           </h1>
@@ -187,7 +187,7 @@ const EventDetail = () => {
           <iframe
             title="Google Map"
             src={`https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${location.lat},${location.lng}&zoom=14`}
-            className="w-full h-96 rounded-lg shadow-md"
+            className="w-full h-96 rounded-lg border-2"
             allowFullScreen
           />
         </div>
@@ -197,7 +197,7 @@ const EventDetail = () => {
         <div className="space-y-4">
           {comments.length > 0 ? (
             comments.map((comment, index) => (
-              <div key={index} className="bg-gray-100 p-4 rounded-lg shadow-md">
+              <div key={index} className="bg-gray-100 p-4 rounded-lg border-2">
                 <p>{comment.comment}</p>
               </div>
             ))

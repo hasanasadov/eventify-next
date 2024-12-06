@@ -78,7 +78,7 @@ const VenueDetail = () => {
   if (error)
     return (
       <div className="flex justify-center items-center min-h-screen bg-red-50">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg">
+        <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
           <p className="font-semibold">Error:</p>
           <p>{error}</p>
           <button
@@ -95,7 +95,7 @@ const VenueDetail = () => {
     <div className="min-h-screen bg-gray-100">
       <Toaster position="top-right" reverseOrder={false} />
       <div className="container mx-auto py-6">
-        <div className="flex flex-col gap-6 bg-white p-6 rounded-xl shadow-lg">
+        <div className="flex flex-col gap-6 bg-white p-6 rounded-xl border-2">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold text-green-500">{venue.name}</h1>
             <Link href="/" className="text-sm text-blue-500 hover:underline">
@@ -107,10 +107,10 @@ const VenueDetail = () => {
               <img
                 src={venue.image_1_link}
                 alt={venue.name}
-                className="w-full h-full object-cover rounded-lg shadow-lg transform hover:scale-[1.005] transition-transform duration-300 ease-in-out"
+                className="w-full h-full object-cover rounded-lg border-2 transform hover:scale-[1.005] transition-transform duration-300 ease-in-out"
               />
             </div>
-            <div className="bg-white p-6 flex-1 rounded-lg shadow-lg space-y-6 relative">
+            <div className="bg-white p-6 flex-1 rounded-lg border-2 space-y-6 relative">
               <div>
                 <h2 className="text-2xl font-extrabold text-green-500 mb-4">
                   Description
@@ -118,7 +118,7 @@ const VenueDetail = () => {
                 <p className="text-sm text-gray-600">{venue.description}</p>
               </div>
 
-              <div className="flex flex-col md:flex-row justify-between gap-8 ">
+              <div className="flex flex-col  justify-between gap-8 ">
                 <div className="w-full md:w-1/2 space-y-2">
                   <h3 className="text-lg font-semibold text-blue-600">
                     Working Hours
@@ -170,7 +170,7 @@ const VenueDetail = () => {
               <iframe
                 title="Google Map"
                 src={`https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${location.lat},${location.lng}&zoom=14`}
-                className="w-full h-96 rounded-lg shadow-md"
+                className="w-full h-96 rounded-lg border-2"
                 allowFullScreen
               />
             </div>
@@ -185,7 +185,7 @@ const VenueDetail = () => {
                 {venueEvents.map((item) => (
                   <div
                     key={item.event.id}
-                    className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                    className="bg-white p-6 rounded-lg border-2 hover:shadow-xl transition-shadow duration-300"
                   >
                     <h3 className="text-xl font-bold text-gray-800">
                       {item.event.title}

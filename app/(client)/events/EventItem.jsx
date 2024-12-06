@@ -16,7 +16,7 @@ const EventItem = ({ item }) => {
     <Link
       href={`/events/${item.event.id}`}
       key={item.event.id}
-      className="group block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
+      className="group block bg-white rounded-lg border-2 overflow-hidden  transition-all duration-300"
     >
       <div className="relative overflow-hidden">
         <Image
@@ -28,7 +28,7 @@ const EventItem = ({ item }) => {
           alt={item.event.title}
           width={500}
           height={300}
-          className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-300"
+          className="w-full h-56 object-cover group-hover:scale-[1.03] transition-transform duration-300"
         />
         <div className="absolute z-[9999] top-2 right-2 bg-gray-200 rounded-full p-1 group-hover:block hidden transition-colors duration-300">
           <FavoriteBorder className="text-gray-700 z-10 " />
@@ -36,10 +36,10 @@ const EventItem = ({ item }) => {
       </div>
 
       <div className="p-4">
-        <h2 className="text-lg font-semibold text-gray-800 group-hover:text-green-600 transition-colors duration-300">
+        <h2 className="text-lg font-semibold  group-hover:text-green-600 transition-colors duration-300">
           {item.event.title}
         </h2>
-        <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+        <p className="text-sm text-gray-600 mt-2 line-clamp-5">
           {item.event.description}
         </p>
       </div>

@@ -8,9 +8,9 @@ import Logo from "/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar1Icon } from "lucide-react";
-import { SubscriptionsOutlined } from "@mui/icons-material";
 import { MuseumOutlined } from "@mui/icons-material";
-import { FavoriteBorderOutlined } from "@mui/icons-material";
+import { NAVBAR_ITEM } from "@/constants/navbar";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ const Navbar = () => {
               alt="logo"
               width={100}
               height={100}
-              className="contrast-50 brightness-50"
+              className="contrast-150 brightness-50"
             />
           </Link>
         </div>
@@ -42,81 +42,21 @@ const Navbar = () => {
       </div>
 
       <div className="lg:flex md:flex-row flex-col gap-8 hidden">
-        <Link href="/events">
-          <Button
-            variant="ghost"
-            style={{
-              color: "var(--text-primary)",
-              "--tw-bg-hover": "var(--accent-primary)",
-            }}
+        {NAVBAR_ITEM.map((item, index) => (
+          <Link
+            key={index}
+            href={item.href}
+            className={cn(`flex items-center gap-2 font-bold`)}
           >
-            <Calendar1Icon /> Events
-          </Button>
-        </Link>
-
-        <Link href="/venues">
-          <Button
-            variant="ghost"
-            style={{
-              color: "var(--text-primary)",
-              "--tw-bg-hover": "var(--accent-primary)",
-            }}
-          >
-            <MuseumOutlined /> Venues
-          </Button>
-        </Link>
-
-        <Link href="/chat">
-          <Button
-            variant="ghost"
-            style={{
-              color: "var(--text-primary)",
-              "--tw-bg-hover": "var(--accent-primary)",
-            }}
-          >
-            <MessageCircleIcon /> Chat
-          </Button>
-        </Link>
-
-        <Link href="/favorites">
-          <Button
-            variant="ghost"
-            style={{
-              color: "var(--text-primary)",
-              "--tw-bg-hover": "var(--accent-primary)",
-            }}
-          >
-            <FavoriteBorderOutlined /> Favorites
-          </Button>
-        </Link>
-
-        <Link href="/pricing">
-          <Button
-            variant="ghost"
-            style={{
-              color: "var(--text-primary)",
-              "--tw-bg-hover": "var(--accent-primary)",
-            }}
-          >
-            <SubscriptionsOutlined /> Subscriptions
-          </Button>
-        </Link>
-
-        <Link href="/account">
-          <Button
-            variant="ghost"
-            style={{
-              color: "var(--text-primary)",
-              "--tw-bg-hover": "var(--accent-primary)",
-            }}
-          >
-            <User2Icon /> Account
-          </Button>
-        </Link>
+            <Button variant="ghost" className={cn(``)}>
+              {<item.icon />} {item.title}
+            </Button>
+          </Link>
+        ))}
       </div>
 
       <button
-        className="lg:hidden block text-[var(--text-primary)]"
+        className="lg:hidden  block text-[var(--text-primary)]"
         onClick={handleToggle}
       >
         <svg
