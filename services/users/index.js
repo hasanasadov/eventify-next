@@ -22,30 +22,50 @@ export async function handleRegister(values) {
   }
 }
 
+import axios from "axios";
+
 export async function handleLogin(values) {
   try {
-    console.log("values", values);
-    const response = await fetch(`${BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    if (response.status === 200) {
-      return response.json();
+    if (!(values instanceof FormData)) {
+      throw new Error("Input values must be FormData");
     }
+
+    const response = await axios.post(`${BASE_URL}/auth/login`, values, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("response", response);
+
+    if (response.status < 400) {
+      const data = response.data;
+      console.log("data", data);
+
+      if (data.access_token) {
+        localStorage.setItem("access_token", data.access_token);
+      } else {
+        throw new Error("Access token is missing in response");
+      }
+
+      return data;
+    }
+
     throw new Error("Failed to login");
   } catch (error) {
-    console.error(error);
+    console.error("Login error:", error);
+
+    if (error.response) {
+      const message = error.response.data.message || "Failed to login";
+      throw new Error(message);
+    } else {
+      throw new Error("An unexpected error occurred");
+    }
   }
 }
 
 export async function getCurrentUser() {
-  // const token = localStorage.getItem("access_token");
-  // const token =
-  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtdXJhZCIsImlkIjoyOCwiZXhwIjoxNzMyOTQ3MDMwfQ.TZ6vMWR6dXzFbbKkd4XEN6V6GmdsMqH-4Ii7isjbWpM";
-  // 
+  const token = localStorage.getItem("access_token");
   try {
     const response = await fetch(`${BASE_URL}/auth/user`, {
       method: "POST",

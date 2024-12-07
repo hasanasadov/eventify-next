@@ -4,8 +4,8 @@ import GoogleMap from "@/components/shared/GoogleMap";
 import { getCurrentUser } from "@/services/users";
 
 export default async function Home() {
-  // const user = await getCurrentUser();
-  // console.log("user", user);
+  const user = await getCurrentUser();
+  console.log("user", user);
   return (
     <div>
       <div className="flex justify-between flex-col md:flex-row p-8 w-full">
