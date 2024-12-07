@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import LoginForm from "./_components/LoginForm";
 import SignupForm from "./_components/SignupForm";
-import LoginImage from "../../../assets/images/maksi.jpg";
-import SignupImage from "../../../assets/images/luna.jpg";
+import LoginImage from "../../../assets/logo3.png";
+import SignupImage from "../../../assets/logo3.png";
 import Image from "next/image";
 
 const AuthForm = () => {
@@ -37,7 +37,7 @@ const AuthForm = () => {
             <Image
               src={SignupImage}
               alt="image"
-              className="absolute h-full w-full object-cover z-10"
+              className="absolute h-full w-full object-cover z-10 bg-white"
             />
             <div className=" absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full z-10"></div>
           </div>

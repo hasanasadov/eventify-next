@@ -1,3 +1,5 @@
+
+
 import Link from "next/link";
 import "../globals.css";
 import { ArrowBack } from "@mui/icons-material";
@@ -19,7 +21,7 @@ export default function RootLayout({ children }) {
             Back To Home{" "}
           </Link>
         </div>
-        <div className="bg-purple-600 w-screen h-screen flex items-center justify-center p-6">
+        <div className="bg-gray-300 w-screen h-screen flex items-center justify-center p-6">
           {children}
         </div>
         <Toaster />

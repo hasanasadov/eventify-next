@@ -7,7 +7,7 @@ const FavoritesLayout = ({ children }) => {
   const [selectedTab, setSelectedTab] = useState("events");
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-6">
+    <div className="min-h-screen bg-gray-50 py-8 px-6">
       <h1 className="text-4xl text-center pb-6 font-bold text-[#075E54]">Your Favorites</h1>
       <div className="flex mb-6 items-center justify-center">
         <button
