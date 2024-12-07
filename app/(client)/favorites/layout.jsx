@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { redirect } from "next/navigation";
 
-const FavoritesPage = ({ children }) => {
-  const [selectedTab, setSelectedTab] = useState("venues");
+const FavoritesLayout = ({ children }) => {
+  const [selectedTab, setSelectedTab] = useState("events");
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-6">
-      <h1 className="text-3xl font-bold  text-gray-800 mb-8">Your Favorites</h1>
-      <div className="flex mb-6">
+      <h1 className="text-4xl text-center pb-6 font-bold text-[#075E54]">Your Favorites</h1>
+      <div className="flex mb-6 items-center justify-center">
         <button
           onClick={() => {
             setSelectedTab("venues");
@@ -42,4 +42,4 @@ const FavoritesPage = ({ children }) => {
   );
 };
 
-export default FavoritesPage;
+export default FavoritesLayout;

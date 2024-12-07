@@ -72,8 +72,8 @@ const EventsPage = () => {
         </div>
       ) : (
         <>
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-center text-green-600 mb-8">
+          <div className="flex  items-center justify-center">
+            <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
               Explore Events
             </h1>
           </div>

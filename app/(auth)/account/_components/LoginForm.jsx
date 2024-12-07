@@ -16,7 +16,7 @@ const LoginForm = ({ isFlipped, setIsFlipped }) => {
       password: "",
     },
     onSubmit: async (values) => {
-      setErrorMessages([]); 
+      setErrorMessages([]);
       try {
         const res = await handleLogin(values);
         console.log("res", res);

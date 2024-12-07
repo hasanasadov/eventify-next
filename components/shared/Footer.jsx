@@ -91,7 +91,7 @@ const Footer = () => {
                   href="tel:+1234567890"
                   className="flex items-center hover:text-green-400 transition-colors"
                 >
-                  <FaPhoneAlt className="mr-2 text-green-400" /> +1 234 567 890
+                  <FaPhoneAlt className="mr-2 text-green-400" /> +994 50 111 11 11
                 </a>
               </li>
               <li className="flex items-center">
@@ -100,7 +100,7 @@ const Footer = () => {
                   className="flex items-center hover:text-green-400 transition-colors"
                 >
                   <FaEnvelope className="mr-2 text-green-400" />{" "}
-                  support@example.com
+                  eventify@gmail.com
                 </a>
               </li>
             </ul>

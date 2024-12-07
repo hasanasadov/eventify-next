@@ -22,8 +22,6 @@ export async function handleRegister(values) {
   }
 }
 
-import axios from "axios";
-
 export async function handleLogin(values) {
   try {
     if (!(values instanceof FormData)) {
@@ -42,11 +40,11 @@ export async function handleLogin(values) {
       const data = response.data;
       console.log("data", data);
 
-      if (data.access_token) {
-        localStorage.setItem("access_token", data.access_token);
-      } else {
-        throw new Error("Access token is missing in response");
-      }
+      // if (data.access_token) {
+      //   localStorage.setItem("access_token", data.access_token);
+      // } else {
+      //   throw new Error("Access token is missing in response");
+      // }
 
       return data;
     }
@@ -65,7 +63,8 @@ export async function handleLogin(values) {
 }
 
 export async function getCurrentUser() {
-  const token = localStorage.getItem("access_token");
+  // const token = localStorage.getItem("access_token");
+  const token = "token";
   try {
     const response = await fetch(`${BASE_URL}/auth/user`, {
       method: "POST",

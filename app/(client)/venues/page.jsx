@@ -72,7 +72,7 @@ const VenuesPage = () => {
         </div>
       ) : (
         <>
-          <h1 className="text-3xl font-bold  text-blue-800 mb-8">
+          <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
             Explore Venues
           </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

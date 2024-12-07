@@ -6,7 +6,7 @@ const VenueSideBarItem = ({ venue }) => {
     <Link
       href={`/venues/${venue.id}`}
       key={venue.id}
-      className="flex items-center flex-col p-4 gap-4 w-[95%] border-2  transition-all rounded-lg relative "
+      className="bg-white flex items-center flex-col p-4 gap-4 w-[95%] border-2  transition-all rounded-lg relative "
     >
       <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden shadow">
         <img

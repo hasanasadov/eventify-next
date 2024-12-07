@@ -24,7 +24,7 @@ export const NAVBAR_ITEM = [
   {
     title: "Favorites",
     icon: FavoriteBorderOutlined,
-    href: "/favorites",
+    href: "/favorites/events",
   },
   {
     title: "Subscriptions",

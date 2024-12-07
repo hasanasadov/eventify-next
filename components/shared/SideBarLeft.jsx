@@ -14,7 +14,7 @@ const SideBarLeft = () => {
   const [settingsButton, setSettingsButton] = useState(false);
 
   return (
-    <div className="h-[40vh] md:h-[80vh] md:w-1/4 w-full overflow-hidden flex justify-between ">
+    <div className="bg-white h-[40vh] md:h-[80vh] md:w-1/4 w-full overflow-hidden flex justify-between ">
       <div className=" flex flex-col items-center justify-between rounded-l-lg overflow-hidden bg-green-400 w-[70px] py-10">
         <div className="flex flex-col gap-3">
           <button
