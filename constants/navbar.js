@@ -34,6 +34,6 @@ export const NAVBAR_ITEM = [
   {
     title: "Account",
     icon: User2Icon,
-    href: "/account",
+    href: "/login",
   },
 ];
