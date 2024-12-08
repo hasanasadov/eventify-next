@@ -6,16 +6,24 @@ import axios from "axios";
 export async function handleRegister(values) {
   try {
     console.log("values", values);
-    const response = await axios.post(`${BASE_URL}/auth`, values, {
+    const response = await fetch(`${BASE_URL}/auth`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(values),
     });
-    console.log("response", response.json());
-    if (response?.detail) {
-      console.log("response.detail", response.detail);
-      return response.json();
+    if (response.status < 400) {
+      return {
+        message: response.message,
+        success: true,
+      };
     }
+    const data = await response.json();
+    return {
+      success: false,
+      detail: data?.detail,
+    };
   } catch (error) {
     console.error(error);
     return null;

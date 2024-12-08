@@ -15,10 +15,12 @@ const RegisterPAge = () => {
   const formik = useFormik({
     initialValues: {
       username: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
       rePassword: "",
-      isOrganizer: false,
+      is_organizer: false,
     },
     onSubmit: async (values) => {
       setErrorMessages([]);
@@ -29,12 +31,21 @@ const RegisterPAge = () => {
       }
 
       try {
-        const response = await handleRegister(values);
-        if (response?.detail) {
+        const copyValues = { ...values };
+        delete copyValues.rePassword;
+        console.log("values", values);
+        const response = await handleRegister(copyValues);
+        if (!response?.success) {
           setErrorMessages([response.detail]);
           return;
         }
-        // formik.resetForm();
+        if (response?.success) {
+          toast.success("Registered successfully");
+          setErrorMessages([
+            "You have been registered successfully, check your email for verification",
+          ]);
+          formik.resetForm();
+        }
       } catch (error) {
         console.error("Error during registration:", error);
         toast.error("Failed to register");
@@ -43,7 +54,7 @@ const RegisterPAge = () => {
     },
   });
   return (
-    <div className="w-full p-6 h-[520px] ">
+    <div className="w-full p-6  ">
       <div className=" text-2xl font-extrabold text-gray-800 mb-4 relative">
         Signup
         <div className="absolute left-0 bottom-0 h-[3px] w-5 bg-green-500"></div>
@@ -58,6 +69,32 @@ const RegisterPAge = () => {
               onChange={formik.handleChange}
               value={formik.values.username}
               placeholder="Enter your username"
+              className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-green-500 transition duration-300"
+              required
+            />
+          </div>
+
+          <div className=" flex items-center relative mb-4">
+            <User2Icon className="text-green-500 text-lg absolute left-4 w-6" />
+            <input
+              type="text"
+              name="first_name"
+              onChange={formik.handleChange}
+              value={formik.values.first_name}
+              placeholder="Enter your First Name"
+              className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-green-500 transition duration-300"
+              required
+            />
+          </div>
+
+          <div className=" flex items-center relative mb-4">
+            <User2Icon className="text-green-500 text-lg absolute left-4 w-6" />
+            <input
+              type="text"
+              name="last_name"
+              onChange={formik.handleChange}
+              value={formik.values.last_name}
+              placeholder="Enter your Last Name"
               className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-green-500 transition duration-300"
               required
             />
@@ -104,8 +141,8 @@ const RegisterPAge = () => {
             <input
               type="checkbox"
               onChange={formik.handleChange}
-              checked={formik.values.isOrganizer}
-              name="isOrganizer"
+              checked={formik.values.is_organizer}
+              name="is_organizer"
               className="appearance-none ml-[18px] mr-2 w-6 h-6 rounded-full border-2 border-gray-300 checked:bg-green-500 checked:border-green-500 transition-colors cursor-pointer"
             />
             <label
