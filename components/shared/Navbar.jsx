@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InputWithButton } from "../ui/search";
 import { Button } from "../ui/button";
 import { CalendarPlus2Icon, User2Icon, MessageCircleIcon } from "lucide-react";
@@ -11,8 +11,27 @@ import { Calendar1Icon } from "lucide-react";
 import { MuseumOutlined } from "@mui/icons-material";
 import { NAVBAR_ITEM } from "@/constants/navbar";
 import { cn } from "@/lib/utils";
+import { getCurrentUser } from "@/services/users";
 
 const Navbar = () => {
+  const token = localStorage.getItem("access_token");
+  const [user, setUser] = useState({ first_name: "Account" });
+  useEffect(() => {
+    getUser();
+  }, [token]);
+
+  async function getUser() {
+    const data = await getCurrentUser(token);
+    if (data.success) {
+      setUser(data.user);
+    }
+
+    if (!data.success) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+    }
+  }
+
   const [open, setOpen] = useState(false);
 
   const handleToggle = () => {
@@ -27,12 +46,7 @@ const Navbar = () => {
       <div className="flex w-full items-center justify-between">
         <div className="w-40  md:scale-150 h-12  flex items-center justify-center">
           <Link href="/">
-            <Image
-              src={Logo}
-              alt="logo"
-              width={100}
-              height={100}
-            />
+            <Image src={Logo} alt="logo" width={100} height={100} />
           </Link>
         </div>
         <div className="w-full md:px-10 px-4">
@@ -48,7 +62,8 @@ const Navbar = () => {
             className={cn(`flex items-center gap-2 font-bold`)}
           >
             <Button variant="ghost" className={cn(``)}>
-              {<item.icon />} {item.title}
+              {<item.icon />}{" "}
+              {item.title === "Account" ? user?.first_name : item.title}
             </Button>
           </Link>
         ))}

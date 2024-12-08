@@ -36,43 +36,32 @@ export async function handleLogin(values) {
       throw new Error("Input values must be FormData");
     }
 
-    const response = await axios.post(`${BASE_URL}/auth/login`, values, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+    const response = await fetch(`${BASE_URL}/auth/token`, {
+      method: "POST",
+      body: values,
     });
-
-    console.log("response", response);
-
+    const data = await response.json();
     if (response.status < 400) {
-      const data = response.data;
-      console.log("data", data);
-
-      // if (data.access_token) {
-      //   localStorage.setItem("access_token", data.access_token);
-      // } else {
-      //   throw new Error("Access token is missing in response");
-      // }
-
-      return data;
+      return {
+        success: true,
+        message: "Login successful",
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
+      };
     }
-
-    throw new Error("Failed to login");
+    return {
+      success: false,
+      message: data?.detail,
+    };
   } catch (error) {
     console.error("Login error:", error);
-
-    if (error.response) {
-      const message = error.response.data.message || "Failed to login";
-      throw new Error(message);
-    } else {
-      throw new Error("An unexpected error occurred");
-    }
+    return {
+      success: false,
+    };
   }
 }
 
-export async function getCurrentUser() {
-  // const token = localStorage.getItem("access_token");
-  const token = "token";
+export async function getCurrentUser(token) {
   try {
     const response = await fetch(`${BASE_URL}/auth/user`, {
       method: "POST",
@@ -81,12 +70,19 @@ export async function getCurrentUser() {
         "Content-Type": "application/json",
       },
     });
+    const data = await response.json();
     if (response.status < 400) {
       console.log("response", response);
-      //localStorage.setItem("access_token", "eyJhbGciOiJI...");
 
-      return response.json();
+      return {
+        success: true,
+        user: data,
+      };
     }
+    return {
+      success: false,
+      message: "User not found",
+    };
   } catch (error) {
     console.error(error);
     return null;

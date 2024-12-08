@@ -1,11 +1,8 @@
 import SideBarLeft from "@/components/shared/SideBarLeft";
 import SideBarRight from "@/components/shared/SideBarRight";
 import GoogleMap from "@/components/shared/GoogleMap";
-import { getCurrentUser } from "@/services/users";
 
 export default async function Home() {
-  const user = await getCurrentUser();
-  console.log("user", user);
   return (
     <div>
       <div className="flex justify-between flex-col md:flex-row p-8 w-full bg-gray-50">

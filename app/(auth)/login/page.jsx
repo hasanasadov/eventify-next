@@ -7,6 +7,7 @@ import { User2Icon } from "lucide-react";
 import React from "react";
 import { handleLogin } from "@/services/users";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 const LoginPage = () => {
   const [errorMessages, setErrorMessages] = React.useState([]);
@@ -18,8 +19,20 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setErrorMessages([]);
       try {
-        const res = await handleLogin(values);
-        console.log("res", res);
+        const formData = new FormData();
+        formData.append("username", values.username);
+        formData.append("password", values.password);
+
+        const res = await handleLogin(formData);
+        if (!res.success) {
+          setErrorMessages([res.message]);
+          return;
+        }
+        if (res.success) {
+          localStorage.setItem("access_token", res.accessToken);
+          formik.resetForm();
+          toast.success("Login successful");
+        }
       } catch (error) {
         console.error(error);
       }
@@ -27,7 +40,7 @@ const LoginPage = () => {
   });
 
   const handleGoogleSignIn = () => {
-    console.log("Google Sign-In clicked!"); 
+    console.log("Google Sign-In clicked!");
   };
 
   return (
