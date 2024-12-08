@@ -14,7 +14,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="">
         <Navbar />
-
         <main className="flex-grow">{children}</main>
         <Footer />
         <Toaster />

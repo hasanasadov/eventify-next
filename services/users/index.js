@@ -1,7 +1,6 @@
 "use server";
 
 import { BASE_URL } from "@/constants";
-import axios from "axios";
 
 export async function handleRegister(values) {
   try {
