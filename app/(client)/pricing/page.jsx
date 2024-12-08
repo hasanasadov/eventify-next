@@ -91,7 +91,7 @@ const Pricing = () => {
     "rounded-lg py-3 px-6 w-full font-semibold text-sm transition-all duration-300";
 
   return (
-    <div className=" bg-gray-50 py-12 px-6 lg:px-24">
+    <div className=" bg-gray-50 p-8 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Heading Section */}
         <div className="text-center">

@@ -23,24 +23,17 @@ export default function RootLayout({ children }) {
           </Link>
         </div>
         <div className="bg-gray-300 w-screen h-screen flex items-center justify-center p-6">
-          <>
-            <div className="container relative max-w-[850px] w-full bg-white p-0 border-2  ">
-              <div className="right-0 cover absolute top-0  h-full lg:w-1/2 z-10 hidden md:block">
-                <div className="absolute top-0 left-0 h-full w-full ">
-                  <Image
-                    src={AccountImage}
-                    alt="image"
-                    className="absolute h-full w-full object-cover z-10"
-                  />
-                  <div className="absolute top-0 left-0 flex flex-col items-center justify-center w-full h-full z-10"></div>
-                </div>
-              </div>
-
-              <div className="flex flex-col lg:flex-row items-center justify-between ">
-                {children}
-              </div>
+          <div className="container flex relative max-w-[850px] w-full bg-white p-0 border-2  ">
+            <div className="right-0 z-10 lg:w-1/2 hidden lg:flex  items-center justify-center border-r-2 ">
+              <Image
+                src={AccountImage}
+                alt="image"
+                className=" object-cover z-10"
+              />
             </div>
-          </>
+
+            <div className="lg:w-1/2 w-full">{children}</div>
+          </div>
         </div>
         <Toaster />
       </body>

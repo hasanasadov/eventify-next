@@ -43,7 +43,7 @@ const RegisterPAge = () => {
     },
   });
   return (
-    <div className="w-full lg:w-1/2 p-6 h-[520px] ">
+    <div className="w-full p-6 h-[520px] ">
       <div className=" text-2xl font-extrabold text-gray-800 mb-4 relative">
         Signup
         <div className="absolute left-0 bottom-0 h-[3px] w-5 bg-green-500"></div>

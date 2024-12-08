@@ -31,7 +31,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="w-full h-[520px] lg:w-1/2 p-6 flex flex-col justify-between">
+    <div className="w-full h-[520px]  p-6 flex flex-col justify-between">
       <div className="text-2xl text-gray-800 mb-4 relative font-extrabold">
         Login
         <div className="absolute left-0 bottom-0 h-[3px] w-6 bg-green-500"></div>
