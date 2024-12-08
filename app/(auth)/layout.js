@@ -3,7 +3,7 @@ import "../globals.css";
 import { ArrowBack } from "@mui/icons-material";
 import { Toaster } from "sonner";
 import React from "react";
-import AccountImage from "../../assets/logo3.png";
+import AccountImage from "../../assets/logo.png";
 import Image from "next/image";
 
 export const metadata = {

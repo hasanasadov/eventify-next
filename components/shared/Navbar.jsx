@@ -32,7 +32,6 @@ const Navbar = () => {
               alt="logo"
               width={100}
               height={100}
-              className="contrast-150 brightness-50"
             />
           </Link>
         </div>
