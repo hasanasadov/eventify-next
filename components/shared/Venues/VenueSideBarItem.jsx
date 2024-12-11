@@ -37,7 +37,7 @@ const VenueSideBarItemSkeleton = () => (
   <ContentLoader
     speed={2}
     width="90%"
-    height="250px"
+    height="450px"
     viewBox="0 0 100% 100%"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"

@@ -28,7 +28,6 @@ const VenuesSection = () => {
         <>
           <VenueSideBarItemSkeleton />
           <VenueSideBarItemSkeleton />
-          <VenueSideBarItemSkeleton />
         </>
       ) : (
         venues.map((venue, idx) => <VenueSideBarItem key={idx} venue={venue} />)

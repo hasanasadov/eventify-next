@@ -6,7 +6,7 @@ import { EventSideBarItem, EventSideBarItemSkeleton } from "./EventSideBarItem";
 
 const EventsSection = ({ eventsButton }) => {
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -17,7 +17,7 @@ const EventsSection = ({ eventsButton }) => {
       } catch (error) {
         console.error("Failed to fetch events:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
     fetchLinks();
@@ -31,7 +31,6 @@ const EventsSection = ({ eventsButton }) => {
     >
       {loading ? (
         <>
-          <EventSideBarItemSkeleton />
           <EventSideBarItemSkeleton />
           <EventSideBarItemSkeleton />
         </>
