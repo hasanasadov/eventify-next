@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from "@/constants";
 import { EventSideBarItem, EventSideBarItemSkeleton } from "./EventSideBarItem";
 
-const EventsSection = ({ eventsButton }) => {
+const EventsSection = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,9 +25,7 @@ const EventsSection = ({ eventsButton }) => {
 
   return (
     <div
-      className={`flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4 ${
-        eventsButton ? "flex" : "hidden"
-      }`}
+      className={`flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4 `}
     >
       {loading ? (
         <>

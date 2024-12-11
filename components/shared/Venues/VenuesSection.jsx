@@ -23,7 +23,7 @@ const VenuesSection = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4 px-2">
+    <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4 px-2">
       {loading ? (
         <>
           <VenueSideBarItemSkeleton />

@@ -32,13 +32,9 @@ const EventSideBarItem = ({ item }) => {
       className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative"
     >
       <Image
-        src={
-          isValidUrl(item.event.poster_image_link)
-            ? item.event.poster_image_link
-            : "/default-image.jpg"
-        }
+        src={isValidUrl(item.event.poster_image_link) ? item.event.poster_image_link : "/assets/logo.png"}
         className="rounded-lg w-full h-48 bg-red-500"
-        alt={item.event.title}
+        alt={item.event.title || "event"}
         width={100}
         height={100}
       />

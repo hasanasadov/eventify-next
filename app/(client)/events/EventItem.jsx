@@ -20,12 +20,8 @@ const EventItem = ({ event }) => {
     >
       <div className="relative overflow-hidden">
         <Image
-          src={
-            isValidUrl(event.poster_image_link)
-              ? event.poster_image_link
-              : "/default-image.jpg"
-          }
-          alt={event.title}
+          src={isValidUrl(event.poster_image_link) ? event.poster_image_link : "/assets/logo.png"}
+          alt={event.title || "event"}
           width={500}
           height={300}
           className="w-full h-56 object-cover group-hover:scale-[1.03] transition-transform duration-300"

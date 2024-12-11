@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/services/users";
 
 const Navbar = () => {
-  const token = localStorage.getItem("access_token");
+  const token = localStorage.getItem("access_token") || "";
   const [user, setUser] = useState({ first_name: "Account" });
   useEffect(() => {
     getUser();

@@ -11,8 +11,8 @@ const VenueSideBarItem = ({ venue }) => {
     >
       <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden shadow">
         <img
-          src={venue.image_1_link || "/default-image.jpg"}
-          alt={venue.name}
+          src={venue.image_1_link || "/assets/logo.png"}
+          alt={venue.name || "venue"}
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
