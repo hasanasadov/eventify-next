@@ -1,6 +1,7 @@
 import React from "react";
 import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
+import ContentLoader from "react-content-loader";
 const VenueSideBarItem = ({ venue }) => {
   return (
     <Link
@@ -32,4 +33,17 @@ const VenueSideBarItem = ({ venue }) => {
   );
 };
 
-export default VenueSideBarItem;
+const VenueSideBarItemSkeleton = () => (
+  <ContentLoader
+    speed={2}
+    width="90%"
+    height="250px"
+    viewBox="0 0 100% 100%"
+    backgroundColor="#f3f3f3"
+    foregroundColor="#ecebeb"
+  >
+    <rect x="0" y="0" rx="10" ry="10" width="100%" height="100%" />
+  </ContentLoader>
+);
+
+export { VenueSideBarItem, VenueSideBarItemSkeleton };

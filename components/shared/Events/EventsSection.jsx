@@ -2,28 +2,42 @@
 
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/constants";
+import { EventSideBarItem, EventSideBarItemSkeleton } from "./EventSideBarItem";
 
-import EventSideBarItem from "./EventSideBarItem";
 const EventsSection = ({ eventsButton }) => {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+
   useEffect(() => {
     const fetchLinks = async () => {
-      const res = await fetch(`${BASE_URL}/events`);
-      const data = await res.json();
-      setEvents(data);
+      try {
+        const res = await fetch(`${BASE_URL}/events`);
+        const data = await res.json();
+        setEvents(data);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
     };
     fetchLinks();
   }, []);
 
   return (
     <div
-      className={`flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4  ${
+      className={`flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4 ${
         eventsButton ? "flex" : "hidden"
       }`}
     >
-      {events.map((item, idx) => (
-        <EventSideBarItem key={idx} item={item} />
-      ))}
+      {loading ? (
+        <>
+          <EventSideBarItemSkeleton />
+          <EventSideBarItemSkeleton />
+          <EventSideBarItemSkeleton />
+        </>
+      ) : (
+        events.map((item, idx) => <EventSideBarItem key={idx} item={item} />)
+      )}
     </div>
   );
 };

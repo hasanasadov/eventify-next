@@ -59,6 +59,9 @@ importers:
       react-bootstrap:
         specifier: ^2.10.6
         version: 2.10.6(@types/react@18.3.12)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
+      react-content-loader:
+        specifier: ^7.0.2
+        version: 7.0.2(react@19.0.0-rc-66855b96-20241106)
       react-dom:
         specifier: 19.0.0-rc-66855b96-20241106
         version: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
@@ -1798,6 +1801,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-content-loader@7.0.2:
+    resolution: {integrity: sha512-773S98JTyC8VB2nu7LXUhpHx8tZMieGxMcx3qTe7IkohT6Br7d9AXnIXs/wQ6IhlUdKQcw6JLKk1QKigYCWDRA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16.0.0'
 
   react-dom@19.0.0-rc-66855b96-20241106:
     resolution: {integrity: sha512-D25vdaytZ1wFIRiwNU98NPQ/upS2P8Co4/oNoa02PzHbh8deWdepjm5qwZM/46OdSiGv4WSWwxP55RO9obqJEQ==}
@@ -4089,6 +4098,10 @@ snapshots:
       warning: 4.0.3
     optionalDependencies:
       '@types/react': 18.3.12
+
+  react-content-loader@7.0.2(react@19.0.0-rc-66855b96-20241106):
+    dependencies:
+      react: 19.0.0-rc-66855b96-20241106
 
   react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106):
     dependencies:

@@ -1,24 +1,38 @@
 "use client";
 
-import React from "react";
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getVenues } from "@/services/venues";
-import VenueSideBarItem from "./VenueSideBarItem";
+import { VenueSideBarItem, VenueSideBarItemSkeleton } from "./VenueSideBarItem";
+
 const VenuesSection = () => {
   const [venues, setVenues] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+
   useEffect(() => {
     const fetchVenues = async () => {
-      const data = await getVenues();
-      setVenues(data);
+      try {
+        const data = await getVenues();
+        setVenues(data);
+      } catch (error) {
+        console.error("Failed to fetch venues:", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
     };
     fetchVenues();
   }, []);
+
   return (
     <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full py-4 px-2">
-      {venues.map((venue, idx) => (
-        <VenueSideBarItem key={idx} venue={venue} />
-      ))}
+      {loading ? (
+        <>
+          <VenueSideBarItemSkeleton />
+          <VenueSideBarItemSkeleton />
+          <VenueSideBarItemSkeleton />
+        </>
+      ) : (
+        venues.map((venue, idx) => <VenueSideBarItem key={idx} venue={venue} />)
+      )}
     </div>
   );
 };
