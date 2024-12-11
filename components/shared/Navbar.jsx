@@ -14,7 +14,14 @@ import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/services/users";
 
 const Navbar = () => {
-  const token = localStorage.getItem("access_token") || "";
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("access_token") || "";
+      setToken(storedToken);
+    }
+  }, []);
   const [user, setUser] = useState({ first_name: "Account" });
   useEffect(() => {
     getUser();
