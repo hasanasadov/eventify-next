@@ -3,24 +3,20 @@
 import React, { useEffect, useState } from "react";
 import { InputWithButton } from "../ui/search";
 import { Button } from "../ui/button";
-import { CalendarPlus2Icon, User2Icon, MessageCircleIcon } from "lucide-react";
 import Logo from "/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar1Icon } from "lucide-react";
-import { MuseumOutlined } from "@mui/icons-material";
 import { NAVBAR_ITEM } from "@/constants/navbar";
 import { cn } from "@/lib/utils";
 import { getCurrentUser } from "@/services/users";
+import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedToken = localStorage.getItem("access_token") || "";
-      setToken(storedToken);
-    }
+    const storedToken = localStorage.getItem("access_token") || "";
+    setToken(storedToken);
   }, []);
   const [user, setUser] = useState({ first_name: "Account" });
   useEffect(() => {
@@ -38,12 +34,6 @@ const Navbar = () => {
       localStorage.removeItem("refresh_token");
     }
   }
-
-  const [open, setOpen] = useState(false);
-
-  const handleToggle = () => {
-    setOpen(!open);
-  };
 
   return (
     <>
@@ -77,128 +67,8 @@ const Navbar = () => {
           ))}
         </div>
 
-        <button
-          className="lg:hidden  block text-[var(--text-primary)]"
-          onClick={handleToggle}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        </button>
-
-        {/* Black Overlay */}
-        <div
-          className={`fixed inset-0 transition-opacity duration-300 ${
-            open ? "opacity-50 visible" : "opacity-0 invisible"
-          }`}
-          style={{ backgroundColor: "var(--overlay)" }}
-          onClick={handleToggle}
-        ></div>
-
-        {/* Hamburger Menu */}
-        <div
-          className={`fixed right-0 top-0 h-full md:w-1/3 p-8 flex flex-col gap-8 transition-transform duration-300 ${
-            open ? "translate-x-0" : "translate-x-full"
-          }`}
-          style={{ backgroundColor: "var(--accent-secondary)" }}
-        >
-          <Link href="/events">
-            <Button
-              className="text-2xl p-8"
-              style={{
-                color: "var(--bg-light)",
-                "--tw-bg-hover": "var(--accent-primary)",
-              }}
-              variant="ghost"
-              onClick={handleToggle}
-            >
-              <Calendar1Icon style={{ width: "28px", height: "28px" }} /> Events
-            </Button>
-          </Link>
-
-          <Link href="/venues">
-            <Button
-              className="text-2xl p-8"
-              style={{
-                color: "var(--bg-light)",
-                "--tw-bg-hover": "var(--accent-primary)",
-              }}
-              variant="ghost"
-              onClick={handleToggle}
-            >
-              <MuseumOutlined style={{ width: "28px", height: "28px" }} />{" "}
-              Venues
-            </Button>
-          </Link>
-
-          <Link href="/chat">
-            <Button
-              className="text-2xl p-8"
-              style={{
-                color: "var(--bg-light)",
-                "--tw-bg-hover": "var(--accent-primary)",
-              }}
-              variant="ghost"
-              onClick={handleToggle}
-            >
-              <MessageCircleIcon style={{ width: "28px", height: "28px" }} />{" "}
-              Chat
-            </Button>
-          </Link>
-
-          <Link href="/pricing">
-            <Button
-              className="text-2xl p-8"
-              style={{
-                color: "var(--bg-light)",
-                "--tw-bg-hover": "var(--accent-primary)",
-              }}
-              variant="ghost"
-              onClick={handleToggle}
-            >
-              <CalendarPlus2Icon style={{ width: "28px", height: "28px" }} />{" "}
-              Subscriptions
-            </Button>
-          </Link>
-
-          <Link href="/account">
-            <Button
-              className="text-2xl p-8"
-              style={{
-                color: "var(--bg-light)",
-                "--tw-bg-hover": "var(--accent-primary)",
-              }}
-              variant="ghost"
-              onClick={handleToggle}
-            >
-              <User2Icon style={{ width: "28px", height: "28px" }} /> Account
-            </Button>
-          </Link>
-
-          <Button
-            variant="secondary"
-            className="text-xl"
-            style={{
-              "--tw-bg-hover": "var(--accent-primary)",
-            }}
-            onClick={handleToggle}
-          >
-            Close Menu
-          </Button>
-        </div>
+        <MobileNavbar />
       </div>
-      {/* <span className="loader"></span> */}
     </>
   );
 };
