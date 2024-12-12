@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 
-const GoogleMap = () => {
+const GoogleMap = ({ className }) => {
   const mapRef = useRef(null); // Ref for the map container
 
   useEffect(() => {
@@ -183,6 +183,7 @@ const GoogleMap = () => {
     <div
       id="map"
       ref={mapRef}
+      className={className}
       style={{
         width: "100%",
         height: "100%",
