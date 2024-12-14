@@ -3,8 +3,8 @@ import "../globals.css";
 import { ArrowBack } from "@mui/icons-material";
 import { Toaster } from "sonner";
 import React from "react";
-import AccountImage from "../../assets/logo.png";
 import Image from "next/image";
+import AccountImage from "@/assets/logo.png";
 
 export const metadata = {
   title: "Eventify",
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
         </div>
         <div className="bg-gray-300 w-screen h-screen flex items-center justify-center p-6">
           <div className="container flex relative max-w-[850px] w-full bg-white p-0 border-2  ">
-            <div className="right-0 z-10 lg:w-1/2 hidden lg:flex  items-center justify-center border-r-2 ">
+            <div className="right-0 z-10 lg:w-1/2 hidden lg:flex  items-center justify-center border-r ">
               <Image
                 src={AccountImage}
                 alt="image"
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
               />
             </div>
 
-            <div className="lg:w-1/2 w-full">{children}</div>
+            <div className="lg:w-1/2 w-full border-l">{children}</div>
           </div>
         </div>
         <Toaster />

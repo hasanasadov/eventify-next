@@ -1,6 +1,7 @@
 import { FavoriteBorder } from "@mui/icons-material";
 import Link from "next/link";
 import React from "react";
+import LOGO from "@/assets/logo.png";
 
 const VenueItem = ({ venue }) => {
   return (
@@ -11,7 +12,7 @@ const VenueItem = ({ venue }) => {
     >
       <div className="relative overflow-hidden">
         <img
-          src={venue.image_1_link || "/assets/logo.png"}
+          src={venue.image_1_link || LOGO}
           alt={venue.name || "venue"}
           className="w-full h-56 object-cover group-hover:scale-[1.03] transition-transform duration-300"
         />

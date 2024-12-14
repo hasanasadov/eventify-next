@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "/assets/logo.png"; // Ensure this path is correct
+import Logo from "@/assets/logo.png";
 import {
   FaFacebookF,
   FaTwitter,

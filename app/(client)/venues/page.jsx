@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from "@/constants";
 import VenueItem from "./VenueItem";
+import { getVenues } from "@/services/venues";
 
 const ITEMS_PER_PAGE = 8;
 const ITEMS_PER_SCROLL = 4;
@@ -17,13 +18,12 @@ const VenuesPage = () => {
   useEffect(() => {
     const fetchVenues = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/venues`);
-        const data = await res.json();
-        setVenues(data);
+        const res = await getVenues();
+        setVenues(res.data);
         setDisplayedVenues(data.slice(0, ITEMS_PER_PAGE));
         if (data.length <= ITEMS_PER_PAGE) setHasMore(false);
       } catch (error) {
-        console.error("Error fetching venues:", error);
+        setVenues([]);
       } finally {
         setIsLoading(false);
       }

@@ -162,7 +162,7 @@ const RegisterPAge = () => {
             >
               ?
               <div
-                className={`tooltip-text absolute  bg-black text-white p-2 rounded-md text-sm w-[200px] ${
+                className={`tooltip-text absolute -left-20 md:left-0  bg-black text-white p-2 rounded-md text-sm w-[200px] ${
                   qmarkhover ? "block" : "hidden"
                 }`}
               >
@@ -191,7 +191,7 @@ const RegisterPAge = () => {
         </div>
       </form>
 
-      <div className="sign-up-text text-center mt-6">
+      <div className="text-center mt-6">
         Already have an account?{" "}
         <button
           onClick={() => {

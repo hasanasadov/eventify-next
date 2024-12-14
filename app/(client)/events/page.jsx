@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BASE_URL } from "@/constants";
 import EventItem from "./EventItem";
+import { getEvents } from "@/services/events";
 
 const ITEMS_PER_PAGE = 8;
 const ITEMS_PER_SCROLL = 4;
@@ -17,13 +17,12 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/events`);
-        const data = await res.json();
-        setEvents(data);
+        const result = await getEvents();
+        setEvents(result.data);
         setDisplayedEvents(data.slice(0, ITEMS_PER_PAGE));
         if (data.length <= ITEMS_PER_PAGE) setHasMore(false);
       } catch (error) {
-        console.error("Error fetching events:", error);
+        setEvents([]);
       } finally {
         setIsLoading(false);
       }

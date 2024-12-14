@@ -2,8 +2,9 @@ import React from "react";
 import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
 import ContentLoader from "react-content-loader";
+import LOGO from "@/assets/logo.png";
+
 const VenueSideBarItem = ({ venue }) => {
-  
   return (
     <Link
       href={`/venues/${venue.id}`}
@@ -12,7 +13,7 @@ const VenueSideBarItem = ({ venue }) => {
     >
       <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden ">
         <img
-          src={venue.image_1_link || "/assets/logo.png"}
+          src={venue.image_1_link || LOGO}
           alt={venue.name || "venue"}
           className="w-full h-full object-cover rounded-lg"
         />

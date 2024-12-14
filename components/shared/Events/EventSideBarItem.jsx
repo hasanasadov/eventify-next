@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import ContentLoader from "react-content-loader";
+import LOGO from "@/assets/logo.png";
 
 const EventSideBarItem = ({ item }) => {
   const [isHovered, setIsHovered] = useState("hidden");
@@ -35,7 +36,7 @@ const EventSideBarItem = ({ item }) => {
         src={
           isValidUrl(item.event.poster_image_link)
             ? item.event.poster_image_link
-            : "/assets/logo.png"
+            : LOGO
         }
         className="rounded-lg w-full h-48 "
         alt={item.event.title || "event"}

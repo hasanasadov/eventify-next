@@ -2,6 +2,7 @@ import { FavoriteBorder } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import LOGO from "@/assets/logo.png";
 
 const EventItem = ({ event }) => {
   const isValidUrl = (url) => {
@@ -20,7 +21,9 @@ const EventItem = ({ event }) => {
     >
       <div className="relative overflow-hidden">
         <Image
-          src={isValidUrl(event.poster_image_link) ? event.poster_image_link : "/assets/logo.png"}
+          src={
+            isValidUrl(event.poster_image_link) ? event.poster_image_link : LOGO
+          }
           alt={event.title || "event"}
           width={500}
           height={300}

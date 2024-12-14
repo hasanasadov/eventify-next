@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import { EventSideBarItem, EventSideBarItemSkeleton } from "./EventSideBarItem";
 import { getEvents } from "@/services/events";
-import LOGO from "@/assets/logo.png";
 
 const EventsSection = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -15,18 +15,12 @@ const EventsSection = () => {
         .then((res) => {
           setEvents(res.data);
           setLoading(false);
+          setError(false);
         })
         .catch(() => {
-          setEvents([
-            {
-              event: {
-                title: "Server Error",
-                description: "Please try again later",
-                poster_image_link: LOGO,
-              },
-            },
-          ]);
+          setEvents([]);
           setLoading(false);
+          setError(true);
         });
     };
     fetchLinks();
@@ -41,6 +35,15 @@ const EventsSection = () => {
           <EventSideBarItemSkeleton />
           <EventSideBarItemSkeleton />
         </>
+      ) : error ? (
+        <div className="flex flex-col items-center gap-3">
+          <h2 className="text-lg font-bold text-center">
+            Something went wrong
+          </h2>
+          <p className="text-sm text-center">
+            We couldn't fetch the events at the moment. Please try again later.
+          </p>
+        </div>
       ) : (
         events.map((item, idx) => <EventSideBarItem key={idx} item={item} />)
       )}

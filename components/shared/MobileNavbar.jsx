@@ -61,7 +61,7 @@ const MobileNavbar = () => {
         </Button>
       </Link>
 
-      <Link href="/account">
+      <Link href="/login">
         <Button
           className="text-2xl "
           style={{

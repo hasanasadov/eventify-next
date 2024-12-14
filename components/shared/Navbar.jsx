@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { InputWithButton } from "../ui/search";
 import { Button } from "../ui/button";
-import Logo from "/assets/logo.png";
+import Logo from "@/assets/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { NAVBAR_ITEM } from "@/constants/navbar";
