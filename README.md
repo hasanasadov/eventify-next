@@ -1,21 +1,19 @@
 First, install and run the development server:
 
 ```ruby
-npm/yarn/pnpm/bun  install
+npm/pnpm install
 # and
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm/pnpm run dev
+```
+
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 ```
 
 OR  
 
-Deploy link : [https://haseventify.vercel.app](https://haseventify.vercel.app)
+### Deploy link : 
+#### [https://haseventify.vercel.app](https://haseventify.vercel.app)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-s
+![Profile views](https://komarev.com/ghpvc/?username=hasanasadov1406&label=Profile%20Views&color=0e75b6&style=flat-square)
