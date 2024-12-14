@@ -3,13 +3,14 @@ import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
 import ContentLoader from "react-content-loader";
 const VenueSideBarItem = ({ venue }) => {
+  
   return (
     <Link
       href={`/venues/${venue.id}`}
       key={venue.id}
       className="bg-white flex items-center flex-col p-4 gap-4 w-[95%] border-2  transition-all rounded-lg relative "
     >
-      <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden shadow">
+      <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden ">
         <img
           src={venue.image_1_link || "/assets/logo.png"}
           alt={venue.name || "venue"}
@@ -24,7 +25,7 @@ const VenueSideBarItem = ({ venue }) => {
           </p>
         </div>
         <div className="absolute  flexx top-2 right-2                         hidden ">
-          <button className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center shadow">
+          <button className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center ">
             <TimelapseOutlined className="h-5 w-5 text-gray-600" />
           </button>
         </div>
@@ -36,7 +37,7 @@ const VenueSideBarItem = ({ venue }) => {
 const VenueSideBarItemSkeleton = () => (
   <ContentLoader
     speed={2}
-    width="100%"
+    width="90%"
     height="450px"
     backgroundColor="#f3f3f3"
     foregroundColor="#ecebeb"

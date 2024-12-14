@@ -10,14 +10,22 @@ const VenuesSection = () => {
 
   useEffect(() => {
     const fetchVenues = async () => {
-      try {
-        const data = await getVenues();
-        setVenues(data);
-      } catch (error) {
-        console.error("Failed to fetch venues:", error);
-      } finally {
-        setLoading(false); // Set loading to false after fetching
-      }
+      getVenues()
+        .then((res) => {
+          setVenues(res.data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setVenues([
+            {
+              id: 99999,
+              name: "Server Error",
+              description: "Please try again later",
+              image_1_link: "/assets/logo.png",
+            },
+          ]);
+          setLoading(false);
+        });
     };
     fetchVenues();
   }, []);

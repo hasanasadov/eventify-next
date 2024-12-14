@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BASE_URL } from "@/constants";
 import { EventSideBarItem, EventSideBarItemSkeleton } from "./EventSideBarItem";
+import { getEvents } from "@/services/events";
+import LOGO from "@/assets/logo.png";
 
 const EventsSection = () => {
   const [events, setEvents] = useState([]);
@@ -10,15 +11,23 @@ const EventsSection = () => {
 
   useEffect(() => {
     const fetchLinks = async () => {
-      try {
-        const res = await fetch(`${BASE_URL}/events`);
-        const data = await res.json();
-        setEvents(data);
-      } catch (error) {
-        console.error("Failed to fetch events:", error);
-      } finally {
-        setLoading(false);
-      }
+      getEvents()
+        .then((res) => {
+          setEvents(res.data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setEvents([
+            {
+              event: {
+                title: "Server Error",
+                description: "Please try again later",
+                poster_image_link: LOGO,
+              },
+            },
+          ]);
+          setLoading(false);
+        });
     };
     fetchLinks();
   }, []);
