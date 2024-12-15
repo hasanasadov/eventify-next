@@ -15,11 +15,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="absolute top-6 left-8 font-bold flex items-center hover:cursor-pointer ">
-          <ArrowBack className="transition-transform duration-300" />
-          <Link href="/" className="ml-2">
-            {" "}
-            Back To Home{" "}
+        <div className="absolute top-6 left-8 hover:cursor-pointer hover:scale-[1.03] transition-transform duration-300">
+          <Link href="/" className="ml-2 gap-4 font-bold flex items-center ">
+            <ArrowBack className="transition-transform duration-300" />
+            <span> Back To Home </span>
           </Link>
         </div>
         <div className="bg-gray-300 w-screen h-screen flex items-center justify-center p-6">

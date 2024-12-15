@@ -10,12 +10,12 @@ import { User2Icon } from "lucide-react";
 const MobileNavbar = () => {
   return (
     <div
-      className={`fixed  right-0 bottom-0 w-full h-20  flex items-center justify-center gap-8 transition-transform duration-300 lg:hidden `}
+      className={`fixed  right-0 bottom-0 w-full h-20  flex items-center justify-center gap-4 transition-transform duration-300 lg:hidden `}
       style={{ backgroundColor: "var(--accent-secondary)" }}
     >
       <Link href="/events">
         <Button
-          className="text-2xl "
+          className="text-2xl hover:bg-green-600"
           style={{
             color: "var(--bg-light)",
           }}
@@ -27,7 +27,7 @@ const MobileNavbar = () => {
 
       <Link href="/venues">
         <Button
-          className="text-2xl "
+          className="text-2xl hover:bg-green-600"
           style={{
             color: "var(--bg-light)",
           }}
@@ -39,7 +39,7 @@ const MobileNavbar = () => {
 
       <Link href="/chat">
         <Button
-          className="text-2xl "
+          className="text-2xl hover:bg-green-600"
           style={{
             color: "var(--bg-light)",
           }}
@@ -51,7 +51,7 @@ const MobileNavbar = () => {
 
       <Link href="/pricing">
         <Button
-          className="text-2xl "
+          className="text-2xl hover:bg-green-600"
           style={{
             color: "var(--bg-light)",
           }}
@@ -63,7 +63,7 @@ const MobileNavbar = () => {
 
       <Link href="/login">
         <Button
-          className="text-2xl "
+          className="text-2xl hover:bg-green-600"
           style={{
             color: "var(--bg-light)",
           }}

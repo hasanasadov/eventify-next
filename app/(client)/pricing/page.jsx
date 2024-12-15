@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
 const Pricing = () => {
-  const [isAnnual, setIsAnnual] = useState(false); // Toggle between annual and monthly plans
-  const [selectedPlan, setSelectedPlan] = useState(null); // Track selected plan
-  const [actionMessage, setActionMessage] = useState(""); // Message for user actions
+  const [isAnnual, setIsAnnual] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [actionMessage, setActionMessage] = useState("");
 
-  // Pricing plans
   const plans = [
     {
       id: 1,
@@ -64,20 +64,9 @@ const Pricing = () => {
 
   const handleTogglePricing = (annual) => {
     setIsAnnual(annual);
-
-    // Update selected plan pricing when toggling
-    if (selectedPlan) {
-      const updatedPlan = plans.find((plan) => plan.id === selectedPlan.id);
-      setSelectedPlan(updatedPlan);
-      setActionMessage(
-        `You have selected the "${updatedPlan.name}" plan with ${
-          annual ? "Annual" : "Monthly"
-        } pricing.`
-      );
-    }
   };
 
-  const handleButtonClick = (planId, action) => {
+  const handleButtonClick = (planId) => {
     const selected = plans.find((plan) => plan.id === planId);
     setSelectedPlan(selected);
     setActionMessage(
@@ -88,30 +77,30 @@ const Pricing = () => {
   };
 
   const buttonBaseStyle =
-    "rounded-lg py-3 px-6 w-full font-semibold text-sm transition-all duration-300";
+    "rounded-lg py-3 px-6 w-full font-semibold text-sm transition-all duration-300 transform hover:scale-105";
 
   return (
-    <div className=" bg-gray-50 p-8 lg:px-24">
+    <div className="bg-gradient-to-r from-[#075E54] to-[#128C7E] p-8 lg:px-24">
       <div className="max-w-7xl mx-auto">
         {/* Heading Section */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-[#075E54]">
+        <div className="text-center text-white">
+          <h1 className="text-4xl font-semibold tracking-wide mb-4">
             Your Subscription
           </h1>
-          <p className="text-lg text-gray-600 mt-2">
-            Choose the plan that works best for you.
+          <p className="text-lg opacity-90">
+            Choose the plan that fits your needs, with flexible billing options.
           </p>
         </div>
 
         {/* Toggle between Monthly and Annual */}
         <div className="mt-8 flex justify-center">
-          <div className="inline-flex border border-gray-200 rounded-lg shadow-sm">
+          <div className="inline-flex border-2 border-white rounded-full overflow-hidden">
             <button
               className={`${
                 !isAnnual
-                  ? "bg-[#075E54] text-white"
-                  : "bg-white text-gray-700 hover:bg-gray-100"
-              } font-medium py-2 px-6 rounded-l-lg`}
+                  ? "bg-[#128C7E] text-white"
+                  : "bg-white text-[#075E54] hover:bg-gray-100"
+              } font-medium py-2 px-6 rounded-l-full transition-all duration-300`}
               onClick={() => handleTogglePricing(false)}
             >
               Monthly
@@ -119,9 +108,9 @@ const Pricing = () => {
             <button
               className={`${
                 isAnnual
-                  ? "bg-[#075E54] text-white"
-                  : "bg-white text-gray-700 hover:bg-gray-100"
-              } font-medium py-2 px-6 rounded-r-lg`}
+                  ? "bg-[#128C7E] text-white"
+                  : "bg-white text-[#075E54] hover:bg-gray-100"
+              } font-medium py-2 px-6 rounded-r-full transition-all duration-300`}
               onClick={() => handleTogglePricing(true)}
             >
               Annual
@@ -134,14 +123,14 @@ const Pricing = () => {
           {plans.map((plan) => (
             <div
               key={plan.id}
-              className={`p-6 bg-white rounded-lg shadow-lg border ${
+              className={`p-6 bg-white rounded-lg shadow-lg border-2 transition-all duration-500 transform hover:scale-105 ${
                 selectedPlan?.id === plan.id
-                  ? "border-[#25D366] bg-[#E8F5E9]"
+                  ? "border-[#128C7E] bg-[#E8F5E9]"
                   : "border-gray-200"
-              } transition-all duration-300`}
+              }`}
             >
               {/* Plan Header */}
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mb-4">
                 <span className="text-xs font-semibold text-gray-500 uppercase bg-gray-100 px-3 py-1 rounded-full">
                   {plan.name}
                 </span>
@@ -149,8 +138,10 @@ const Pricing = () => {
 
               {/* Plan Details */}
               <div className="mt-4">
-                <h3 className="text-xl font-bold text-gray-800">{plan.type}</h3>
-                <p className="text-4xl font-extrabold text-[#075E54] mt-2">
+                <h3 className="text-xl font-semibold text-[#075E54]">
+                  {plan.type}
+                </h3>
+                <p className="text-4xl font-extrabold text-[#128C7E] mt-2">
                   {isAnnual ? plan.annualPrice : plan.monthlyPrice}
                 </p>
                 <p className="text-sm text-gray-500">
@@ -165,9 +156,12 @@ const Pricing = () => {
                 <p className="text-sm font-medium text-gray-700">
                   {plan.users}
                 </p>
-                <ul className="mt-4 space-y-1 text-sm text-gray-600">
+                <ul className="mt-4 space-y-2 text-sm text-gray-600">
                   {plan.features.map((feature, index) => (
-                    <li key={index}>✔ {feature}</li>
+                    <li key={index} className="flex items-center">
+                      <FaCheckCircle className="text-[#128C7E] mr-2" />
+                      {feature}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -178,12 +172,10 @@ const Pricing = () => {
                   className={`${
                     selectedPlan?.id === plan.id
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                      : "bg-[#25D366] text-white hover:bg-[#128C7E] active:scale-95"
+                      : "bg-[#128C7E] text-white hover:bg-[#075E54] active:scale-95"
                   } ${buttonBaseStyle}`}
                   disabled={selectedPlan?.id === plan.id}
-                  onClick={() =>
-                    handleButtonClick(plan.id, plan.buttonText.toLowerCase())
-                  }
+                  onClick={() => handleButtonClick(plan.id)}
                 >
                   {plan.buttonText}
                 </button>
@@ -192,9 +184,8 @@ const Pricing = () => {
           ))}
         </div>
 
-        {/* Action Message */}
         {actionMessage && (
-          <div className="mt-8 p-4 bg-green-100 text-green-700 rounded-lg text-center">
+          <div className="mt-8 p-4 bg-green-100 text-green-700 rounded-lg text-center transition-all duration-300">
             {actionMessage}
           </div>
         )}
