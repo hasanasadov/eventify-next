@@ -51,7 +51,7 @@ const VenuesSection = () => {
             Something went wrong
           </h2>
           <p className="text-sm text-center">
-            We couldn't fetch the venues at the moment. Please try again later.
+            We could not fetch the venues at the moment. Please try again later.
           </p>
         </div>
       ) : (
