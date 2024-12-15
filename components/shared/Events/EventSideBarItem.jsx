@@ -54,9 +54,7 @@ const EventSideBarItem = ({ item }) => {
         </div>
 
         {/* Bookmark Button */}
-        <div
-          className={`mt-6 absolute z-10  -top-4 right-2 z-10 block ${isHovered}`}
-        >
+        <div className={`mt-6 absolute -top-4 right-2 z-10 block ${isHovered}`}>
           {isFavorite ? (
             <Bookmark
               style={{
