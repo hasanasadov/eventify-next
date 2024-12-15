@@ -1,7 +1,8 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "@/assets/logo.png";
+import { motion } from "framer-motion";
 import {
   FaFacebookF,
   FaTwitter,
@@ -11,10 +12,23 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { IoArrowUpCircle } from "react-icons/io5";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Logo from "@/assets/logo.png";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      const scrolled = document.documentElement.scrollTop;
+      setIsVisible(scrolled > 300);
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -26,168 +40,235 @@ const Footer = () => {
     setEmail("");
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const socialLinks = [
+    {
+      Icon: FaFacebookF,
+      href: "https://facebook.com",
+      color: "hover:text-blue-500",
+    },
+    {
+      Icon: FaTwitter,
+      href: "https://twitter.com",
+      color: "hover:text-sky-400",
+    },
+    {
+      Icon: FaInstagram,
+      href: "https://instagram.com",
+      color: "hover:text-pink-500",
+    },
+    {
+      Icon: FaLinkedinIn,
+      href: "https://linkedin.com",
+      color: "hover:text-blue-700",
+    },
+  ];
+
   return (
-    <footer className="bg-white text-black py-10">
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo Section */}
-          <div className="flex flex-col items-center md:items-start">
-            <Link href="/">
-              <div className="w-40 h-12 md:scale-150 flex items-center justify-center">
-                <Image src={Logo} alt="logo" width={100} height={100} />
-              </div>
+    <motion.footer
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 py-16 relative overflow-hidden"
+    >
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-green-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-200/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      </div>
+
+      <div className="px-6 sm:px-12 lg:px-24 relative z-10">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-4 gap-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.3,
+              },
+            },
+          }}
+        >
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: -50 },
+              visible: { opacity: 1, x: 0 },
+            }}
+            className="flex flex-col items-center md:items-start"
+          >
+            <Link href="/" className="group">
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                className="w-40 h-12 md:scale-150 flex items-center justify-center mb-4"
+              >
+                <Image
+                  src={Logo}
+                  alt="logo"
+                  width={120}
+                  height={120}
+                  className="group-hover:rotate-6 transition-transform duration-300"
+                />
+              </motion.div>
             </Link>
-            <p className="mt-4 text-sm text-center md:text-left">
-              We provide high-quality services and products tailored to meet
-              your needs. Join us in building a brighter future.
+            <p className="text-center md:text-left text-sm opacity-80 hover:opacity-100 transition-opacity">
+              Providing high-quality services tailored to meet your needs.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: -50 },
+              visible: { opacity: 1, x: 0 },
+            }}
+            className="space-y-4"
+          >
+            <h3 className="text-lg font-semibold mb-2 border-b-2 border-green-400 pb-2">
+              Quick Links
+            </h3>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/"
-                  className="hover:text-green-400 transition-colors"
+              {["Home", "About", "Services", "Contact"].map((link) => (
+                <motion.li
+                  key={link}
+                  whileHover={{ translateX: 10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                 >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="hover:text-green-400 transition-colors"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="hover:text-green-400 transition-colors"
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-green-400 transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
+                  <Link
+                    href={`/${link.toLowerCase()}`}
+                    className="group flex items-center transition-all"
+                  >
+                    <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity text-green-400">
+                      →
+                    </span>
+                    {link}
+                  </Link>
+                </motion.li>
+              ))}
             </ul>
-          </div>
+          </motion.div>
 
-          {/* Contact Section */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Contact Us</h3>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: 50 },
+              visible: { opacity: 1, x: 0 },
+            }}
+            className="space-y-4"
+          >
+            <h3 className="text-lg font-semibold mb-2 border-b-2 border-green-400 pb-2">
+              Contact Us
+            </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-center">
+              <motion.li
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center"
+              >
                 <a
                   href="tel:+1234567890"
-                  className="flex items-center hover:text-green-400 transition-colors"
+                  className="flex items-center hover:text-green-600 transition-all"
                 >
-                  <FaPhoneAlt className="mr-2 text-green-400" /> +994 50 111 11 11
+                  <FaPhoneAlt className="mr-3 text-green-400 animate-pulse" />{" "}
+                  +994 50 111 11 11
                 </a>
-              </li>
-              <li className="flex items-center">
+              </motion.li>
+              <motion.li
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center"
+              >
                 <a
                   href="mailto:support@example.com"
-                  className="flex items-center hover:text-green-400 transition-colors"
+                  className="flex items-center hover:text-green-600 transition-all"
                 >
-                  <FaEnvelope className="mr-2 text-green-400" />{" "}
+                  <FaEnvelope className="mr-3 text-green-400 animate-pulse" />{" "}
                   eventify@gmail.com
                 </a>
-              </li>
+              </motion.li>
             </ul>
-          </div>
+          </motion.div>
 
-          {/* Newsletter Subscription */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">
-              Subscribe to Our Newsletter
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, x: 50 },
+              visible: { opacity: 1, x: 0 },
+            }}
+          >
+            <h3 className="text-lg font-semibold mb-2 border-b-2 border-green-400 pb-2">
+              Subscribe
             </h3>
             <form
               onSubmit={handleSubscribe}
-              className="flex flex-col sm:flex-row items-center"
+              className="flex flex-col sm:flex-row items-center gap-3"
             >
-              <input
+              <motion.input
+                whileFocus={{ scale: 1.05 }}
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="w-full sm:w-auto flex-grow p-2 rounded-lg border border-gray-700 focus:outline-none focus:ring focus:ring-green-500"
+                className="w-full sm:w-auto p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-green-500 transition-all"
               />
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 type="submit"
-                className="mt-3 sm:mt-0 sm:ml-3 text-white bg-green-600 hover:bg-green-700 py-2 px-4 rounded-lg transition-all"
+                className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-lg transition-all mt-3 sm:mt-0"
               >
                 Subscribe
-              </button>
+              </motion.button>
             </form>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Footer Bottom */}
-        <div className="mt-10 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="mt-12 border-t border-gray-300 pt-6 flex flex-col md:flex-row justify-between items-center"
+        >
           <p className="text-sm text-black">
             &copy; {new Date().getFullYear()} Eventify. All rights reserved.
           </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="text-black hover:text-green-400 transition-colors"
-            >
-              <FaFacebookF size={20} />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              className="text-black hover:text-green-400 transition-colors"
-            >
-              <FaTwitter size={20} />
-            </a>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="text-black hover:text-green-400 transition-colors"
-            >
-              <FaInstagram size={20} />
-            </a>
-            <a
-              href="https://linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="text-black hover:text-green-400 transition-colors"
-            >
-              <FaLinkedinIn size={20} />
-            </a>
+          <div className="flex space-x-6 mt-4 md:mt-0">
+            {socialLinks.map(({ Icon, href, color }) => (
+              <motion.a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.2, rotate: 360 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className={`text-black ${color} transition-all`}
+              >
+                <Icon size={24} />
+              </motion.a>
+            ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Scroll to Top Button */}
-        <div className="mt-6 flex justify-center">
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="text-green-400 hover:text-green-600 transition-all"
+        {isVisible && (
+          <motion.button
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={scrollToTop}
+            className="fixed lg:bottom-8 bottom-24 right-8 text-green-400 hover:text-green-600 transition-all p-3 bg-white rounded-full shadow-lg hover:shadow-xl z-50"
           >
             <IoArrowUpCircle size={40} />
-          </button>
-        </div>
+          </motion.button>
+        )}
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 
