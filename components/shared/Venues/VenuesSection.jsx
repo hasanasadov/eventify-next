@@ -55,7 +55,7 @@ const VenuesSection = () => {
           </p>
         </div>
       ) : (
-        venues.map((venue, idx) => <VenueSideBarItem key={idx} venue={venue} />)
+        venues?.map((venue, idx) => <VenueSideBarItem key={idx} venue={venue} />)
       )}
     </div>
   );

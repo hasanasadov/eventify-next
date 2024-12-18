@@ -55,7 +55,7 @@ const EventsSection = () => {
           </p>
         </div>
       ) : (
-        events.map((item, idx) => <EventSideBarItem key={idx} item={item} />)
+        events?.map((item, idx) => <EventSideBarItem key={idx} item={item} />)
       )}
     </div>
   );
