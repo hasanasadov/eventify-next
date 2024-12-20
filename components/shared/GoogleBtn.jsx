@@ -1,6 +1,7 @@
 import { Google } from "@mui/icons-material";
 import { Component } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { Button } from "../ui/button";
 
 const CLIENT_ID = "<client_id>";
 

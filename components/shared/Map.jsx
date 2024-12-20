@@ -13,24 +13,9 @@ const mapContainerStyle = {
 };
 
 const Map = ({ imageSource, title, location }) => {
-  if (
-    !location ||
-    !location.lat ||
-    !location.lng ||
-    Number.isNaN(+location.lat) ||
-    Number.isNaN(+location.lng)
-  ) {
-    return null;
-  }
-
-  const destination = {
-    lat: +location.lat,
-    lng: +location.lng,
-  };
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
-
   const [currentPosition, setCurrentPosition] = useState(null);
   const [directions, setDirections] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
@@ -54,12 +39,15 @@ const Map = ({ imageSource, title, location }) => {
   }, []);
 
   useEffect(() => {
-    if (currentPosition && routeVisible) {
+    if (currentPosition && routeVisible && isLoaded) {
       const directionsService = new window.google.maps.DirectionsService();
       directionsService.route(
         {
           origin: currentPosition,
-          destination: destination,
+          destination: location && {
+            lat: +location.lat,
+            lng: +location.lng,
+          },
           travelMode: window.google.maps.TravelMode.DRIVING,
         },
         (result, status) => {
@@ -71,10 +59,24 @@ const Map = ({ imageSource, title, location }) => {
         }
       );
     }
-  }, [currentPosition, routeVisible]);
+  }, [currentPosition, routeVisible, isLoaded, location]);
+
+  if (!location ||
+      !location.lat ||
+      !location.lng ||
+      Number.isNaN(+location.lat) ||
+      Number.isNaN(+location.lng)
+  ) {
+    return null;
+  }
 
   if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded) return <div>Loading Maps...</div>;
+
+  const destination = {
+    lat: +location.lat,
+    lng: +location.lng,
+  };
 
   return (
     <GoogleMap
