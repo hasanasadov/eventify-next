@@ -9,6 +9,7 @@ import { handleLogin } from "@/services/users";
 import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import GoogleBtn from "@/components/shared/GoogleBtn";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -59,10 +60,6 @@ const LoginPage = () => {
       }
     },
   });
-
-  const handleGoogleSignIn = () => {
-    toast.info("Google Sign-In is not implemented yet.");
-  };
 
   return (
     <div className="w-full p-6 flex flex-col justify-between">
@@ -139,17 +136,7 @@ const LoginPage = () => {
               Log In
             </button>
           </div>
-          <div className="mt-6 flex justify-evenly items-center bg-slate-100 w-full py-3 px-4 cursor-pointer hover:bg-gray-50  hover:text-green-500 transition duration-300">
-            <Google />
-            <button
-              disabled={loading}
-              type="button"
-              className="cursor-pointer"
-              onClick={handleGoogleSignIn}
-            >
-              Sign In With Google
-            </button>
-          </div>
+          <GoogleBtn />
         </div>
       </form>
 
