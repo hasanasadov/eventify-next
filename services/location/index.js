@@ -20,7 +20,7 @@ export const getLocations = async () => {
       name: venue.name,
       lat: venue.lat,
       lng: venue.lng,
-      image: venue.image,
+      image: venue.image_1_link,
     }));
     locations.push(...locations2);
 
