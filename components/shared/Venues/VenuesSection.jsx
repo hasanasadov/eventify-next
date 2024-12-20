@@ -23,8 +23,8 @@ const VenuesSection = () => {
   const fetchVenues = async () => {
     setLoading(true);
     try {
-      const res = await getVenues();
-      setVenues(res.data);
+      const data = await getVenues();
+      setVenues(data);
       setLoading(false);
       setError(false);
     } catch (err) {
@@ -55,7 +55,9 @@ const VenuesSection = () => {
           </p>
         </div>
       ) : (
-        venues?.map((venue, idx) => <VenueSideBarItem key={idx} venue={venue} />)
+        venues?.map((venue, idx) => (
+          <VenueSideBarItem key={idx} venue={venue} />
+        ))
       )}
     </div>
   );

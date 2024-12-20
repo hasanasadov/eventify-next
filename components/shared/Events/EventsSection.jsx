@@ -23,8 +23,8 @@ const EventsSection = () => {
   const fetchLinks = async () => {
     setLoading(true);
     try {
-      const res = await getEvents();
-      setEvents(res.data);
+      const data = await getEvents();
+      setEvents(data);
       setLoading(false);
       setError(false);
     } catch (err) {

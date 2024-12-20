@@ -24,8 +24,8 @@ const EventSideBarItem = ({ item }) => {
   };
   return (
     <Link
-      href={`/events/${item.event.id}`}
-      key={item.event.id}
+      href={`/events/${item.id}`}
+      key={item.id}
       onMouseEnter={() => {
         setIsHovered("block");
       }}
@@ -33,13 +33,9 @@ const EventSideBarItem = ({ item }) => {
       className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative"
     >
       <Image
-        src={
-          isValidUrl(item.event.poster_image_link)
-            ? item.event.poster_image_link
-            : LOGO
-        }
+        src={isValidUrl(item.poster_image_link) ? item.poster_image_link : LOGO}
         className="rounded-lg w-full h-48 "
-        alt={item.event.title || "event"}
+        alt={item.title || "event"}
         width={100}
         height={100}
       />
@@ -47,9 +43,9 @@ const EventSideBarItem = ({ item }) => {
       <div className="flex items-center ">
         {/* Event Details */}
         <div className="flex flex-col gap-1 items-start justify-center">
-          <h1 className="font-semibold text-lg">{item.event.title}</h1>
+          <h1 className="font-semibold text-lg">{item.title}</h1>
           <p className="text-sm text-gray-600 line-clamp-3">
-            {item.event.description}
+            {item.description}
           </p>
         </div>
 
