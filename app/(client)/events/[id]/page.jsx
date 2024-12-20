@@ -1,5 +1,6 @@
 "use client";
 
+import Map from "@/components/shared/Map";
 import { BASE_URL } from "@/constants";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
@@ -16,6 +17,7 @@ const EventDetail = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
+  console.log(eventData);
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -112,7 +114,7 @@ const EventDetail = () => {
   const { event, location } = eventData || {};
 
   return (
-    <div className="p-6 container mx-auto bg-gradient-to-r bg-white rounded-lg border-2">
+    <div className="p-6 my-6 container mx-auto bg-gradient-to-r bg-white rounded-lg border-2">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col md:flex-row gap-6">
         {event?.poster_image_link ? (
@@ -184,12 +186,7 @@ const EventDetail = () => {
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Location
           </h2>
-          <iframe
-            title="Google Map"
-            src={`https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${location.lat},${location.lng}&zoom=14`}
-            className="w-full h-96 rounded-lg border-2"
-            allowFullScreen
-          />
+          <Map imageSource={event?.poster_image_link} title={event?.title} location={location} />
         </div>
       )}
       <div className="mt-6">

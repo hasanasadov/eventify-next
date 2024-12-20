@@ -8,16 +8,20 @@ import { BASE_URL } from "@/constants";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
 import EventItem from "../../events/EventItem";
+import Map from "@/components/shared/Map";
 
 const VenueDetail = () => {
   const params = useParams();
   const { id } = params;
   const [venue, setVenue] = useState(null);
   const [venueEvents, setVenueEvents] = useState([]);
+  const [location, setLocation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
 
+  console.log(venue);
+  console.log(location);
   useEffect(() => {
     const fetchVenueDetails = async () => {
       try {
@@ -28,6 +32,11 @@ const VenueDetail = () => {
         if (!foundVenue) {
           throw new Error("Venue not found!");
         }
+        const location = {
+          lat: foundVenue.lat,
+          lng: foundVenue.lng,
+        };
+        setLocation(location);
         setVenue(foundVenue);
       } catch (err) {
         setError(err.message);
@@ -55,7 +64,6 @@ const VenueDetail = () => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    // make toast notification on center top
     toast.success(
       isFavorite ? "Removed from favorites" : "Added to favorites",
       {
@@ -168,11 +176,10 @@ const VenueDetail = () => {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                 Location
               </h2>
-              <iframe
-                title="Google Map"
-                src={`https://www.google.com/maps/embed/v1/view?key=YOUR_API_KEY&center=${location.lat},${location.lng}&zoom=14`}
-                className="w-full h-96 rounded-lg border-2"
-                allowFullScreen
+              <Map
+                imageSource={venue.image_1_link}
+                title={venue.name}
+                location={location}
               />
             </div>
           )}
