@@ -42,7 +42,7 @@ const VenueDetail = () => {
         const events = await fetch(`${BASE_URL}/events`).then((res) =>
           res.json()
         );
-        const venueEvents = events.filter((item) => item.event.venue_id == id);
+        const venueEvents = events.filter((item) => item.venue_id == id);
         setVenueEvents(venueEvents);
       } catch (err) {
         console.error(err);
@@ -184,7 +184,7 @@ const VenueDetail = () => {
             {venueEvents.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {venueEvents.map((item) => (
-                  <EventItem key={item.event.id} event={item.event} />
+                  <EventItem key={item.id} event={item} />
                 ))}
               </div>
             ) : (

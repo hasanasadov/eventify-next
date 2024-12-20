@@ -14,6 +14,8 @@ import {
 import { IoArrowUpCircle } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import Logo from "@/assets/logo.png";
+import { Task } from "@mui/icons-material";
+import { toast } from "sonner";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -36,7 +38,8 @@ const Footer = () => {
       alert("Please enter a valid email address.");
       return;
     }
-    alert(`Subscribed with: ${email}`);
+    Task;
+    toast.success(`Subscribed with: ${email}`);
     setEmail("");
   };
 
@@ -84,7 +87,7 @@ const Footer = () => {
 
       <div className="px-6 sm:px-12 lg:px-24 relative z-10">
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-10"
+          className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -108,17 +111,8 @@ const Footer = () => {
             className="flex flex-col items-center md:items-start"
           >
             <Link href="/" className="group">
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                className="w-40 h-12 md:scale-150 flex items-center justify-center mb-4"
-              >
-                <Image
-                  src={Logo}
-                  alt="logo"
-                  width={120}
-                  height={120}
-                  className="group-hover:rotate-6 transition-transform duration-300"
-                />
+              <motion.div className="w-40 h-12  flex items-center justify-center mb-4">
+                <Image src={Logo} alt="logo" width={240} height={120} />
               </motion.div>
             </Link>
             <p className="text-center md:text-left text-sm opacity-80 hover:opacity-100 transition-opacity">
@@ -206,7 +200,7 @@ const Footer = () => {
             </h3>
             <form
               onSubmit={handleSubscribe}
-              className="flex flex-col sm:flex-row items-center gap-3"
+              className="flex flex-col sm:flex-row  items-center gap-3"
             >
               <motion.input
                 whileFocus={{ scale: 1.05 }}
@@ -245,7 +239,7 @@ const Footer = () => {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, rotate: 360 }}
+                whileHover={{ scale: 1.2, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className={`text-black ${color} transition-all`}
               >

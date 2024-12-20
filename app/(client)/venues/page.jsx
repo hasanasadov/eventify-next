@@ -15,11 +15,14 @@ const VenuesPage = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+
+  console.log(venues);
+
   useEffect(() => {
     const fetchVenues = async () => {
       try {
-        const res = await getVenues();
-        setVenues(res.data);
+        const data = await getVenues();
+        setVenues(data);
         setDisplayedVenues(data.slice(0, ITEMS_PER_PAGE));
         if (data.length <= ITEMS_PER_PAGE) setHasMore(false);
       } catch (error) {

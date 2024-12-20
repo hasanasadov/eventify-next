@@ -25,11 +25,11 @@ const Navbar = () => {
 
   async function getUser() {
     const data = await getCurrentUser(token);
-    if (data.success) {
+    if (data?.success) {
       setUser(data.user);
     }
 
-    if (!data.success) {
+    if (!data?.success) {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
     }

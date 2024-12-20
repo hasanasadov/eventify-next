@@ -14,11 +14,13 @@ const EventsPage = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  console.log(events);
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const result = await getEvents();
-        setEvents(result.data);
+        const data = await getEvents();
+        setEvents(data);
         setDisplayedEvents(data.slice(0, ITEMS_PER_PAGE));
         if (data.length <= ITEMS_PER_PAGE) setHasMore(false);
       } catch (error) {
@@ -78,7 +80,7 @@ const EventsPage = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {displayedEvents.map((item) => (
-              <EventItem key={item.event.id} event={item.event} />
+              <EventItem key={item.id} event={item} />
             ))}
           </div>
 
