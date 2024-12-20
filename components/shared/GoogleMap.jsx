@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 const GoogleMap = ({ className }) => {
   const mapRef = useRef(null); // Ref for the map container
 
-  useEffect(() => {
+  useEffect(() => { 
     const loadGoogleMapsAPI = () => {
       return new Promise((resolve) => {
         if (

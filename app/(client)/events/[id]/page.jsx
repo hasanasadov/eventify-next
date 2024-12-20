@@ -186,7 +186,11 @@ const EventDetail = () => {
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Location
           </h2>
-          <Map imageSource={event?.poster_image_link} title={event?.title} location={location} />
+          <Map
+            imageSource={event?.poster_image_link}
+            title={event?.title}
+            location={location}
+          />
         </div>
       )}
       <div className="mt-6">
