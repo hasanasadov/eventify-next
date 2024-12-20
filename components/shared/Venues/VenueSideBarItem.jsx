@@ -1,14 +1,29 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
 import ContentLoader from "react-content-loader";
 import LOGO from "@/assets/logo.png";
+import { FavoriteBorderOutlined } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 
 const VenueSideBarItem = ({ venue }) => {
+  const [isHovered, setIsHovered] = useState("hidden");
+
+  const [isFavorite, setIsFavorite] = useState(true);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
   return (
     <Link
       href={`/venues/${venue.id}`}
       key={venue.id}
+      onMouseEnter={() => {
+        setIsHovered("block");
+      }}
+      onMouseLeave={() => setIsHovered("hidden")}
       className="bg-white flex items-center flex-col p-4 gap-4 w-[95%] border-2  transition-all rounded-lg relative "
     >
       <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden ">
@@ -29,6 +44,27 @@ const VenueSideBarItem = ({ venue }) => {
           <button className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center ">
             <TimelapseOutlined className="h-5 w-5 text-gray-600" />
           </button>
+        </div>
+        <div className={`mt-6 absolute -top-4 right-2 z-10 block ${isHovered}`}>
+          {isFavorite ? (
+            <Favorite
+              style={{
+                fontSize: 27,
+                color: "red",
+              }}
+              className="cursor-pointer"
+              onClick={toggleFavorite}
+            />
+          ) : (
+            <FavoriteBorderOutlined
+              style={{
+                color: "black",
+                fontSize: 27,
+              }}
+              className="cursor-pointer"
+              onClick={toggleFavorite}
+            />
+          )}
         </div>
       </div>
     </Link>

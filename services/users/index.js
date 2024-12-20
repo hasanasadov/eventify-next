@@ -87,3 +87,27 @@ export async function getCurrentUser(token) {
     return null;
   }
 }
+
+export async function handleResetPassword(values) {
+  try {
+    const response = await fetch(`${BASE_URL}/auth/reset-password`, {
+      method: "POST",
+      body: values,
+    });
+    const data = await response.json();
+    if (response.status < 400) {
+      return {
+        success: true,
+        message: data.message,
+        accessToken: data.access_token,
+      };
+    }
+    return {
+      success: false,
+      message: data?.detail,
+    };
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

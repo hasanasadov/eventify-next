@@ -1,14 +1,16 @@
-import { BookmarkAddOutlined } from "@mui/icons-material";
-import { Bookmark } from "@mui/icons-material";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import ContentLoader from "react-content-loader";
 import LOGO from "@/assets/logo.png";
+import { FavoriteBorderOutlined } from "@mui/icons-material";
+import { Favorite } from "@mui/icons-material";
 
 const EventSideBarItem = ({ item }) => {
   const [isHovered, setIsHovered] = useState("hidden");
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(true);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
@@ -52,15 +54,16 @@ const EventSideBarItem = ({ item }) => {
         {/* Bookmark Button */}
         <div className={`mt-6 absolute -top-4 right-2 z-10 block ${isHovered}`}>
           {isFavorite ? (
-            <Bookmark
+            <Favorite
               style={{
                 fontSize: 27,
+                color: "red",
               }}
               className="cursor-pointer"
               onClick={toggleFavorite}
             />
           ) : (
-            <BookmarkAddOutlined
+            <FavoriteBorderOutlined
               style={{
                 color: "black",
                 fontSize: 27,
