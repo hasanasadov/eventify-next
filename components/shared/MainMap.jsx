@@ -88,7 +88,7 @@ const MainMap = () => {
       center={
         currentPosition
         ||
-        (locations[0] && {
+        (locations[1] && {
           lat: +locations[0].lat,
           lng: +locations[0].lng,
         })

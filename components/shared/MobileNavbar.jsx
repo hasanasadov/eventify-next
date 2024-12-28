@@ -4,8 +4,8 @@ import { Button } from "../ui/button";
 import { Calendar1Icon } from "lucide-react";
 import { MuseumOutlined } from "@mui/icons-material";
 import { MessageCircleIcon } from "lucide-react";
-import { CalendarPlus2Icon } from "lucide-react";
 import { User2Icon } from "lucide-react";
+import { MapOutlined } from "@mui/icons-material";
 
 const MobileNavbar = () => {
   return (
@@ -49,7 +49,7 @@ const MobileNavbar = () => {
         </Button>
       </Link>
 
-      <Link href="/pricing">
+      <Link href="/map">
         <Button
           className="text-2xl hover:bg-green-600"
           style={{
@@ -57,7 +57,7 @@ const MobileNavbar = () => {
           }}
           variant="ghost"
         >
-          <CalendarPlus2Icon style={{ width: "28px", height: "28px" }} />
+          <MapOutlined style={{ width: "28px", height: "28px" }} />
         </Button>
       </Link>
 

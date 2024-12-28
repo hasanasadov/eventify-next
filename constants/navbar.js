@@ -1,5 +1,5 @@
-import { FavoriteBorderOutlined } from "@mui/icons-material";
 import { SubscriptionsOutlined } from "@mui/icons-material";
+import { MapOutlined } from "@mui/icons-material";
 import { MuseumOutlined } from "@mui/icons-material";
 import { User2Icon } from "lucide-react";
 import { MessageCircleIcon } from "lucide-react";
@@ -22,9 +22,9 @@ export const NAVBAR_ITEM = [
     href: "/chat",
   },
   {
-    title: "Favorites",
-    icon: FavoriteBorderOutlined,
-    href: "/favorites/events",
+    title: "Map",
+    icon: MapOutlined,
+    href: "/map",
   },
   {
     title: "Subscriptions",
