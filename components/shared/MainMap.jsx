@@ -86,11 +86,12 @@ const MainMap = () => {
       mapContainerStyle={mapContainerStyle}
       zoom={14}
       center={
-        currentPosition ||
-        (locations[0] && {
-          lat: +locations[0].lat,
-          lng: +locations[0].lng,
-        })
+        currentPosition
+        // ||
+        // (locations[0] && {
+        //   lat: +locations[0].lat,
+        //   lng: +locations[0].lng,
+        // })
       }
     >
       {/* Current location marker */}
