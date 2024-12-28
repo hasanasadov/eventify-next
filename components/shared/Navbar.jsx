@@ -29,10 +29,10 @@ const Navbar = () => {
       setUser(data.user);
     }
 
-    if (!data?.success) {
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-    }
+    // if (!data?.success) {
+    //   localStorage.removeItem("access_token");
+    //   localStorage.removeItem("refresh_token");
+    // }
   }
 
   return (
