@@ -5,14 +5,7 @@ import React from "react";
 import LOGO from "@/assets/logo.png";
 
 const EventItem = ({ event }) => {
-  const isValidUrl = (url) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+  console.log(event);
   return (
     <Link
       href={`/events/${event.id}`}
@@ -20,10 +13,8 @@ const EventItem = ({ event }) => {
       className="group block bg-white rounded-lg border-2 overflow-hidden  transition-all duration-300"
     >
       <div className="relative overflow-hidden">
-        <Image
-          src={
-            isValidUrl(event.poster_image_link) ? event.poster_image_link : LOGO
-          }
+        <img
+          src={event.poster_image_link || LOGO}
           alt={event.title || "event"}
           width={500}
           height={300}
