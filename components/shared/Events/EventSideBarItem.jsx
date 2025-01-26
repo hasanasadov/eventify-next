@@ -16,14 +16,6 @@ const EventSideBarItem = ({ item }) => {
     setIsFavorite(!isFavorite);
   };
 
-  const isValidUrl = (url) => {
-    try {
-      new URL(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
   return (
     <Link
       href={`/events/${item.id}`}
@@ -34,8 +26,8 @@ const EventSideBarItem = ({ item }) => {
       onMouseLeave={() => setIsHovered("hidden")}
       className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative"
     >
-      <Image
-        src={isValidUrl(item.poster_image_link) ? item.poster_image_link : LOGO}
+      <img
+        src={item.poster_image_link || LOGO}
         className="rounded-lg w-full h-48 "
         alt={item.title || "event"}
         width={100}
