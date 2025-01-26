@@ -26,11 +26,11 @@ export const NAVBAR_ITEM = [
     icon: MapOutlined,
     href: "/map",
   },
-  {
-    title: "Subscriptions",
-    icon: SubscriptionsOutlined,
-    href: "/pricing",
-  },
+  // {
+  //   title: "Subscriptions",
+  //   icon: SubscriptionsOutlined,
+  //   href: "/pricing",
+  // },
   {
     title: "Account",
     icon: User2Icon,

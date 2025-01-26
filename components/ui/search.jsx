@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react";
 
 export function InputWithButton() {
   return (
-    <div className="flex items-center space-x-2 relative ">
+    <div className="flex items-center space-x-2 relative max-w-xl">
       <Input className="rounded-3xl bg-gray-200" type="email" placeholder="Search ..." />
       <Button
         variant={"ghost"}
