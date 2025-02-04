@@ -22,7 +22,7 @@ const EventSideBarItem = ({ item }) => {
         setIsHovered("block");
       }}
       onMouseLeave={() => setIsHovered("hidden")}
-      className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative overflow-hidden"
+      className="flex hover:shadow-xl hover:border-green-300 duration-200 items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative overflow-hidden"
     >
       <img
         src={item.poster_image_link || LOGO}
@@ -42,7 +42,7 @@ const EventSideBarItem = ({ item }) => {
         </div>
 
         {/* Bookmark Button */}
-        <div className={`mt-6 absolute -top-4 right-2 z-10 block ${isHovered}`}>
+        {/* <div className={`mt-6 absolute -top-4 right-2 z-10 block ${isHovered}`}>
           {isFavorite ? (
             <Favorite
               style={{
@@ -62,7 +62,7 @@ const EventSideBarItem = ({ item }) => {
               onClick={toggleFavorite}
             />
           )}
-        </div>
+        </div> */}
       </div>
     </Link>
   );

@@ -23,7 +23,7 @@ const VenueSideBarItem = ({ venue }) => {
         setIsHovered("block");
       }}
       onMouseLeave={() => setIsHovered("hidden")}
-      className="bg-white flex items-center flex-col p-4 gap-4 w-[95%] border-2  transition-all rounded-lg relative "
+      className="bg-white hover:shadow-xl hover:border-blue-300 duration-200 flex items-center flex-col p-4 gap-4 w-[95%] border-2  transition-all rounded-lg relative "
     >
       <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden ">
         <img
@@ -39,12 +39,12 @@ const VenueSideBarItem = ({ venue }) => {
             {venue.description}
           </p>
         </div>
-        <div className="absolute  flexx top-2 right-2                         hidden ">
+        {/* <div className="absolute  flexx top-2 right-2                          ">
           <button className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center ">
             <TimelapseOutlined className="h-5 w-5 text-gray-600" />
           </button>
-        </div>
-        <div className={`mt-6 absolute -top-4 right-2 z-10 block ${isHovered}`}>
+        </div> */}
+        {/* <div className={`mt-6 absolute -top-4 right-2 z-10 block ${isHovered}`}>
           {isFavorite ? (
             <Favorite
               style={{
@@ -64,7 +64,7 @@ const VenueSideBarItem = ({ venue }) => {
               onClick={toggleFavorite}
             />
           )}
-        </div>
+        </div> */}
       </div>
     </Link>
   );
