@@ -1,11 +1,10 @@
 import { FavoriteBorder } from "@mui/icons-material";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import LOGO from "@/assets/logo.png";
 
 const EventItem = ({ event }) => {
-  console.log(event);
+  // console.log(event);
   return (
     <Link
       href={`/events/${event.id}`}

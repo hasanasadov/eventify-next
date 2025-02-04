@@ -10,8 +10,7 @@ import { MapOutlined } from "@mui/icons-material";
 const MobileNavbar = () => {
   return (
     <div
-      className={`fixed  right-0 bottom-0 w-full h-20  flex items-center justify-center gap-4 transition-transform duration-300 lg:hidden `}
-      style={{ backgroundColor: "var(--accent-secondary)" }}
+      className={`fixed bg-green-700 right-0 -bottom-[calc(100vh-70px)] w-full h-20  flex items-center justify-center gap-4 transition-transform duration-300 lg:hidden `}
     >
       <Link href="/events">
         <Button
@@ -37,7 +36,7 @@ const MobileNavbar = () => {
         </Button>
       </Link>
 
-      <Link href="/chat">
+      {/* <Link href="/chat">
         <Button
           className="text-2xl hover:bg-green-600"
           style={{
@@ -47,7 +46,7 @@ const MobileNavbar = () => {
         >
           <MessageCircleIcon style={{ width: "28px", height: "28px" }} />
         </Button>
-      </Link>
+      </Link> */}
 
       <Link href="/map">
         <Button

@@ -153,7 +153,7 @@ const EventDetail = () => {
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
         <div className="space-y-4">
           {eventComments?.length > 0 ? (
-            comments.map((comment, index) => (
+            eventComments.map((comment, index) => (
               <div key={index} className="bg-gray-100 p-4 rounded-lg border-2">
                 <p>{comment.comment}</p>
               </div>

@@ -83,7 +83,7 @@ export async function getEvent(id) {
   try {
     const response = await fetch(`${BASE_URL}/events/${id}`);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -93,7 +93,7 @@ export async function getEventComments(id) {
   try {
     const response = await fetch(`${BASE_URL}/events/${id}/comment`);
     const data = await response.json();
-    console.log("comdata", data);
+    // console.log("comdata", data);
     return data || [];
   } catch (error) {
     console.error("Error:", error);
@@ -104,7 +104,7 @@ export async function getEventComment(comment_id) {
   try {
     const response = await fetch(`${BASE_URL}/events/comment/${comment_id}`);
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.error("Error:", error);
   }

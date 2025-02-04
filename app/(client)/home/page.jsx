@@ -6,8 +6,13 @@ import { useRouter } from "next/navigation";
 import SideBarLeft from "@/components/shared/SideBarLeft";
 import SideBarRight from "@/components/shared/SideBarRight";
 import MainMap from "@/components/shared/MainMap";
+// import { useAppSelector } from "@/hooks/redux";
+// import { selectAuth } from "@/store/auth";
 
 export default function HomePage() {
+  // const { user, loading } = useAppSelector(selectAuth);
+  // console.log("user", user);
+
   const router = useRouter();
 
   useEffect(() => {

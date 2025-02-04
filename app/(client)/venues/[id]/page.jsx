@@ -36,7 +36,7 @@ const VenueDetail = () => {
     queryFn: getEvents,
   });
 
-  console.log(venue, allEvents);
+  // console.log(venue, allEvents);
   const venueEvents = allEvents?.filter((item) => item.venue_id == id);
 
   const toggleFavorite = () => {

@@ -25,7 +25,7 @@ const MainMap = () => {
   const [directions, setDirections] = useState(null);
   const [showRoute, setShowRoute] = useState(false);
 
-  console.log("selectedLocation", locations);
+  // console.log("selectedLocation", locations);
 
   useEffect(() => {
     getLocations().then((locations) => setLocations(locations));
