@@ -1,90 +1,56 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import EventItem from "./EventItem";
 import { getEvents } from "@/services/events";
+import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/constants/queryKeys";
 
-const ITEMS_PER_PAGE = 8;
-const ITEMS_PER_SCROLL = 4;
+// const ITEMS_PER_PAGE = 8;
+// const ITEMS_PER_SCROLL = 4;
 
 const EventsPage = () => {
-  const [events, setEvents] = useState([]);
-  const [displayedEvents, setDisplayedEvents] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const {
+    data: events,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.EVENTS],
+    queryFn: getEvents,
+  });
 
-  console.log(events);
+  if (isError) {
+    return (
+      <div className="flex flex-col items-center gap-3 min-h-[70vh]">
+        <h2 className="text-lg font-bold text-center">Something went wrong</h2>
+        <p className="text-sm text-center">
+          We could not fetch the events at the moment. Please try again later.
+        </p>
+      </div>
+    );
+  }
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const data = await getEvents();
-        setEvents(data);
-        setDisplayedEvents(data.slice(0, ITEMS_PER_PAGE));
-        if (data.length <= ITEMS_PER_PAGE) setHasMore(false);
-      } catch (error) {
-        setEvents([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchEvents();
-  }, []);
-
-  const handleLoadMore = () => {
-    if (!hasMore || loadingMore) return;
-
-    setLoadingMore(true);
-    setTimeout(() => {
-      const nextBatch = displayedEvents.length + ITEMS_PER_SCROLL;
-      if (nextBatch >= events.length) {
-        setDisplayedEvents(events);
-        setHasMore(false);
-      } else {
-        setDisplayedEvents(events.slice(0, nextBatch));
-      }
-      setLoadingMore(false);
-    }, 500);
-  };
-
-  const handleScroll = () => {
-    if (
-      window.innerHeight + window.scrollY >=
-      document.body.offsetHeight - 100
-    ) {
-      handleLoadMore();
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [displayedEvents, hasMore, loadingMore]);
+  if (isLoading || !events) {
+    return (
+      <div className=" min-h-[70vh] flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
-      {isLoading ? (
-        <div className="flex flex-col justify-center items-center min-h-screen">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
-          <p className="mt-4 text-green-500 font-semibold">
-            Loading event details...
-          </p>
-        </div>
-      ) : (
-        <>
-          <div className="flex  items-center justify-center">
-            <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
-              Explore Events
-            </h1>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {displayedEvents.map((item) => (
-              <EventItem key={item.id} event={item} />
-            ))}
-          </div>
+      <div className="flex  items-center justify-center">
+        <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
+          Explore Events
+        </h1>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {events.map((item) => (
+          <EventItem key={item.id} event={item} />
+        ))}
+      </div>
 
-          {hasMore && (
+      {/* {hasMore && (
             <div className="text-center text-gray-500 mt-8">
               <p className="text-sm font-medium">
                 {events.length - displayedEvents.length} more events available.
@@ -114,11 +80,39 @@ const EventsPage = () => {
             <div className="text-center text-gray-600 mt-16">
               <p>No events available at the moment. Please check back later!</p>
             </div>
-          )}
-        </>
-      )}
+          )} */}
     </div>
   );
 };
 
 export default EventsPage;
+
+// const handleLoadMore = () => {
+//   if (!hasMore || loadingMore) return;
+
+//   setLoadingMore(true);
+//   setTimeout(() => {
+//     const nextBatch = displayedVenues.length + ITEMS_PER_SCROLL;
+//     if (nextBatch >= venues.length) {
+//       setDisplayedVenues(venues);
+//       setHasMore(false);
+//     } else {
+//       setDisplayedVenues(venues.slice(0, nextBatch));
+//     }
+//     setLoadingMore(false);
+//   }, 500);
+// };
+
+// const handleScroll = () => {
+//   if (
+//     window.innerHeight + window.scrollY >=
+//     document.body.offsetHeight - 100
+//   ) {
+//     handleLoadMore();
+//   }
+// };
+
+// useEffect(() => {
+//   window.addEventListener("scroll", handleScroll);
+//   return () => window.removeEventListener("scroll", handleScroll);
+// }, [displayedVenues, hasMore, loadingMore]);

@@ -33,7 +33,7 @@ export const addFavoriteEvent = async (id) => {
 };
 export const createEvent = async (inputData) => {
   try {
-    const response = await fetch("http://localhost:8000/events", {
+    const response = await fetch("${BASE_URL}/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const removeFavoriteEvent = async (id) => {
 
 // export async function getFavoriteEvents() {
 //   try {
-//     const response = await fetch("http://localhost:8000/events/favorites", {
+//     const response = await fetch("${BASE_URL}/events/favorites", {
 //       method: "GET",
 //       headers: {
 //         "Content-Type": "application/json",
@@ -79,9 +79,9 @@ export const removeFavoriteEvent = async (id) => {
 //   }
 // }
 
-export async function getEvent(event_id) {
+export async function getEvent(id) {
   try {
-    const response = await fetch("http://localhost:8000/events/" + event_id);
+    const response = await fetch(`${BASE_URL}/events/${id}`);
     const data = await response.json();
     console.log(data);
   } catch (error) {
@@ -89,13 +89,12 @@ export async function getEvent(event_id) {
   }
 }
 
-export async function getEventComments(event_id) {
+export async function getEventComments(id) {
   try {
-    const response = await fetch(
-      "http://localhost:8000/events/" + event_id + "/comment"
-    );
+    const response = await fetch(`${BASE_URL}/events/${id}/comment`);
     const data = await response.json();
-    console.log(data);
+    console.log("comdata", data);
+    return data || [];
   } catch (error) {
     console.error("Error:", error);
   }
@@ -103,9 +102,7 @@ export async function getEventComments(event_id) {
 
 export async function getEventComment(comment_id) {
   try {
-    const response = await fetch(
-      "http://localhost:8000/events/comment/" + comment_id
-    );
+    const response = await fetch(`${BASE_URL}/events/comment/${comment_id}`);
     const data = await response.json();
     console.log(data);
   } catch (error) {
@@ -115,7 +112,7 @@ export async function getEventComment(comment_id) {
 
 // export async function createEvent(inputData) {
 //   try {
-//     const response = await fetch("http://localhost:8000/events", {
+//     const response = await fetch("${BASE_URL}/events", {
 //       method: "POST",
 //       headers: {
 //         "Content-Type": "application/json",
@@ -139,7 +136,7 @@ export async function getEventComment(comment_id) {
 
 export async function createEventLike(inputData) {
   try {
-    const response = await fetch("http://localhost:8000/events/like", {
+    const response = await fetch(`${BASE_URL}/events/like`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

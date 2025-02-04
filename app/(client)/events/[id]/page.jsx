@@ -1,89 +1,46 @@
 "use client";
 
 import Map from "@/components/shared/Map";
-import { BASE_URL } from "@/constants";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import { getEventById, getEventComments } from "@/services/events";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { toast } from "sonner";
 
 const EventDetail = () => {
-  const params = useParams();
-  const { id } = params;
-  const [eventData, setEventData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
+  const { id } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
-  console.log(eventData);
 
-  useEffect(() => {
-    const fetchEventDetails = async () => {
-      try {
-        const res = await fetch(`${BASE_URL}/events/${id}`);
-        if (!res.ok) {
-          throw new Error("Failed to fetch event details. Please try again.");
-        }
-        const event = await res.json();
-        setEventData(event);
+  const {
+    data: eventData,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.EVENT, id],
+    queryFn: () => getEventById(id),
+  });
 
-        const commentsRes = await fetch(`${BASE_URL}/events/${id}/comments`);
-        if (commentsRes.ok) {
-          const commentsData = await commentsRes.json();
-          setComments(commentsData);
-        }
-      } catch (err) {
-        setError(err.message);
-        toast.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: eventComments,
+    isError: commentsError,
+    isLoading: commentsLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.EVENT_COMMENTS, id],
+    queryFn: () => getEventComments(id),
+  });
 
-    fetchEventDetails();
-  }, [id]);
-
-  const handleAddComment = async () => {
-    if (!newComment.trim()) {
-      toast.error("Comment cannot be empty!");
-      return;
-    }
-
-    try {
-      const res = await fetch(`${BASE_URL}/events/${id}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ comment: newComment }),
-      });
-
-      if (!res.ok) throw new Error("Failed to add comment.");
-
-      const comment = await res.json();
-      setComments((prev) => [...prev, comment]);
-      setNewComment("");
-      toast.success("Comment added!", {
-        position: "top-center",
-      });
-    } catch (err) {
-      toast.error(err.message);
-    }
-  };
+  console.log(eventData, eventComments);
+  const [newComment, setNewComment] = useState("");
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    toast.success(
-      isFavorite ? "Removed from favorites!" : "Added to favorites!",
-      {
-        position: "top-center",
-      }
-    );
+    toast.success(isFavorite ? "Removed from favorites" : "Added to favorites");
   };
-
-  if (loading)
+  if (isLoading)
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="flex flex-col justify-center items-center min-h-screen">
@@ -95,12 +52,11 @@ const EventDetail = () => {
       </div>
     );
 
-  if (error)
+  if (isError)
     return (
       <div className="flex justify-center items-center min-h-screen bg-red-50">
         <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
           <p className="font-semibold">Error:</p>
-          <p>{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
@@ -196,7 +152,7 @@ const EventDetail = () => {
       <div className="mt-6">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
         <div className="space-y-4">
-          {comments.length > 0 ? (
+          {eventComments?.length > 0 ? (
             comments.map((comment, index) => (
               <div key={index} className="bg-gray-100 p-4 rounded-lg border-2">
                 <p>{comment.comment}</p>
@@ -215,7 +171,7 @@ const EventDetail = () => {
             className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
-            onClick={handleAddComment}
+            // onClick={handleAddComment}
             className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
           >
             Post

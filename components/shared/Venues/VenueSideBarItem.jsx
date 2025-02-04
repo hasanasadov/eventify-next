@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
-import ContentLoader from "react-content-loader";
 import LOGO from "@/assets/logo.png";
 import { FavoriteBorderOutlined } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
@@ -71,16 +70,4 @@ const VenueSideBarItem = ({ venue }) => {
   );
 };
 
-const VenueSideBarItemSkeleton = () => (
-  <ContentLoader
-    speed={2}
-    width="90%"
-    height="450px"
-    backgroundColor="#f3f3f3"
-    foregroundColor="#ecebeb"
-  >
-    <rect x="0" y="0" rx="10" ry="10" width="100%" height="100%" />
-  </ContentLoader>
-);
-
-export { VenueSideBarItem, VenueSideBarItemSkeleton };
+export { VenueSideBarItem };

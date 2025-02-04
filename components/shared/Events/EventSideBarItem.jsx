@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import ContentLoader from "react-content-loader";
 import LOGO from "@/assets/logo.png";
 import { FavoriteBorderOutlined } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
@@ -24,11 +22,11 @@ const EventSideBarItem = ({ item }) => {
         setIsHovered("block");
       }}
       onMouseLeave={() => setIsHovered("hidden")}
-      className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative"
+      className="flex items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative overflow-hidden"
     >
       <img
         src={item.poster_image_link || LOGO}
-        className="rounded-lg w-full h-48 "
+        className="rounded-lg w-full h-48 overflow-hidden "
         alt={item.title || "event"}
         width={100}
         height={100}
@@ -70,16 +68,5 @@ const EventSideBarItem = ({ item }) => {
   );
 };
 
-const EventSideBarItemSkeleton = () => (
-  <ContentLoader
-    speed={2}
-    width="90%"
-    height="450px"
-    backgroundColor="#f3f3f3"
-    foregroundColor="#ecebeb"
-  >
-    <rect x="0" y="0" rx="10" ry="10" width="100%" height="100%" />
-  </ContentLoader>
-);
 
-export { EventSideBarItemSkeleton, EventSideBarItem };
+export { EventSideBarItem };

@@ -1,78 +1,50 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import toast, { Toaster } from "react-hot-toast";
-import { BASE_URL } from "@/constants";
+import { Toaster } from "react-hot-toast";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
 import EventItem from "../../events/EventItem";
 import Map from "@/components/shared/Map";
+import { useQuery } from "@tanstack/react-query";
+import { getEvents } from "@/services/events";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import { getVenueById } from "@/services/venues";
+import { toast } from "sonner";
 
 const VenueDetail = () => {
-  const params = useParams();
-  const { id } = params;
-  const [venue, setVenue] = useState(null);
-  const [venueEvents, setVenueEvents] = useState([]);
-  const [location, setLocation] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { id } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
 
-  console.log(venue);
-  console.log(location);
-  useEffect(() => {
-    const fetchVenueDetails = async () => {
-      try {
-        const foundVenue = await fetch(`${BASE_URL}/venues/${id}`).then((res) =>
-          res.json()
-        );
+  const {
+    data: venue,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.VENUES, id],
+    queryFn: () => getVenueById(id),
+  });
 
-        if (!foundVenue) {
-          throw new Error("Venue not found!");
-        }
-        const location = {
-          lat: foundVenue.lat,
-          lng: foundVenue.lng,
-        };
-        setLocation(location);
-        setVenue(foundVenue);
-      } catch (err) {
-        setError(err.message);
-        toast.error(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: allEvents,
+    isError: eventsError,
+    isLoading: eventsLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.EVENTS],
+    queryFn: getEvents,
+  });
 
-    const fetchEventsForThisVenue = async () => {
-      try {
-        const events = await fetch(`${BASE_URL}/events`).then((res) =>
-          res.json()
-        );
-        const venueEvents = events.filter((item) => item.venue_id == id);
-        setVenueEvents(venueEvents);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchEventsForThisVenue();
-    fetchVenueDetails();
-  }, [id]);
+  console.log(venue, allEvents);
+  const venueEvents = allEvents?.filter((item) => item.venue_id == id);
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
-    toast.success(
-      isFavorite ? "Removed from favorites" : "Added to favorites",
-      {
-        position: "top-center",
-      }
-    );
+    toast.success(isFavorite ? "Removed from favorites" : "Added to favorites");
   };
 
-  if (loading)
+  if (isLoading)
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
         <div className="flex flex-col justify-center items-center min-h-screen">
@@ -84,12 +56,11 @@ const VenueDetail = () => {
       </div>
     );
 
-  if (error)
+  if (isError)
     return (
       <div className="flex justify-center items-center min-h-screen bg-red-50">
         <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
           <p className="font-semibold">Error:</p>
-          <p>{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
@@ -179,16 +150,18 @@ const VenueDetail = () => {
               <Map
                 imageSource={venue.image_1_link}
                 title={venue.name}
-                location={location}
+                location={{
+                  lat: venue.lat,
+                  lng: venue.lng,
+                }}
               />
             </div>
           )}
-          {/* Events Section */}
           <div className="mt-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Upcoming Events
             </h2>
-            {venueEvents.length > 0 ? (
+            {venueEvents?.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {venueEvents.map((item) => (
                   <EventItem key={item.id} event={item} />
