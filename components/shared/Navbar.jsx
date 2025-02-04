@@ -61,7 +61,11 @@ const Navbar = () => {
               <Link
                 key={index}
                 href={item.href}
-                className={cn(`flex items-center gap-2 font-bold`)}
+                className={cn(
+                  `flex items-center gap-2 font-bold ${
+                    item.title == "Chat" ? " hidden " : ""
+                  }`
+                )}
               >
                 <Button variant="ghost" className={cn(``)}>
                   {<item.icon />} {item.title}

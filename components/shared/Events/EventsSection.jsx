@@ -35,7 +35,7 @@ const EventsSection = () => {
   }
 
   return (
-    <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4">
+    <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4 ">
       {events.map((item, idx) => (
         <EventSideBarItem key={idx} item={item} />
       ))}
