@@ -3,6 +3,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { Toaster } from "sonner";
 import "../globals.css";
+import { Suspense } from "react";
 // import store from "@/store";
 // import { Provider } from "react-redux";
 
@@ -14,7 +15,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* <Provider store={store}> */}
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* <Provider store={store}> */}
         <body className="mb-[40px] lg:mb-0">
           <Navbar />
           <main className="flex-grow">
@@ -23,7 +25,8 @@ export default function RootLayout({ children }) {
           <Footer />
           <Toaster />
         </body>
-      {/* </Provider> */}
+        {/* </Provider> */}
+      </Suspense>
     </html>
   );
 }

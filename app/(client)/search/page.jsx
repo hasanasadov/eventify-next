@@ -4,7 +4,7 @@ import { QUERY_KEYS } from "@/constants/queryKeys";
 import { searchEvents } from "@/services/events";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import React, { Suspense } from "react";
+import React from "react";
 import EventItem from "../events/EventItem";
 import { searchVenues } from "@/services/venues";
 import VenueItem from "../venues/VenueItem";
@@ -44,56 +44,54 @@ const SearchResult = () => {
     );
   }
   return (
-    <Suspense fallback={<PulseSkeleton className={"h-96 m-0"} />}>
-      <div className="min-h-[70vh] bg-gray-50  py-8 px-6 flex flex-col gap-10">
-        <div className="flex  items-center justify-start">
-          <h1 className="text-2xl text-center  font-bold text-[#075E54]">
-            <Renderif condition={eventsData?.length > 0 || eventsLoading}>
-              Found Events
-            </Renderif>
-            <Renderif condition={eventsData?.length === 0}>
-              {" "}
-              No Events Found
-            </Renderif>
-          </h1>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <Renderif condition={eventsLoading}>
-            <PulseSkeleton className={"h-96 m-0"} />
-            <PulseSkeleton className={"h-96 m-0"} />
-            <PulseSkeleton className={"h-96 m-0"} />
-            <PulseSkeleton className={"h-96 m-0"} />
+    <div className="min-h-[70vh] bg-gray-50  py-8 px-6 flex flex-col gap-10">
+      <div className="flex  items-center justify-start">
+        <h1 className="text-2xl text-center  font-bold text-[#075E54]">
+          <Renderif condition={eventsData?.length > 0 || eventsLoading}>
+            Found Events
           </Renderif>
-
-          {eventsData?.map((item) => (
-            <EventItem key={item.id} event={item} />
-          ))}
-        </div>
-
-        <div className="flex py-4 items-center justify-start">
-          <h1 className="text-2xl text-center  font-bold text-[#075E54]">
-            <Renderif condition={venuesData?.length > 0 || venuesLoading}>
-              Found Venues
-            </Renderif>
-            <Renderif condition={venuesData?.length === 0}>
-              {" "}
-              No Venues Found
-            </Renderif>
-          </h1>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          <Renderif condition={venuesLoading}>
-            <PulseSkeleton className={"h-96 m-0"} />
-            <PulseSkeleton className={"h-96 m-0"} />
-            <PulseSkeleton className={"h-96 m-0"} />
-            <PulseSkeleton className={"h-96 m-0"} />
+          <Renderif condition={eventsData?.length === 0}>
+            {" "}
+            No Events Found
           </Renderif>
-          {venuesData?.map((item) => (
-            <VenueItem key={item.id} venue={item} />
-          ))}
-        </div>
+        </h1>
       </div>
-    </Suspense>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <Renderif condition={eventsLoading}>
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+        </Renderif>
+
+        {eventsData?.map((item) => (
+          <EventItem key={item.id} event={item} />
+        ))}
+      </div>
+
+      <div className="flex py-4 items-center justify-start">
+        <h1 className="text-2xl text-center  font-bold text-[#075E54]">
+          <Renderif condition={venuesData?.length > 0 || venuesLoading}>
+            Found Venues
+          </Renderif>
+          <Renderif condition={venuesData?.length === 0}>
+            {" "}
+            No Venues Found
+          </Renderif>
+        </h1>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <Renderif condition={venuesLoading}>
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+        </Renderif>
+        {venuesData?.map((item) => (
+          <VenueItem key={item.id} venue={item} />
+        ))}
+      </div>
+    </div>
   );
 };
 
