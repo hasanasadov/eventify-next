@@ -1,7 +1,9 @@
 "use client";
 
 import Map from "@/components/shared/Map";
+import { Button } from "@/components/ui/button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import { Renderif } from "@/lib/utils";
 import { getEventById, getEventComments } from "@/services/events";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
@@ -14,6 +16,9 @@ import { toast } from "sonner";
 const EventDetail = () => {
   const { id } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
+  const forceSignIn = true;
+  const [newComment, setNewComment] = useState("");
+  const [sliceCount, setSliceCount] = useState(3);
 
   const {
     data: eventData,
@@ -34,12 +39,12 @@ const EventDetail = () => {
   });
 
   console.log(eventData, eventComments);
-  const [newComment, setNewComment] = useState("");
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
     toast.success(isFavorite ? "Removed from favorites" : "Added to favorites");
   };
+
   if (isLoading)
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -152,30 +157,73 @@ const EventDetail = () => {
       <div className="mt-6">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
         <div className="space-y-4">
-          {eventComments?.length > 0 ? (
-            eventComments.map((comment, index) => (
-              <div key={index} className="bg-gray-100 p-4 rounded-lg border-2">
-                <p>{comment.comment}</p>
+          <Renderif condition={eventComments?.length && !commentsError}>
+            {eventComments?.slice(0, sliceCount).map((comment, index) => (
+              <div
+                key={index}
+                className="bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2"
+              >
+                <p>{comment.comment.content}</p>
+                <p className="text-gray-500 text-sm">
+                  {comment.owner.username}
+                </p>
               </div>
-            ))
-          ) : (
+            ))}
+          </Renderif>
+
+          <Renderif condition={commentsLoading}>
+            <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
+              <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
+              <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
+            </div>
+            <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
+              <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
+              <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
+            </div>
+            <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
+              <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
+              <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
+            </div>
+          </Renderif>
+          <Renderif condition={!eventComments?.length && !commentsLoading}>
             <p className="text-gray-500">No comments yet.</p>
-          )}
+          </Renderif>
+          <Button
+            disabled={!eventComments?.length || commentsLoading}
+            onClick={() => {
+              sliceCount === -1 ? setSliceCount(3) : setSliceCount(-1);
+            }}
+            className={`mt-4 ${
+              commentsError ||
+              (!commentsError && !commentsLoading && !eventComments.length)
+                ? "hidden"
+                : ""
+            } `}
+          >
+            <Renderif condition={sliceCount === -1}>Hide Comments</Renderif>
+            <Renderif condition={sliceCount !== -1}>Show All Comments</Renderif>
+            <Renderif condition={eventComments?.length && sliceCount !== -1}>
+              ({eventComments?.length})
+            </Renderif>
+          </Button>
         </div>
         <div className="mt-4 flex items-center">
           <input
             type="text"
-            placeholder="Add a comment..."
+            placeholder={`${
+              forceSignIn ? "You need to sign in to" : ""
+            } Add a comment...`}
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <button
+          <Button
             // onClick={handleAddComment}
-            className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            disabled={forceSignIn}
+            className="ml-2 "
           >
             Post
-          </button>
+          </Button>
         </div>
       </div>
     </div>

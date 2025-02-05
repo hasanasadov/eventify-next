@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { getVenues } from "@/services/venues";
 import VenueItem from "./VenueItem";
+import PulseSkeleton from "@/components/shared/PulseSkeleton";
 
 const VenuesPage = () => {
   const {
@@ -26,11 +27,21 @@ const VenuesPage = () => {
     );
   }
 
-  // console.log(venues);
+  console.log("venuespage", venues);
   if (isLoading || !venues) {
     return (
-      <div className=" min-h-[70vh] flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4">
-        Loading...
+      <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
+        <div className="flex  items-center justify-center">
+          <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
+            Explore Venues
+          </h1>
+        </div>
+        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:grid-cols-4 w-full overflow-y-auto h-full pb-4">
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+          <PulseSkeleton className={"h-96 m-0"} />
+        </div>
       </div>
     );
   }

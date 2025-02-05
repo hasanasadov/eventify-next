@@ -20,6 +20,13 @@ export const getFavoriteEvents = async () => {
   return data;
 };
 
+export const searchEvents = async (searchText) => {
+  const res = await fetch(`${BASE_URL}/events/search/${searchText}`);
+  
+  const data = await res.json();
+  return data;
+};
+
 export const addFavoriteEvent = async (id) => {
   const res = await fetch(`${BASE_URL}/favorite-events`, {
     method: "POST",
@@ -93,7 +100,7 @@ export async function getEventComments(id) {
   try {
     const response = await fetch(`${BASE_URL}/events/${id}/comment`);
     const data = await response.json();
-    // console.log("comdata", data);
+    console.log("comdata", data);
     return data || [];
   } catch (error) {
     console.error("Error:", error);

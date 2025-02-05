@@ -11,12 +11,17 @@ import Map from "@/components/shared/Map";
 import { useQuery } from "@tanstack/react-query";
 import { getEvents } from "@/services/events";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { getVenueById } from "@/services/venues";
+import { getVenueById, getVenueComments } from "@/services/venues";
 import { toast } from "sonner";
+import { Renderif } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const VenueDetail = () => {
   const { id } = useParams();
   const [isFavorite, setIsFavorite] = useState(false);
+  const forceSignIn = true;
+  const [newComment, setNewComment] = useState("");
+  const [sliceCount, setSliceCount] = useState(3);
 
   const {
     data: venue,
@@ -36,7 +41,15 @@ const VenueDetail = () => {
     queryFn: getEvents,
   });
 
-  // console.log(venue, allEvents);
+  const {
+    data: venueComments,
+    isError: commentsError,
+    isLoading: commentsLoading,
+  } = useQuery({
+    queryKey: [QUERY_KEYS.VENUE_COMMENTS, id],
+    queryFn: () => getVenueComments(id),
+  });
+
   const venueEvents = allEvents?.filter((item) => item.venue_id == id);
 
   const toggleFavorite = () => {
@@ -157,6 +170,84 @@ const VenueDetail = () => {
               />
             </div>
           )}
+          <div className="mt-6">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Comments
+            </h2>
+            <div className="space-y-4">
+              <Renderif condition={venueComments?.length && !commentsError}>
+                {venueComments?.slice(0, sliceCount).map((comment, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2"
+                  >
+                    <p>{comment.comment.content}</p>
+                    <p className="text-gray-500 text-sm">
+                      {comment.owner.username}
+                    </p>
+                  </div>
+                ))}
+              </Renderif>
+
+              <Renderif condition={commentsLoading}>
+                <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
+                  <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
+                  <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
+                </div>
+                <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
+                  <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
+                  <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
+                </div>
+                <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
+                  <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
+                  <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
+                </div>
+              </Renderif>
+              <Renderif condition={!venueComments?.length && !commentsLoading}>
+                <p className="text-gray-500">No comments yet.</p>
+              </Renderif>
+              <Button
+                disabled={!venueComments?.length || commentsLoading}
+                onClick={() => {
+                  sliceCount === -1 ? setSliceCount(3) : setSliceCount(-1);
+                }}
+                className={`mt-4 ${
+                  commentsError ||
+                  (!commentsError && !commentsLoading && !venueComments.length)
+                    ? "hidden"
+                    : ""
+                } `}
+              >
+                <Renderif condition={sliceCount === -1}>Hide Comments</Renderif>
+                <Renderif condition={sliceCount !== -1}>
+                  Show All Comments
+                </Renderif>
+                <Renderif
+                  condition={venueComments?.length && sliceCount !== -1}
+                >
+                  ({venueComments?.length})
+                </Renderif>
+              </Button>
+            </div>
+            <div className="mt-4 flex items-center">
+              <input
+                type="text"
+                placeholder={`${
+                  forceSignIn ? "You need to sign in to" : ""
+                } Add a comment...`}
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+              <Button
+                // onClick={handleAddComment}
+                disabled={forceSignIn}
+                className="ml-2 "
+              >
+                Post
+              </Button>
+            </div>
+          </div>
           <div className="mt-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               Upcoming Events

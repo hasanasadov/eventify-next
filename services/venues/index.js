@@ -38,3 +38,23 @@ export const removeFavoriteVenue = async (id) => {
   const data = await res.json();
   return data;
 };
+
+export const searchVenues = async (searchText) => {
+  const res = await fetch(`${BASE_URL}/venues/search/${searchText}`);
+
+  const data = await res.json();
+  return data;
+};
+
+export async function getVenueComments(id) {
+  try {
+    const response = await fetch(`${BASE_URL}/venues/${id}/comment`);
+    const data = await response.json();
+    if (!response.ok) {
+      return [];
+    }
+    return data || [];
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}

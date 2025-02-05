@@ -4,6 +4,7 @@ import { getVenues } from "@/services/venues";
 import { VenueSideBarItem } from "./VenueSideBarItem";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import PulseSkeleton from "../PulseSkeleton";
 
 const VenuesSection = () => {
   const {
@@ -28,9 +29,11 @@ const VenuesSection = () => {
 
   if (isLoading || !venues) {
     return (
-      <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4">
-        Loading...
-      </div>
+      <>
+      <PulseSkeleton />
+      <PulseSkeleton />
+      <PulseSkeleton />
+    </>
     );
   }
   return (

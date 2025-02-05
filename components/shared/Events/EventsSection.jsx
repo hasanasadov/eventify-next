@@ -4,6 +4,7 @@ import { QUERY_KEYS } from "@/constants/queryKeys";
 import { EventSideBarItem } from "./EventSideBarItem";
 import { getEvents } from "@/services/events";
 import { useQuery } from "@tanstack/react-query";
+import PulseSkeleton from "../PulseSkeleton";
 
 const EventsSection = () => {
   const {
@@ -28,9 +29,11 @@ const EventsSection = () => {
 
   if (isLoading || !events) {
     return (
-      <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4">
-        Loading...
-      </div>
+      <>
+        <PulseSkeleton />
+        <PulseSkeleton />
+        <PulseSkeleton />
+      </>
     );
   }
 
