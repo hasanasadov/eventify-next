@@ -11,7 +11,8 @@ import { Renderif } from "@/lib/utils";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
 
 const SearchResult = () => {
-  const searchtext = typeof window !== "undefined" ? localStorage.getItem("searchText") : "";
+  const searchtext =
+    typeof window !== "undefined" ? localStorage.getItem("searchText") : "";
 
   const {
     data: eventsData,
