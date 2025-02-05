@@ -3,7 +3,6 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { searchEvents } from "@/services/events";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
 import React from "react";
 import EventItem from "../events/EventItem";
 import { searchVenues } from "@/services/venues";
@@ -12,8 +11,7 @@ import { Renderif } from "@/lib/utils";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
 
 const SearchResult = () => {
-  const searchParams = useSearchParams();
-  const searchtext = searchParams.get("searchText");
+  const searchtext = typeof window !== "undefined" ? localStorage.getItem("searchText") : "";
 
   const {
     data: eventsData,

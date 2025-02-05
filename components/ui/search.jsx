@@ -2,19 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { redirect, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export function InputWithButton() {
-  const searchParams = useSearchParams();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(
+    typeof window !== "undefined" ? localStorage.getItem("searchText") || "" : ""
+  );
 
-  useEffect(() => {
-    setSearch(searchParams.get("searchText") || "");
-  }, [searchParams]);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!search) return;
-    redirect(`/search?searchText=${search}`);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("searchText", search);
+    }
+    redirect(`/search`);
   };
   return (
     <form
