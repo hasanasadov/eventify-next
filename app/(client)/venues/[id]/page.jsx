@@ -90,8 +90,10 @@ const VenueDetail = () => {
       <div className="container mx-auto py-6">
         <div className="flex flex-col gap-6 bg-white p-6 rounded-xl border-2">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-green-500">{venue.name}</h1>
-            <Link href="/" className="text-sm text-blue-500 hover:underline">
+            <Link
+              href="/venues"
+              className="text-sm text-blue-500 hover:underline"
+            >
               Back to list
             </Link>
           </div>
@@ -104,19 +106,15 @@ const VenueDetail = () => {
               />
             </div>
             <div className="bg-white p-6 flex-1 rounded-lg border-2 space-y-6 relative">
-              <div>
-                <h2 className="text-2xl font-extrabold text-green-500 mb-4">
-                  Description
-                </h2>
-                <p className="text-sm text-gray-600">{venue.description}</p>
+              <div className="text-blue-500">
+                <span className="text-3xl font-bold ">{venue.name}</span>{" "}
+                <span className="text-md!">({venue.venue_type})</span>
               </div>
 
               <div className="flex flex-col  justify-between gap-8 ">
                 <div className="w-full md:w-1/2 space-y-2">
-                  <h3 className="text-lg font-semibold text-blue-600">
-                    Working Hours
-                  </h3>
-                  <p className="text-sm text-gray-600">
+                  <h3 className="text-2xl font-semibold ">Working Hours</h3>
+                  <p className="text-md text-gray-600">
                     Open:{" "}
                     <span className="font-medium">{venue.work_hours_open}</span>{" "}
                     - Close:{" "}
@@ -125,13 +123,14 @@ const VenueDetail = () => {
                     </span>
                   </p>
                 </div>
-                <div className="w-full md:w-1/2 space-y-2">
-                  <h3 className="text-lg font-semibold text-purple-600">
-                    Venue Type
-                  </h3>
-                  <p className="text-sm text-gray-600">{venue.venue_type}</p>
+                <div>
+                  <h2 className="text-2xl  text-gray-800 mb-4 font-semibold">
+                    Description
+                  </h2>
+                  <p className="text-md text-gray-600">{venue.description}</p>
                 </div>
-                <div className="mt-6 absolute top-0 right-4">
+
+                {/* <div className="mt-6 absolute top-0 right-4">
                   {isFavorite ? (
                     <Favorite
                       style={{
@@ -151,7 +150,7 @@ const VenueDetail = () => {
                       onClick={toggleFavorite}
                     />
                   )}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

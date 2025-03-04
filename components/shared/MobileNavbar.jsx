@@ -6,8 +6,9 @@ import { MuseumOutlined } from "@mui/icons-material";
 import { MessageCircleIcon } from "lucide-react";
 import { User2Icon } from "lucide-react";
 import { MapOutlined } from "@mui/icons-material";
+import { AccountPopOver } from "./AccountPopover";
 
-const MobileNavbar = () => {
+const MobileNavbar = ({ user }) => {
   return (
     <div
       className={`fixed bg-green-700 right-0 -bottom-[calc(100vh-70px)] w-full h-20  flex items-center justify-center gap-4 transition-transform duration-300 lg:hidden `}
@@ -59,8 +60,8 @@ const MobileNavbar = () => {
           <MapOutlined style={{ width: "28px", height: "28px" }} />
         </Button>
       </Link>
-
-      <Link href="/login">
+      <AccountPopOver user={user} />
+      {/* <Link href="/login">
         <Button
           className="text-2xl hover:bg-green-600"
           style={{
@@ -70,7 +71,7 @@ const MobileNavbar = () => {
         >
           <User2Icon style={{ width: "28px", height: "28px" }} />
         </Button>
-      </Link>
+      </Link> */}
     </div>
   );
 };

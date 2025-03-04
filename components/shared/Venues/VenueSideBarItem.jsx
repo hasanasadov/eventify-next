@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { TimelapseOutlined } from "@mui/icons-material";
 import Link from "next/link";
 import LOGO from "@/assets/logo.png";
 import { FavoriteBorderOutlined } from "@mui/icons-material";

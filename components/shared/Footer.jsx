@@ -183,7 +183,7 @@ const Footer = () => {
                   className="flex items-center hover:text-green-600 transition-all"
                 >
                   <FaEnvelope className="mr-3 text-green-400 animate-pulse" />{" "}
-                  eventify@gmail.com
+                  support@myevents.az
                 </a>
               </motion.li>
             </ul>
@@ -230,7 +230,7 @@ const Footer = () => {
           className="mt-12 border-t border-gray-300 pt-6 flex flex-col md:flex-row justify-between items-center"
         >
           <p className="text-sm text-black">
-            &copy; {new Date().getFullYear()} Eventify. All rights reserved.
+            &copy; {new Date().getFullYear()} Myevents. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             {socialLinks.map(({ Icon, href, color }) => (

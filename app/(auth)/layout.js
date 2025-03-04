@@ -7,8 +7,8 @@ import Image from "next/image";
 import AccountImage from "@/assets/logo.png";
 
 export const metadata = {
-  title: "Eventify",
-  description: "Eventify app for all your event needs",
+  title: "Events App",
+  description: "MyEvents app for all your event needs",
 };
 
 export default function RootLayout({ children }) {

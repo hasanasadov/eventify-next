@@ -34,14 +34,14 @@ export function AccountPopOver({ user }) {
               Register
             </Button>
           </Link>
-          <Link
+          {/* <Link
             href="/favorites/events"
             className={`w-full ${user ? "block" : "hidden"}`}
           >
             <Button variant="ghost" className="w-full">
               Favorites
             </Button>
-          </Link>
+          </Link> */}
           <Link
             href="/profile"
             className={`w-full 

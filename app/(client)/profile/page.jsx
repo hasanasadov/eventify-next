@@ -1,59 +1,39 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import {
-  MapPin,
-  Heart,
-  CreditCard,
   User,
   Mail,
   Phone,
   Leaf,
+  MapPin,
+  Heart,
+  CreditCard,
   Calendar,
   Ticket,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getCurrentUser } from "@/services/users";
 
 const UserProfile = () => {
-  const user = {
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "+1 234 567 8900",
-    username: "johndoe",
-    memberSince: "2023",
-    favoriteEvents: [
-      {
-        id: 1,
-        name: "Summer Music Festival",
-        date: "2024-07-15",
-        venue: "Central Park",
-        price: "$85.00",
-        imageUrl: "/api/placeholder/400/200",
-      },
-      {
-        id: 2,
-        name: "Comedy Night",
-        date: "2024-06-20",
-        venue: "Laugh Factory",
-        price: "$45.00",
-        imageUrl: "/api/placeholder/400/200",
-      },
-    ],
-    purchaseHistory: [
-      {
-        id: 1,
-        eventName: "Rock Concert",
-        date: "2024-05-10",
-        amount: "$120.00",
-        status: "Completed",
-      },
-    ],
-    billingInfo: {
-      cardNumber: "**** **** **** 4242",
-      expiryDate: "12/25",
-      billingAddress: "123 Main St, New York, NY 10001",
-    },
-  };
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("access_token") || "";
+    setToken(storedToken);
+  }, []);
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    getUser();
+  }, [token]);
+
+  async function getUser() {
+    const data = await getCurrentUser(token);
+    if (data?.success) {
+      setUser(data.user);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b ">
@@ -66,11 +46,11 @@ const UserProfile = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold mb-1 text-green-800">
-                {user.firstName} {user.lastName}
+                {user?.first_name} {user?.last_name}
               </h1>
               <p className="text-green-600 flex items-center gap-2">
                 <Leaf className="w-4 h-4" />
-                Member since {user.memberSince}
+                Member since 2025
               </p>
             </div>
           </div>
@@ -78,7 +58,8 @@ const UserProfile = () => {
 
         <Tabs defaultValue="profile" className="space-y-4">
           <TabsList className="bg-green-100 p-1 rounded-xl">
-            {["profile", "favorites", "billing", "history"].map((tab) => (
+            {/* {["profile", "favorites", "billing", "history"].map((tab) => ( */}
+            {["profile"].map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab}
@@ -100,9 +81,13 @@ const UserProfile = () => {
               <CardContent className="mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {[
-                    { icon: User, label: "Username", value: user.username },
-                    { icon: Mail, label: "Email", value: user.email },
-                    { icon: Phone, label: "Phone", value: user.phone },
+                    { icon: User, label: "Username", value: user?.username },
+                    {
+                      icon: Mail,
+                      label: "Role",
+                      value: user?.is_admin ? "Admin" : "User",
+                    },
+                    { icon: Phone, label: "Phone", value: user?.phone },
                   ].map((item, index) => (
                     <div
                       key={index}
@@ -127,7 +112,7 @@ const UserProfile = () => {
           </TabsContent>
 
           {/* Favorites */}
-          <TabsContent value="favorites">
+          {/* <TabsContent value="favorites">
             <Card className="border-green-200 shadow-lg">
               <CardHeader className="bg-green-50 border-b border-green-100">
                 <CardTitle className="text-green-800 flex items-center gap-2">
@@ -137,7 +122,7 @@ const UserProfile = () => {
               </CardHeader>
               <CardContent className="mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {user.favoriteEvents.map((event) => (
+                  {user?.favoriteEvents.map((event) => (
                     <div
                       key={event.id}
                       className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border border-green-100"
@@ -176,10 +161,10 @@ const UserProfile = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
 
           {/* Billing Information */}
-          <TabsContent value="billing">
+          {/* <TabsContent value="billing">
             <Card className="border-green-200 shadow-lg">
               <CardHeader className="bg-green-50 border-b border-green-100">
                 <CardTitle className="text-green-800">
@@ -192,26 +177,26 @@ const UserProfile = () => {
                     <CreditCard className="w-8 h-8" />
                     <div>
                       <p className="text-lg font-bold">
-                        {user.billingInfo.cardNumber}
+                        {user?.billingInfo.cardNumber}
                       </p>
                       <p className="text-green-100">
-                        Expires: {user.billingInfo.expiryDate}
+                        Expires: {user?.billingInfo.expiryDate}
                       </p>
                     </div>
                   </div>
                   <div className="mt-4 border-t border-green-300 pt-4">
                     <p className="text-green-100">Billing Address:</p>
                     <p className="font-medium">
-                      {user.billingInfo.billingAddress}
+                      {user?.billingInfo.billingAddress}
                     </p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
 
           {/* Purchase History */}
-          <TabsContent value="history">
+          {/* <TabsContent value="history">
             <Card className="border-green-200 shadow-lg">
               <CardHeader className="bg-green-50 border-b border-green-100">
                 <CardTitle className="text-green-800">
@@ -220,7 +205,7 @@ const UserProfile = () => {
               </CardHeader>
               <CardContent className="mt-6">
                 <div className="space-y-4">
-                  {user.purchaseHistory.map((purchase) => (
+                  {user?.purchaseHistory.map((purchase) => (
                     <div
                       key={purchase.id}
                       className="bg-white p-4 rounded-xl border border-green-100 hover:shadow-md transition-shadow"
@@ -249,7 +234,7 @@ const UserProfile = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
       </div>
     </div>

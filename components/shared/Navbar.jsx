@@ -75,7 +75,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <MobileNavbar />
+        <MobileNavbar user={user} />
       </div>
     </>
   );

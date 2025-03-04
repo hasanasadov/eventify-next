@@ -7,7 +7,7 @@ import "../globals.css";
 // import { Provider } from "react-redux";
 
 export const metadata = {
-  title: "myevent.az",
+  title: "myevents.az",
   description: "My Event app for all your event needs",
 };
 

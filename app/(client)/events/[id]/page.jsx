@@ -8,6 +8,7 @@ import { getEventById, getEventComments } from "@/services/events";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -77,6 +78,11 @@ const EventDetail = () => {
   return (
     <div className="p-6 my-6 container mx-auto bg-gradient-to-r bg-white rounded-lg border-2">
       <Toaster position="top-center" reverseOrder={false} />
+      <div className="flex items-center justify-between mb-6">
+        <Link href="/events" className="text-sm text-blue-500 hover:underline">
+          Back to list
+        </Link>
+      </div>
       <div className="flex flex-col md:flex-row gap-6">
         {event?.poster_image_link ? (
           <img
@@ -92,34 +98,52 @@ const EventDetail = () => {
         <div className="bg-white p-6 flex-1 rounded-lg border-2 space-y-4 relative">
           <h1 className="text-4xl font-extrabold text-green-500 mb-4">
             {event?.title || "Event Title"}
+            <span className="text-xl"> ({event?.event_type})</span>
           </h1>
-          <p>
-            <span className="font-semibold text-blue-600">Date:</span>{" "}
-            {event?.date
-              ? new Date(event.date).toLocaleDateString()
-              : "No date available"}
-          </p>
-          <p>
-            <span className="font-semibold text-purple-600">Start Time:</span>{" "}
-            {event?.start || "Not specified"}
-          </p>
-          <p>
-            <span className="font-semibold text-pink-600">Finish Time:</span>{" "}
-            {event?.finish || "Not specified"}
-          </p>
-          <p>
-            <span className="font-semibold text-green-600">Description:</span>{" "}
+
+          <div>
+            <span
+              className="
+            text-xl font-semibold text-gray-800 mb-4
+            "
+            >
+              Date :
+            </span>
+            <span>
+              {" "}
+              {event?.date
+                ? new Date(event.date).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                : "No date available"}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <p>
+              <span className="font-semibold ">From : </span>{" "}
+              {event?.start || "Not specified"}
+            </p>
+            <p>
+              <span className="font-semibold ">To : </span>{" "}
+              {event?.finish || "Not specified"}
+            </p>
+          </div>
+
+          <p className="text-md">
             {event?.description || "No description provided"}
           </p>
-          <p>
+          {/* <p>
             <span className="font-semibold text-yellow-600">Event Type:</span>{" "}
             {event?.event_type || "Type not specified"}
-          </p>
-          <p>
+          </p> */}
+          {/* <p>
             <span className="font-semibold text-red-600">Likes:</span>{" "}
             {event?.num_likes || 0}
-          </p>
-          <div className="mt-6 absolute top-1 right-4">
+          </p> */}
+          {/* <div className="mt-6 absolute top-1 right-4">
             {isFavorite ? (
               <Favorite
                 style={{
@@ -139,7 +163,7 @@ const EventDetail = () => {
                 onClick={toggleFavorite}
               />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
       {location?.lat && location?.lng && (

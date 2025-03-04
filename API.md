@@ -1,8 +1,8 @@
-# eventify.az API Documentation
+# myevents.az API Documentation
 
 ## Overview
 
-- **API Title**: eventify.az
+- **API Title**: myevents.az
 - **Version**: 1.0.0
 - **Base URL**: http://localhost:8000
 

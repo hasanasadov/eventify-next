@@ -79,7 +79,7 @@ const MainMap = () => {
   };
 
   if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded) return <div>Loading Maps...</div>;
+  if (!isLoaded || !locations) return <div>Loading Maps...</div>;
 
   return (
     <GoogleMap
@@ -104,7 +104,7 @@ const MainMap = () => {
       )}
 
       {/* Location markers */}
-      {locations.map((location, idx) => (
+      {locations?.map((location, idx) => (
         <Marker
           key={idx}
           position={{ lat: +location.lat, lng: +location.lng }}
