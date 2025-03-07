@@ -3,26 +3,26 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import LOGO from "@/assets/logo.png";
-import { FavoriteBorderOutlined } from "@mui/icons-material";
-import { Favorite } from "@mui/icons-material";
+// import { FavoriteBorderOutlined } from "@mui/icons-material";
+// import { Favorite } from "@mui/icons-material";
 
 const VenueSideBarItem = ({ venue }) => {
-  const [isHovered, setIsHovered] = useState("hidden");
+  // const [isHovered, setIsHovered] = useState("hidden");
 
-  const [isFavorite, setIsFavorite] = useState(true);
+  // const [isFavorite, setIsFavorite] = useState(true);
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
+  // const toggleFavorite = () => {
+  //   setIsFavorite(!isFavorite);
+  // };
   return (
     <Link
       href={`/venues/${venue.id}`}
       key={venue.id}
-      onMouseEnter={() => {
-        setIsHovered("block");
-      }}
-      onMouseLeave={() => setIsHovered("hidden")}
-      className="bg-white hover:shadow-xl hover:border-blue-300 duration-200 flex items-center flex-col p-4 gap-4 w-[95%] border-2  transition-all rounded-lg relative "
+      // onMouseEnter={() => {
+      //   setIsHovered("block");
+      // }}
+      // onMouseLeave={() => setIsHovered("hidden")}
+      className="bg-white hover:shadow-xl hover:border-blue-300 duration-200 flex items-center flex-col p-4 gap-4 w-[90%] border-2  transition-all rounded-lg relative "
     >
       <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden ">
         <img
@@ -33,7 +33,7 @@ const VenueSideBarItem = ({ venue }) => {
       </div>
       <div className="flex flex-col gap-1 items-start justify-center">
         <div className="flex flex-col gap-1 items-start justify-center">
-          <h1 className="font-bold text-lg">{venue.name}</h1>
+          <h1 className="font-bold text-lg line-clamp-1">{venue.name}</h1>
           <p className="text-sm text-gray-600 line-clamp-3">
             {venue.description}
           </p>

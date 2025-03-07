@@ -30,14 +30,14 @@ const VenuesSection = () => {
   if (isLoading || !venues) {
     return (
       <>
-      <PulseSkeleton />
-      <PulseSkeleton />
-      <PulseSkeleton />
-    </>
+        <PulseSkeleton />
+        <PulseSkeleton />
+        <PulseSkeleton />
+      </>
     );
   }
   return (
-    <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4 px-2">
+    <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4 ">
       {venues?.map((venue, idx) => (
         <VenueSideBarItem key={idx} venue={venue} />
       ))}
