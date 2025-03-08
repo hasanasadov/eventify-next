@@ -95,46 +95,59 @@ const EventDetail = () => {
             <p className="text-gray-500">No Poster Available</p>
           </div>
         )}
-        <div className="bg-white p-6 flex-1 rounded-lg border-2 space-y-4 relative">
-          <h1 className="text-4xl font-extrabold text-green-500 mb-4">
-            {event?.title || "Event Title"}
-            <span className="text-xl"> ({event?.event_type})</span>
-          </h1>
+        <div className="bg-white p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
+          <div className="space-y-4">
+            <h1 className="text-4xl font-extrabold text-green-500 mb-4">
+              {event?.title || "Event Title"}
+              <span className="text-xl"> ({event?.event_type})</span>
+            </h1>
 
-          <div>
-            <span
-              className="
+            <div>
+              <span
+                className="
             text-xl font-semibold text-gray-800 mb-4
             "
-            >
-              Date :
-            </span>
-            <span>
-              {" "}
-              {event?.date
-                ? new Date(event.date).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })
-                : "No date available"}
-            </span>
+              >
+                Date :
+              </span>
+              <span>
+                {" "}
+                {event?.date
+                  ? new Date(event.date).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })
+                  : "No date available"}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <p>
+                <span className="font-semibold ">From : </span>{" "}
+                {event?.start || "Not specified"}
+              </p>
+              <p>
+                <span className="font-semibold ">To : </span>{" "}
+                {event?.finish || "Not specified"}
+              </p>
+            </div>
+
+            <p className="text-md">
+              {event?.description || "No description provided"}
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <Renderif condition={event?.goto}>
+              <Button
+                onClick={() => window.open(event.goto, "_blank").focus()}
+                className="bg-black hover:bg-opacity-40 text-white hover:bg-black text-xl font-sans p-5 md:w-1/2 w-full "
+              >
+                Buy Ticket
+              </Button>
+            </Renderif>
           </div>
 
-          <div className="flex items-center gap-4">
-            <p>
-              <span className="font-semibold ">From : </span>{" "}
-              {event?.start || "Not specified"}
-            </p>
-            <p>
-              <span className="font-semibold ">To : </span>{" "}
-              {event?.finish || "Not specified"}
-            </p>
-          </div>
-
-          <p className="text-md">
-            {event?.description || "No description provided"}
-          </p>
           {/* <p>
             <span className="font-semibold text-yellow-600">Event Type:</span>{" "}
             {event?.event_type || "Type not specified"}
