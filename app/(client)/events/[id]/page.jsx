@@ -84,17 +84,18 @@ const EventDetail = () => {
         </Link>
       </div>
       <div className="flex flex-col md:flex-row gap-6">
-        {event?.poster_image_link ? (
+        <Renderif condition={event?.poster_image_link}>
           <img
             src={event.poster_image_link}
             alt={event?.title || "Event Poster"}
-            className="w-full md:w-1/2 max-h-[500px] object-cover rounded-lg border-2"
+            className="w-full md:max-w-[50%]  h-full  object-contain rounded-lg border-2"
           />
-        ) : (
+        </Renderif>
+        <Renderif condition={!event?.poster_image_link}>
           <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
             <p className="text-gray-500">No Poster Available</p>
           </div>
-        )}
+        </Renderif>
         <div className="bg-white p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
           <div className="space-y-4">
             <h1 className="text-4xl font-extrabold text-green-500 mb-4">

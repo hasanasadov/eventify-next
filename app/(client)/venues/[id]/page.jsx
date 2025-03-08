@@ -98,13 +98,18 @@ const VenueDetail = () => {
             </Link>
           </div>
           <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-            <div className="md:w-1/2 relative">
+            <Renderif condition={venue?.image_1_link}>
               <img
                 src={venue.image_1_link}
                 alt={venue.name}
-                className="w-full h-full object-cover rounded-lg border-2 transform hover:scale-[1.005] transition-transform duration-300 ease-in-out"
+                className="w-full md:max-w-[50%]  h-full  object-contain rounded-lg border-2"
               />
-            </div>
+            </Renderif>
+            <Renderif condition={!venue?.image_1_link}>
+              <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
+                <p className="text-gray-500">No Image Available</p>
+              </div>
+            </Renderif>
             <div className="bg-white p-6 flex-1 rounded-lg border-2 space-y-6 relative">
               <div className="text-blue-500">
                 <span className="text-3xl font-bold ">{venue.name}</span>{" "}
