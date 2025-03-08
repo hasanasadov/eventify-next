@@ -1,8 +1,8 @@
 "use client";
 
+import { LOGO } from "@/constants";
 import Link from "next/link";
 import React, { useState } from "react";
-import LOGO from "@/assets/logo.png";
 // import { FavoriteBorderOutlined } from "@mui/icons-material";
 // import { Favorite } from "@mui/icons-material";
 

@@ -41,7 +41,8 @@ const MainMap = () => {
           });
         },
         () => {
-          console.error("Error fetching current position");
+          // console.error("Error fetching current position");
+          setCurrentPosition(null);
         }
       );
     }
@@ -79,12 +80,18 @@ const MainMap = () => {
   };
 
   if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded || !locations) return <div>Loading Maps...</div>;
+  if (!isLoaded || !locations)
+    return (
+      <div className="w-full h-full animate-pulse bg-black bg-opacity-40 flex justify-center items-center">
+        Loading Maps...
+      </div>
+    );
 
+    console.log("locations", locations);
   return (
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
-      zoom={14}
+      zoom={12}
       center={
         currentPosition ||
         (locations[0] && {

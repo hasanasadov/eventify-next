@@ -162,7 +162,7 @@ const Footer = () => {
               Contact Us
             </h3>
             <ul className="space-y-3 text-sm">
-              <motion.li
+              {/* <motion.li
                 whileHover={{ scale: 1.05 }}
                 className="flex items-center"
               >
@@ -173,7 +173,7 @@ const Footer = () => {
                   <FaPhoneAlt className="mr-3 text-green-400 animate-pulse" />{" "}
                   +994 50 111 11 11
                 </a>
-              </motion.li>
+              </motion.li> */}
               <motion.li
                 whileHover={{ scale: 1.05 }}
                 className="flex items-center"
