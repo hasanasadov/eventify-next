@@ -2,9 +2,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { getVenues } from "@/services/venues";
 import VenueItem from "./VenueItem";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
+import venueServices from "@/services/venues";
 
 const VenuesPage = () => {
   const {
@@ -13,7 +13,7 @@ const VenuesPage = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.VENUES],
-    queryFn: getVenues,
+    queryFn: venueServices.getVenues,
   });
 
   if (isError) {

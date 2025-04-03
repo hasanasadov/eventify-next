@@ -1,14 +1,14 @@
 "use client";
 
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { searchEvents } from "@/services/events";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import EventItem from "../events/EventItem";
-import { searchVenues } from "@/services/venues";
 import VenueItem from "../venues/VenueItem";
 import { Renderif } from "@/lib/utils";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
+import eventServices from "@/services/events";
+import venueServices from "@/services/venues";
 
 const SearchResult = () => {
   const searchtext =
@@ -20,7 +20,7 @@ const SearchResult = () => {
     isLoading: eventsLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.SEARCH_EVENTS, searchtext],
-    queryFn: () => searchEvents(searchtext),
+    queryFn: () => eventServices.searchEvents(searchtext),
   });
 
   let {
@@ -29,7 +29,7 @@ const SearchResult = () => {
     isLoading: venuesLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.SEARCH_VENUES, searchtext],
-    queryFn: () => searchVenues(searchtext),
+    queryFn: () => venueServices.searchVenues(searchtext),
   });
 
   if (eventsError || venuesError) {

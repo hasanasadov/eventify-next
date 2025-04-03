@@ -9,12 +9,12 @@ import { Favorite } from "@mui/icons-material";
 import EventItem from "../../events/EventItem";
 import Map from "@/components/shared/Map";
 import { useQuery } from "@tanstack/react-query";
-import { getEvents } from "@/services/events";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { getVenueById, getVenueComments } from "@/services/venues";
 import { toast } from "sonner";
 import { Renderif } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import eventServices from "@/services/events";
+import venueServices from "@/services/venues";
 
 const VenueDetail = () => {
   const { id } = useParams();
@@ -29,7 +29,7 @@ const VenueDetail = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.VENUES, id],
-    queryFn: () => getVenueById(id),
+    queryFn: () => venueServices.getVenueById(id),
   });
 
   const {
@@ -38,7 +38,7 @@ const VenueDetail = () => {
     isLoading: eventsLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS],
-    queryFn: getEvents,
+    queryFn: eventServices.getEvents,
   });
 
   const {
@@ -47,7 +47,7 @@ const VenueDetail = () => {
     isLoading: commentsLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.VENUE_COMMENTS, id],
-    queryFn: () => getVenueComments(id),
+    queryFn: () => venueServices.getVenueComments(id),
   });
 
   const venueEvents = allEvents?.filter((item) => item.venue_id == id);

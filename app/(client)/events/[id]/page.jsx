@@ -4,7 +4,7 @@ import Map from "@/components/shared/Map";
 import { Button } from "@/components/ui/button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { Renderif } from "@/lib/utils";
-import { getEventById, getEventComments } from "@/services/events";
+import  eventServices  from "@/services/events";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
@@ -26,8 +26,8 @@ const EventDetail = () => {
     isError,
     isLoading,
   } = useQuery({
-    queryKey: [QUERY_KEYS.EVENT, id],
-    queryFn: () => getEventById(id),
+    queryKey: [QUERY_KEYS.EVENTS, id],
+    queryFn: () => eventServices.getEventById(id),
   });
 
   const {
@@ -36,7 +36,7 @@ const EventDetail = () => {
     isLoading: commentsLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.EVENT_COMMENTS, id],
-    queryFn: () => getEventComments(id),
+    queryFn: () => eventServices.getEventComments(id),
   });
 
   console.log(eventData, eventComments);
