@@ -18,9 +18,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { RenderIf } from "@/components/shared/RenderIf";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import  eventServices  from "@/services/events";
+import eventServices from "@/services/events";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { paths } from "@/constants/paths";
 
 const getFormSchema = ({ isEdit, isDelete }) =>
   z.object({
@@ -87,38 +88,40 @@ const ActionForm = ({ type }) => {
   const editLocation = data?.location || null;
   console.log("data", data);
 
-  // console.log("editItem", editItem);
+  console.log("editItem", editItem);
 
-  // const { mutate: mutateCreate } = useMutation({
-  //   mutationFn: createEvent,
-  //   onSuccess: () => {
-  //     toast.success("Event created successfully.");
-  //   },
-  //   onError,
-  // });
+  const { mutate: mutateCreate } = useMutation({
+    mutationFn: eventServices.createEvent,
+    onSuccess: () => {
+      toast.success("Event created successfully.");
+    },
+    onError,
+  });
 
-  // const { mutate: mutateUpdate } = useMutation({
-  //   mutationFn: rentService.edit,
-  //   onSuccess: () => {
-  //     toast.success("Rent updated successfully.");
-  //     navigate(paths.DASHBOARD.RENTS.LIST);
-  //   },
-  //   onError,
-  // });
+  const { mutate: mutateUpdate } = useMutation({
+    mutationFn: eventServices.edit,
+    onSuccess: () => {
+      toast.success("Event updated successfully.");
+      navigate(paths.DASHBOARD.EVENTS.LIST);
+    },
+    onError,
+  });
 
-  // const { mutate: mutateDelete } = useMutation({
-  //   mutationFn: rentService.remove,
-  //   onSuccess: () => {
-  //     toast.success("Rent deleted successfully.");
-  //     navigate(paths.DASHBOARD.RENTS.LIST);
-  //   },
-  //   onError,
-  // });
+  const { mutate: mutateDelete } = useMutation({
+    mutationFn: eventServices.remove,
+    onSuccess: () => {
+      toast.success("Event deleted successfully.");
+      navigate(paths.DASHBOARD.EVENTS.LIST);
+    },
+    onError,
+  });
 
   const formSchema = useMemo(
     () => getFormSchema({ isEdit, isDelete }),
     [isEdit, isDelete]
   );
+
+  
 
   const form = useForm({
     defaultValues: {
@@ -172,18 +175,18 @@ const ActionForm = ({ type }) => {
     };
 
     console.log(data);
-    // if (type === "create") {
-    //   mutateCreate(data);
-    // } else if (type === "update") {
-    //   mutateUpdate({
-    //     id,
-    //     data,
-    //   });
-    // } else if (type === "delete") {
-    //   mutateDelete({
-    //     id,
-    //   });
-    // }
+    if (type === "create") {
+      mutateCreate(data);
+    } else if (type === "update") {
+      mutateUpdate({
+        id,
+        data,
+      });
+    } else if (type === "delete") {
+      mutateDelete({
+        id,
+      });
+    }
   }
 
   return (
@@ -223,7 +226,8 @@ const ActionForm = ({ type }) => {
                     <Input
                       className="bg-transparent border"
                       type="date"
-                      placeholder="2025-01-27"
+                      value={toString(field.value)}
+                      placeholder="2025-01-01"
                       {...field}
                     />
                   </FormControl>

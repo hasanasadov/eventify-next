@@ -1,6 +1,7 @@
 import React from "react";
 import { SideBarItems } from "./_components/DashboardSidebar";
 import Link from "next/link";
+import { HomeIcon } from "lucide-react";
 
 const DashboardMainPage = () => {
   return (
@@ -17,6 +18,12 @@ const DashboardMainPage = () => {
             </div>
           </Link>
         ))}
+        <Link href="/" key={"home"}>
+          <div className="flex items-center justify-center h-16 border  border-orange-400 ">
+            <HomeIcon className="w-6 h-6 mr-2" />
+            <span>Go Home</span>
+          </div>
+        </Link>
       </div>
     </>
   );

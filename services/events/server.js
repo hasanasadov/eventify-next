@@ -40,7 +40,7 @@ export const addFavoriteEvent = async (id) => {
 };
 export const createEvent = async (inputData) => {
   try {
-    const response = await fetch("${BASE_URL}/events", {
+    const response = await fetch(`${BASE_URL}/events`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -161,6 +161,38 @@ export async function createEventLike(inputData) {
         console.error("Error:", error);
       });
 
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+export async function remove(id) {
+  try {
+    const response = await fetch(`${BASE_URL}/events/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+export async function edit(id, inputData) {
+  try {
+    const response = await fetch(`${BASE_URL}/events/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(inputData),
+    });
     const data = await response.json();
     console.log(data);
   } catch (error) {

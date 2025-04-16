@@ -1,4 +1,6 @@
 import {
+  remove,
+  edit,
   getEvents,
   getEventById,
   getFavoriteEvents,
@@ -12,6 +14,8 @@ import {
 } from "./server";
 
 const eventServices = {
+  remove,
+  edit,
   getEvents,
   getEventById,
   getFavoriteEvents,
@@ -25,6 +29,3 @@ const eventServices = {
 };
 
 export default eventServices;
-
-
-
