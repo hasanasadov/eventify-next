@@ -7,8 +7,11 @@ import "../globals.css";
 // import { Provider } from "react-redux";
 
 export const metadata = {
-  title: "myevents.az",
-  description: "My Event app for all your event needs",
+  title: "My Events",
+  description: "My Events App",
+  verification: {
+    google: "Kgwc7apwSgQ78KHX9S3HLqqZCET7TAQk-OGZJGVJ1mg",
+  },
 };
 
 export default function RootLayout({ children }) {
