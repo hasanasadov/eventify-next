@@ -66,7 +66,7 @@ const MainMap = () => {
           if (status === window.google.maps.DirectionsStatus.OK) {
             setDirections(result);
           } else {
-            console.error(`Error fetching directions: ${status}`);
+            console.log(`Error fetching directions: ${status}`);
           }
         }
       );
@@ -87,7 +87,7 @@ const MainMap = () => {
       </div>
     );
 
-    console.log("locations", locations);
+    // console.log("locations", locations);
   return (
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
