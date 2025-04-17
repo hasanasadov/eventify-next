@@ -13,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { RenderIf } from "./RenderIf";
 
 export function DataTable({ columns, data = [] }) {
   const table = useReactTable({
@@ -22,7 +23,7 @@ export function DataTable({ columns, data = [] }) {
   });
 
   return (
-    <div className="rounded-md border border-orange-600 overflow-hidden ">
+    <div className="rounded-md border border-green-500 overflow-hidden ">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -46,10 +47,10 @@ export function DataTable({ columns, data = [] }) {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+          <RenderIf condition={table.getRowModel().rows?.length}>
+            {table.getRowModel().rows.map((row) => (
               <TableRow
-                className="hover:bg-orange-900 !text-white"
+                className="hover:bg-green-900 !text-white"
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
@@ -59,14 +60,15 @@ export function DataTable({ columns, data = [] }) {
                   </TableCell>
                 ))}
               </TableRow>
-            ))
-          ) : (
+            ))}
+          </RenderIf>
+          <RenderIf condition={!table.getRowModel().rows?.length}>
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                Loading...
               </TableCell>
             </TableRow>
-          )}
+          </RenderIf>
         </TableBody>
       </Table>
     </div>

@@ -34,7 +34,7 @@ export const DashboardSidebar = () => {
     <Sidebar className="!bg-black border">
       <SidebarGroupContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-orange-600">
+          <SidebarGroupLabel className="text-green-500">
             Application
           </SidebarGroupLabel>
           <SidebarGroupContent>

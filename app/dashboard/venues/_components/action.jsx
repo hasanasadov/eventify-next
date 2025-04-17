@@ -22,21 +22,34 @@ import eventServices from "@/services/events";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
+import venueServices from "@/services/venues";
+
+// description: "The Baku Crystal Hall is a modern multi-functional indoor arena in Baku, Azerbaijan, known for hosting events such as the Eurovision Song Contest 2012 and various sports and cultural events.";
+// id: 1;
+// image_1_link: "https://cdn.pbilet.com/origin/d8e57e62-ba3a-4d14-85df-38281f780f53.webp";
+// image_2_link: null;
+// image_3_link: null;
+// lat: "40.34422108008709";
+// lng: "49.850154753418984";
+// name: "Crystall Hall ";
+// num_likes: 0;
+// venue_type: "cultural_space";
+// work_hours_close: "00:00:00";
+// work_hours_open: "09:00:00";
 
 const getFormSchema = ({ isEdit, isDelete }) =>
   z.object({
-    title: z.string().min(2),
-    date: z.string().min(2),
+    name: z.string().min(2),
     description: z.string().min(2),
-    event_type: z.string().min(2),
-    start: z.string().min(2),
-    finish: z.string().min(2),
-    goto: z.string().min(2),
+    venue_type: z.string().min(2),
+    work_hours_open: z.string().min(2),
+    work_hours_close: z.string().min(2),
+    id: z.string().min(2),
 
-    venue_id: z.string().min(1),
-    organizer_id: z.string().min(1),
-    poster_image_link: isEdit || isDelete ? z.string().optional() : z.string(),
-    // poster_image_link:
+    lat: z.string().min(1),
+    lng: z.string().min(1),
+    image_1_link: isEdit || isDelete ? z.string().optional() : z.string(),
+    // image_1_link:
     //   isEdit || isDelete
     //     ? z.any().optional()
     //     : z
@@ -79,21 +92,18 @@ const ActionForm = ({ type }) => {
 
   const { id } = useParams();
   const { data } = useQuery({
-    queryKey: [QUERY_KEYS.EVENT_COMMENTS, id],
-    queryFn: () => eventServices.getEventById(id),
+    queryKey: [QUERY_KEYS.VENUE_COMMENTS, id],
+    queryFn: () => venueServices.getVenueById(id),
     enabled: isEdit || isDelete,
   });
 
-  const editItem = data?.event || null;
-  const editLocation = data?.location || null;
+  const editItem = data || null;
   console.log("data", data);
-
-  console.log("editItem", editItem);
 
   const { mutate: mutateCreate } = useMutation({
     mutationFn: eventServices.createEvent,
     onSuccess: () => {
-      toast.success("Event created successfully.");
+      toast.success("Venue created successfully.");
     },
     onError,
   });
@@ -101,7 +111,7 @@ const ActionForm = ({ type }) => {
   const { mutate: mutateUpdate } = useMutation({
     mutationFn: eventServices.edit,
     onSuccess: () => {
-      toast.success("Event updated successfully.");
+      toast.success("Venue updated successfully.");
       navigate(paths.DASHBOARD.EVENTS.LIST);
     },
     onError,
@@ -110,8 +120,8 @@ const ActionForm = ({ type }) => {
   const { mutate: mutateDelete } = useMutation({
     mutationFn: eventServices.remove,
     onSuccess: () => {
-      toast.success("Event deleted successfully.");
-      navigate(paths.DASHBOARD.EVENTS.LIST);
+      toast.success("Venue deleted successfully.");
+      navigate(paths.DASHBOARD.VENUES.LIST);
     },
     onError,
   });
@@ -123,16 +133,15 @@ const ActionForm = ({ type }) => {
 
   const form = useForm({
     defaultValues: {
-      title: "",
-      date: "",
+      name: "",
       description: "",
-      event_type: "",
-      start: "",
-      finish: "",
-      goto: "",
-      venue_id: "",
-      organizer_id: "",
-      poster_image_link: "",
+      venue_type: "",
+      work_hours_open: "",
+      work_hours_close: "",
+      id: "",
+      lat: "",
+      lng: "",
+      image_1_link: "",
       lat: "",
       lng: "",
     },
@@ -141,33 +150,31 @@ const ActionForm = ({ type }) => {
 
   useEffect(() => {
     if (editItem) {
-      form.setValue("title", editItem?.title);
-      form.setValue("poster_image_link", editItem?.poster_image_link);
-      form.setValue("date", editItem?.date);
+      form.setValue("name", editItem?.name);
+      form.setValue("image_1_link", editItem?.image_1_link);
       form.setValue("description", editItem?.description);
-      form.setValue("event_type", editItem?.event_type);
-      form.setValue("start", editItem?.start);
-      form.setValue("finish", editItem?.finish);
-      form.setValue("goto", editItem?.goto);
-      form.setValue("venue_id", editItem?.venue_id);
-      form.setValue("organizer_id", editItem?.organizer_id);
-      form.setValue("lat", editLocation?.lat);
-      form.setValue("lng", editLocation?.lng);
+      form.setValue("venue_type", editItem?.venue_type);
+      form.setValue("work_hours_open", editItem?.work_hours_open);
+      form.setValue("work_hours_close", editItem?.work_hours_close);
+      form.setValue("id", editItem?.id);
+      form.setValue("lat", editItem?.lat);
+      form.setValue("lng", editItem?.lng);
+      form.setValue("lat", data?.lat);
+      form.setValue("lng", data?.lng);
     }
   }, [editItem]);
 
   function onSubmit(values) {
     const data = {
-      title: values.title,
-      poster_image_link: values.poster_image_link,
-      date: values.date,
+      name: values.name,
+      image_1_link: values.image_1_link,
       description: values.description,
-      event_type: values.event_type,
-      start: values.start,
-      finish: values.finish,
-      goto: values.goto,
-      venue_id: values.venue_id,
-      organizer_id: values.organizer_id,
+      venue_type: values.venue_type,
+      work_hours_open: values.work_hours_open,
+      work_hours_close: values.work_hours_close,
+      id: values.id,
+      lat: values.lat,
+      lng: values.lng,
       lat: values.lat,
       lng: values.lng,
     };
@@ -190,7 +197,7 @@ const ActionForm = ({ type }) => {
   return (
     <div className="pt-6">
       <h1 className="text-2xl font-bold  text-green-500 mb-4">
-        {isEdit ? "Edit" : isDelete ? "Delete" : "Create"} Event
+        {isEdit ? "Edit" : isDelete ? "Delete" : "Create"} Venue
       </h1>
 
       <Form {...form}>
@@ -198,14 +205,14 @@ const ActionForm = ({ type }) => {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FormField
               control={form.control}
-              name="title"
+              name="id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
+                  <FormLabel>ID</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Mercedes"
+                      placeholder="ID"
                       {...field}
                     />
                   </FormControl>
@@ -213,18 +220,16 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
-              name="date"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      type="datetime-local"
-                      placeholder="2025-01-01"
+                      placeholder="Mercedes"
                       {...field}
                     />
                   </FormControl>
@@ -252,14 +257,14 @@ const ActionForm = ({ type }) => {
             />
             <FormField
               control={form.control}
-              name="event_type"
+              name="venue_type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Event Type</FormLabel>
+                  <FormLabel>Venue Type</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Event Type"
+                      placeholder="Venue Type"
                       {...field}
                     />
                   </FormControl>
@@ -269,15 +274,15 @@ const ActionForm = ({ type }) => {
             />
             <FormField
               control={form.control}
-              name="start"
+              name="work_hours_open"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Start</FormLabel>
+                  <FormLabel>Work hours open</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
                       type="time"
-                      placeholder="Start"
+                      placeholder="work_hours_open"
                       {...field}
                     />
                   </FormControl>
@@ -287,15 +292,15 @@ const ActionForm = ({ type }) => {
             />
             <FormField
               control={form.control}
-              name="finish"
+              name="work_hours_close"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Finish</FormLabel>
+                  <FormLabel>Work hours close</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
                       type="time"
-                      placeholder="Finish"
+                      placeholder="work_hours_close"
                       {...field}
                     />
                   </FormControl>
@@ -303,33 +308,17 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="goto"
+              name="lat"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Goto</FormLabel>
+                  <FormLabel>Latitute</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Goto"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="venue_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Venue ID</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="bg-transparent border"
-                      placeholder="Venue ID"
+                      placeholder="Latitute"
                       {...field}
                       onChange={(e) =>
                         field.onChange(e.target.value.toString())
@@ -342,14 +331,14 @@ const ActionForm = ({ type }) => {
             />
             <FormField
               control={form.control}
-              name="organizer_id"
+              name="lng"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Organizer ID</FormLabel>
+                  <FormLabel>Lengitute</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Organizer ID"
+                      placeholder="Lengitute"
                       {...field}
                       onChange={(e) =>
                         field.onChange(e.target.value.toString())
@@ -405,7 +394,7 @@ const ActionForm = ({ type }) => {
 
             {/* <FormField
               control={form.control}
-              name="poster_image_link"
+              name="image_1_link"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Image</FormLabel>
@@ -427,7 +416,7 @@ const ActionForm = ({ type }) => {
 
             <FormField
               control={form.control}
-              name="poster_image_link"
+              name="image_1_link"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Image</FormLabel>
@@ -446,17 +435,15 @@ const ActionForm = ({ type }) => {
           </div>
 
           <RenderIf
-            condition={
-              !!editItem?.poster_image_link && !!form.watch("poster_image_link")
-            }
+            condition={!!editItem?.image_1_link && !!form.watch("image_1_link")}
           >
             <div className="mt-4">
               <h4>Existing Image</h4>
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
                 <RenderIf condition={!!editItem}>
                   <img
-                    src={editItem?.poster_image_link}
-                    alt="Event Image"
+                    src={editItem?.image_1_link}
+                    alt="Venus Image"
                     className="w-full object-cover rounded-lg"
                   />
                 </RenderIf>
@@ -472,7 +459,7 @@ const ActionForm = ({ type }) => {
             <RenderIf condition={!isDelete}>
               <Button asChild variant="secondary">
                 <Link
-                  href={paths.DASHBOARD.EVENTS.LIST}
+                  href={paths.DASHBOARD.VENUES.LIST}
                   className="hover:scale-105 mr-2  !bg-transparent !text-green-400 !border-green-100 !border"
                 >
                   Back

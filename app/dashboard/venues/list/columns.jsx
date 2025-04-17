@@ -7,37 +7,33 @@ export const columns = [
     header: "ID",
   },
   {
-    accessorKey: "poster_image_link",
+    accessorKey: "image_1_link",
     header: "Image",
     cell: (data) => {
       return (
         <img
-          src={data.row.original.poster_image_link}
-          alt="Event Picture"
+          src={data.row.original.image_1_link}
+          alt="V"
           className="w-10 h-10 object-cover rounded-lg"
         />
       );
     },
   },
   {
-    accessorKey: "title",
-    header: "Title",
+    accessorKey: "name",
+    header: "Name",
   },
   {
-    accessorKey: "start",
-    header: "Start",
+    accessorKey: "work_hours_open",
+    header: "Open",
   },
   {
-    accessorKey: "finish",
-    header: "Finish",
+    accessorKey: "work_hours_close",
+    header: "Close",
   },
   {
-    accessorKey: "date",
-    header: "Date",
-  },
-  {
-    accessorKey: "venue_id",
-    header: "Venue ID",
+    accessorKey: "venue_type",
+    header: "Type",
   },
   {
     accessorKey: "",
@@ -45,10 +41,10 @@ export const columns = [
     cell: (data) => {
       return (
         <div className=" text-yellow-500 flex items-center justify-center gap-4">
-          <Link href={paths.DASHBOARD.EVENTS.EDIT(data.row.original.id)}>
+          <Link href={paths.DASHBOARD.VENUES.EDIT(data.row.original.id)}>
             <Edit2Icon className="w-4 h-4 hover:scale-110" />
           </Link>
-          <Link href={paths.DASHBOARD.EVENTS.DELETE(data.row.original.id)}>
+          <Link href={paths.DASHBOARD.VENUES.DELETE(data.row.original.id)}>
             <Trash2Icon className="w-4 h-4 text-red-600 hover:scale-110" />
           </Link>
         </div>

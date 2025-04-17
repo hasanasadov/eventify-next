@@ -11,7 +11,8 @@ export const paths = {
     VENUES: {
       LIST: "/dashboard/venues",
       CREATE: "/dashboard/venues/create",
-      EDIT: "/dashboard/venues/edit/:id",
+      EDIT: (id = ":id") => `/dashboard/venues/edit/${id}`,
+      DELETE: (id = ":id") => `/dashboard/venues/delete/${id}`,
     },
   },
 };
