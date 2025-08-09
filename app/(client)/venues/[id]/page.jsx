@@ -13,8 +13,8 @@ import { QUERY_KEYS } from "@/constants/queryKeys";
 import { toast } from "sonner";
 import { Renderif } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import eventServices from "@/services/events";
-import venueServices from "@/services/venues";
+import eventServices from "@/actions/events";
+import { getVenueById } from "@/actions/venues";
 
 const VenueDetail = () => {
   const { id } = useParams();
@@ -29,33 +29,19 @@ const VenueDetail = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.VENUES, id],
-    queryFn: () => venueServices.getVenueById(id),
+    queryFn: () => getVenueById(id),
   });
 
-  const {
-    data: allEvents,
-    isError: eventsError,
-    isLoading: eventsLoading,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.EVENTS],
-    queryFn: eventServices.getEvents,
-  });
+  const venueComments = venue?.comments || [];
+  const venueEvents = venue?.events || [];
+  const venueLocation = venue?.location || {};
 
-  const {
-    data: venueComments,
-    isError: commentsError,
-    isLoading: commentsLoading,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.VENUE_COMMENTS, id],
-    queryFn: () => venueServices.getVenueComments(id),
-  });
+  console.log(venue);
 
-  const venueEvents = allEvents?.filter((item) => item.venue_id == id);
-
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    toast.success(isFavorite ? "Removed from favorites" : "Added to favorites");
-  };
+  // const toggleFavorite = () => {
+  //   setIsFavorite(!isFavorite);
+  //   toast.success(isFavorite ? "Removed from favorites" : "Added to favorites");
+  // };
 
   if (isLoading)
     return (
@@ -98,34 +84,30 @@ const VenueDetail = () => {
             </Link>
           </div>
           <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-            <Renderif condition={venue?.image_1_link}>
+            <Renderif condition={venue?.imageURL}>
               <img
-                src={venue.image_1_link}
-                alt={venue.name}
+                src={venue.imageURL}
+                alt={venue.title}
                 className="w-full md:max-w-[50%]  h-full  object-contain rounded-lg border-2"
               />
             </Renderif>
-            <Renderif condition={!venue?.image_1_link}>
+            <Renderif condition={!venue?.imageURL}>
               <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
                 <p className="text-gray-500">No Image Available</p>
               </div>
             </Renderif>
             <div className="bg-white p-6 flex-1 rounded-lg border-2 space-y-6 relative">
               <div className="text-blue-500">
-                <span className="text-3xl font-bold ">{venue.name}</span>{" "}
-                <span className="text-md!">({venue.venue_type})</span>
+                <span className="text-3xl font-bold ">{venue.title}</span>{" "}
+                <span className="text-md!">({venue.type})</span>
               </div>
 
               <div className="flex flex-col  justify-between gap-8 ">
                 <div className="w-full md:w-1/2 space-y-2">
                   <h3 className="text-2xl font-semibold ">Working Hours</h3>
                   <p className="text-md text-gray-600">
-                    Open:{" "}
-                    <span className="font-medium">{venue.work_hours_open}</span>{" "}
-                    - Close:{" "}
-                    <span className="font-medium">
-                      {venue.work_hours_close}
-                    </span>
+                    Open: <span className="font-medium">{venue.openAT}</span> -
+                    Close: <span className="font-medium">{venue.closeAT}</span>
                   </p>
                 </div>
                 <div>
@@ -165,12 +147,24 @@ const VenueDetail = () => {
                 Location
               </h2>
               <Map
-                imageSource={venue.image_1_link}
-                title={venue.name}
+                imageSource={venue.imageURL}
+                title={venue.title}
                 location={{
                   lat: venue.lat,
                   lng: venue.lng,
                 }}
+              />
+            </div>
+          )}
+          {venueLocation?.lat && venueLocation?.lng && (
+            <div className="mt-6">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                Location
+              </h2>
+              <Map
+                imageSource={venue?.imageURL}
+                title={venue?.title}
+                location={venueLocation}
               />
             </div>
           )}
@@ -179,21 +173,19 @@ const VenueDetail = () => {
               Comments
             </h2>
             <div className="space-y-4">
-              <Renderif condition={venueComments?.length && !commentsError}>
+              <Renderif condition={venueComments?.length && !isError}>
                 {venueComments?.slice(0, sliceCount).map((comment, index) => (
                   <div
                     key={index}
                     className="bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2"
                   >
-                    <p>{comment.comment.content}</p>
-                    <p className="text-gray-500 text-sm">
-                      {comment.owner.username}
-                    </p>
+                    <p>{comment.content}</p>
+                    <p className="text-gray-500 text-sm">{comment.author}</p>
                   </div>
                 ))}
               </Renderif>
 
-              <Renderif condition={commentsLoading}>
+              <Renderif condition={isLoading}>
                 <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
                   <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
                   <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
@@ -207,17 +199,16 @@ const VenueDetail = () => {
                   <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
                 </div>
               </Renderif>
-              <Renderif condition={!venueComments?.length && !commentsLoading}>
+              <Renderif condition={!venueComments?.length && !isLoading}>
                 <p className="text-gray-500">No comments yet.</p>
               </Renderif>
               <Button
-                disabled={!venueComments?.length || commentsLoading}
+                disabled={!venueComments?.length || isLoading}
                 onClick={() => {
                   sliceCount === -1 ? setSliceCount(3) : setSliceCount(-1);
                 }}
                 className={`mt-4 ${
-                  commentsError ||
-                  (!commentsError && !commentsLoading && !venueComments.length)
+                  isError || (!isError && !isLoading && !venueComments.length)
                     ? "hidden"
                     : ""
                 } `}

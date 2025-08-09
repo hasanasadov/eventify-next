@@ -1,0 +1,70 @@
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model Event {
+    id          String   @id @default(cuid())
+    title       String
+    description String
+    imageURL    String
+    start       DateTime @default(now())
+    end         DateTime @default(now())
+    date        DateTime @default(now())
+    goto        String
+    type        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    Venue       Venue?   @relation(fields: [venueId], references: [id])
+    venueId     String?
+
+    location   Location? @relation(fields: [locationId], references: [id])
+    locationId String?
+    Comment    Comment[]
+}
+
+model Venue {
+    id          String  @id @default(cuid())
+    title       String
+    description String
+    imageURL    String
+    type        String?
+    openAT      String?
+    closeAT     String?
+
+    events     Event[]
+    location   Location? @relation(fields: [locationId], references: [id])
+    locationId String?
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+    Comment    Comment[]
+}
+
+model Location {
+    id       String  @id @default(cuid())
+    title    String
+    lat      Float
+    lng      Float
+    imageURL String
+    venues   Venue[]
+    events   Event[]
+
+    @@index([lat, lng])
+}
+
+model Comment {
+    id        String   @id @default(cuid())
+    content   String
+    author    String
+    createdAt DateTime @default(now())
+
+    event   Event?  @relation(fields: [eventId], references: [id])
+    eventId String?
+
+    venue   Venue?  @relation(fields: [venueId], references: [id])
+    venueId String?
+}

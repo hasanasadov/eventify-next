@@ -8,33 +8,37 @@ import Image from "next/image";
 import Link from "next/link";
 import { NAVBAR_ITEM } from "@/constants/navbar";
 import { cn } from "@/lib/utils";
-import { getCurrentUser } from "@/services/users";
+// import { getCurrentUser } from "@/services/users";
 import MobileNavbar from "./MobileNavbar";
 import { AccountPopOver } from "./AccountPopover";
+import { RenderIf } from "./RenderIf";
+import { paths } from "@/constants/paths";
+import { ControlPoint } from "@mui/icons-material";
 
 const Navbar = () => {
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("access_token") || "";
-    setToken(storedToken);
-  }, []);
+  // useEffect(() => {
+  //   const storedToken = localStorage.getItem("access_token") || "";
+  //   setToken(storedToken);
+  // }, []);
   const [user, setUser] = useState(null);
-  useEffect(() => {
-    getUser();
-  }, [token]);
+  // useEffect(() => {
+  //   getUser();
+  // }, [token]);
 
-  async function getUser() {
-    const data = await getCurrentUser(token);
-    if (data?.success) {
-      setUser(data.user);
-    }
+  // async function getUser() {
+  //   const data = await getCurrentUser(token);
+  //   if (data?.success) {
+  //     setUser(data.user);
+  //   }
 
-    // if (!data?.success) {
-    //   localStorage.removeItem("access_token");
-    //   localStorage.removeItem("refresh_token");
-    // }
-  }
+  //   // if (!data?.success) {
+  //   //   localStorage.removeItem("access_token");
+  //   //   localStorage.removeItem("refresh_token");
+  //   // }
+  // }
+  const isAdmin = user?.is_admin === true || user?.first_name === "Hasanali";
 
   return (
     <>
@@ -54,6 +58,17 @@ const Navbar = () => {
         </div>
 
         <div className="lg:flex md:flex-row flex-col gap-8 hidden">
+          <RenderIf condition={!!isAdmin}>
+            <Link
+              href={paths.DASHBOARD.MAIN}
+              className={`w-full ${user ? "block" : "hidden"}`}
+            >
+              <Button variant="ghost" className="w-full">
+                <ControlPoint className="text-green-500" />
+                Dashboard
+              </Button>
+            </Link>
+          </RenderIf>
           {NAVBAR_ITEM.map((item, index) =>
             item.title === "Account" ? (
               <AccountPopOver key={index} user={user} />

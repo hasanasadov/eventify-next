@@ -4,7 +4,7 @@ import { VenueSideBarItem } from "./VenueSideBarItem";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import PulseSkeleton from "../PulseSkeleton";
-import venueServices from "@/services/venues";
+import { getVenues } from "@/actions/venues";
 
 const VenuesSection = () => {
   const {
@@ -13,8 +13,10 @@ const VenuesSection = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.VENUES],
-    queryFn: venueServices.getVenues,
+    queryFn: getVenues,
   });
+
+  console.log(venues);
 
   if (isError) {
     return (

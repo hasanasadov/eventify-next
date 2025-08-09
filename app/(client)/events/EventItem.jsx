@@ -13,7 +13,7 @@ const EventItem = ({ event }) => {
     >
       <div className="relative overflow-hidden">
         <img
-          src={event.poster_image_link || LOGO}
+          src={event.imageURL || LOGO}
           alt={event.title || "event"}
           width={500}
           height={300}

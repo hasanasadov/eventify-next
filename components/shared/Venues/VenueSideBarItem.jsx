@@ -26,14 +26,14 @@ const VenueSideBarItem = ({ venue }) => {
     >
       <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden ">
         <img
-          src={venue.image_1_link || LOGO}
-          alt={venue.name || "venue"}
+          src={venue.imageURL || LOGO}
+          alt={venue.title || "venue"}
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
       <div className="flex flex-col gap-1 items-start justify-center">
         <div className="flex flex-col gap-1 items-start justify-center">
-          <h1 className="font-bold text-lg line-clamp-1">{venue.name}</h1>
+          <h1 className="font-bold text-lg line-clamp-1">{venue.title}</h1>
           <p className="text-sm text-gray-600 line-clamp-3">
             {venue.description}
           </p>

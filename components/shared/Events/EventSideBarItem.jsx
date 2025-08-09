@@ -27,7 +27,7 @@ const EventSideBarItem = ({ item }) => {
       <div className="w-full !h-48  bg-white flex items-center justify-center overflow-hidden ">
         <img
           className="!w-full !h-full object-cover rounded-lg"
-          src={item.poster_image_link || LOGO}
+          src={item.imageURL || LOGO}
           alt={item.title || "event"}
         />
       </div>

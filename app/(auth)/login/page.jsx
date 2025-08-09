@@ -5,7 +5,7 @@ import { PasswordOutlined } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { User2Icon } from "lucide-react";
 import React from "react";
-import { handleLogin } from "@/services/users";
+import { handleLogin } from "@/actions/users";
 import { redirect, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";

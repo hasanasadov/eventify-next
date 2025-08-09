@@ -4,7 +4,7 @@ import { QUERY_KEYS } from "@/constants/queryKeys";
 import { EventSideBarItem } from "./EventSideBarItem";
 import { useQuery } from "@tanstack/react-query";
 import PulseSkeleton from "../PulseSkeleton";
-import  eventServices  from "@/services/events";
+import { getEvents } from "@/actions/events";
 
 const EventsSection = () => {
   const {
@@ -13,7 +13,7 @@ const EventsSection = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS],
-    queryFn: eventServices.getEvents,
+    queryFn: getEvents,
   });
 
   if (isError) {

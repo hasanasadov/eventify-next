@@ -7,12 +7,12 @@ export const columns = [
     header: "ID",
   },
   {
-    accessorKey: "poster_image_link",
+    accessorKey: "imageURL",
     header: "Image",
     cell: (data) => {
       return (
         <img
-          src={data.row.original.poster_image_link}
+          src={data.row.original.imageURL}
           alt="Event Picture"
           className="w-10 h-10 object-cover rounded-lg"
         />
@@ -24,19 +24,35 @@ export const columns = [
     header: "Title",
   },
   {
-    accessorKey: "start",
-    header: "Start",
+    accessorKey: "location",
+    header: "Location",
+    cell: (data) => {
+      return data.row.original.location?.title || "No Location";
+    },
   },
   {
-    accessorKey: "finish",
+    accessorKey: "start",
+    header: "Start",
+    cell: (data) => {
+      return new Date(data.row.original.start).toLocaleTimeString();
+    },
+  },
+  {
+    accessorKey: "end",
     header: "Finish",
+    cell: (data) => {
+      return new Date(data.row.original.end).toLocaleTimeString();
+    },
   },
   {
     accessorKey: "date",
     header: "Date",
+    cell: (data) => {
+      return new Date(data.row.original.date).toLocaleDateString();
+    },
   },
   {
-    accessorKey: "venue_id",
+    accessorKey: "venueId",
     header: "Venue ID",
   },
   {

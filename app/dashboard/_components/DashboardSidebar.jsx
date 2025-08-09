@@ -11,6 +11,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { paths } from "@/constants/paths";
+import { PinDrop } from "@mui/icons-material";
 
 export const SideBarItems = [
   {
@@ -27,6 +28,11 @@ export const SideBarItems = [
     title: "Venues",
     url: paths.DASHBOARD.VENUES.LIST,
     icon: MuseumOutlined,
+  },
+  {
+    title: "Locations",
+    url: paths.DASHBOARD.LOCATIONS.LIST,
+    icon: PinDrop,
   },
 ];
 export const DashboardSidebar = () => {

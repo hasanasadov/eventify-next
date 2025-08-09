@@ -1,13 +1,10 @@
 "use client";
 
 import EventItem from "./EventItem";
-import  eventServices  from "@/services/events";
+import { getEvents } from "@/actions/events";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
-
-// const ITEMS_PER_PAGE = 8;
-// const ITEMS_PER_SCROLL = 4;
 
 const EventsPage = () => {
   const {
@@ -16,8 +13,10 @@ const EventsPage = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS],
-    queryFn: eventServices.getEvents,
+    queryFn: getEvents,
   });
+
+  console.log("Events:", events);
 
   if (isError) {
     return (

@@ -1,4 +1,4 @@
-import authService, { getCurrentUser } from "@/services/auth";
+import authService, { getCurrentUser } from "@/actions/auth";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
