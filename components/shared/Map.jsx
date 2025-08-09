@@ -13,7 +13,6 @@ const mapContainerStyle = {
 };
 
 const Map = ({ location }) => {
-  console.log("Location:", location);
   const title = location?.title || "No Title";
   const imageSource = location?.imageURL || "";
   const { isLoaded, loadError } = useLoadScript({

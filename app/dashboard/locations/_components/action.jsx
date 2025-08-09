@@ -140,8 +140,6 @@ const ActionForm = ({ type }) => {
       lng: values.lng,
       lat: values.lat,
     };
-
-    console.log(data);
     if (type === "create") {
       mutateCreate(data);
     } else if (type === "update") {

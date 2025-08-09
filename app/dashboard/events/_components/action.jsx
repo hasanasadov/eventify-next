@@ -165,7 +165,6 @@ const ActionForm = ({ type }) => {
       // organizer_id: values.organizer_id,
     };
 
-    console.log(data);
     if (type === "create") {
       mutateCreate(data);
     } else if (type === "update") {

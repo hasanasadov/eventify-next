@@ -20,7 +20,6 @@ const DashboardEventsPage = () => {
     <LoadingComp />;
   }
 
-  console.log(data);
   if (isError) {
     return (
       <div className="flex flex-col gap-1 jkustify-center items-center mt-32">

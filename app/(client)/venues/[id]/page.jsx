@@ -36,7 +36,6 @@ const VenueDetail = () => {
   const venueEvents = venue?.events || [];
   const venueLocation = venue?.location || {};
 
-  console.log(venue);
 
   // const toggleFavorite = () => {
   //   setIsFavorite(!isFavorite);

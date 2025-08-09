@@ -44,11 +44,9 @@ const EventDetail = () => {
     minute: "numeric",
   });
 
-  console.log(event);
   const eventComments = event?.comments || [];
   const location = event?.location || {};
 
-  console.log(location);
 
   if (isLoading)
     return (

@@ -33,7 +33,6 @@ const MainMap = () => {
     queryFn: getLocations,
   });
 
-  console.log("Locations:", locations);
 
   useEffect(() => {
     if (navigator.geolocation) {

@@ -22,7 +22,11 @@ import eventServices from "@/actions/events";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
-import venueServices from "@/actions/venues";
+import venueServices, {
+  createVenue,
+  deleteVenue,
+  editVenue,
+} from "@/actions/venues";
 
 // description: "The Baku Crystal Hall is a modern multi-functional indoor arena in Baku, Azerbaijan, known for hosting events such as the Eurovision Song Contest 2012 and various sports and cultural events.";
 // id: 1;
@@ -98,10 +102,9 @@ const ActionForm = ({ type }) => {
   });
 
   const editItem = data || null;
-  console.log("data", data);
 
   const { mutate: mutateCreate } = useMutation({
-    mutationFn: eventServices.createEvent,
+    mutationFn: createVenue,
     onSuccess: () => {
       toast.success("Venue created successfully.");
     },
@@ -109,7 +112,7 @@ const ActionForm = ({ type }) => {
   });
 
   const { mutate: mutateUpdate } = useMutation({
-    mutationFn: eventServices.edit,
+    mutationFn: editVenue,
     onSuccess: () => {
       toast.success("Venue updated successfully.");
       navigate(paths.DASHBOARD.EVENTS.LIST);
@@ -118,7 +121,7 @@ const ActionForm = ({ type }) => {
   });
 
   const { mutate: mutateDelete } = useMutation({
-    mutationFn: eventServices.remove,
+    mutationFn: deleteVenue,
     onSuccess: () => {
       toast.success("Venue deleted successfully.");
       navigate(paths.DASHBOARD.VENUES.LIST);
@@ -164,7 +167,6 @@ const ActionForm = ({ type }) => {
       closeAT: values.closeAT,
     };
 
-    console.log(data);
     if (type === "create") {
       mutateCreate(data);
     } else if (type === "update") {

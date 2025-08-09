@@ -4,7 +4,6 @@ import React from "react";
 import LOGO from "@/assets/logo.png";
 
 const EventItem = ({ event }) => {
-  // console.log(event);
   return (
     <Link
       href={`/events/${event.id}`}

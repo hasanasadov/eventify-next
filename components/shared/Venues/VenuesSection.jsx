@@ -16,7 +16,6 @@ const VenuesSection = () => {
     queryFn: getVenues,
   });
 
-  console.log(venues);
 
   if (isError) {
     return (
