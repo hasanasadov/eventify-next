@@ -22,9 +22,9 @@ const EventSideBarItem = ({ item }) => {
       //   setIsHovered("block");
       // }}
       // onMouseLeave={() => setIsHovered("hidden")}
-      className="flex hover:shadow-xl hover:border-green-300 duration-200 items-center flex-col  p-4 gap-4 w-[90%] bg-white border-2 border-gray-200 rounded-lg relative "
+      className="flex hover:shadow-xl hover:border-green-300 duration-200 items-center flex-col  p-4 gap-4 w-[90%] bg-white dark:bg-white/10 border-2   rounded-lg  relative "
     >
-      <div className="w-full !h-48  bg-white flex items-center justify-center overflow-hidden ">
+      <div className="w-full !h-48  bg-white dark:bg-white/10 flex items-center justify-center overflow-hidden ">
         <img
           className="!w-full !h-full object-cover rounded-lg"
           src={item.imageURL || LOGO}

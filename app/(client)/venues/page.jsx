@@ -30,7 +30,7 @@ const VenuesPage = () => {
   console.log("venuespage", venues);
   if (isLoading || !venues) {
     return (
-      <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
+      <div className="min-h-[70vh] bg-gray-50 dark:bg-black py-8 px-6">
         <div className="flex  items-center justify-center">
           <h1 className="text-4xl text-center pb-8 mr-4 font-bold text-[#075E54]">
             Explore Venues
@@ -47,7 +47,7 @@ const VenuesPage = () => {
   }
 
   return (
-    <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
+    <div className="min-h-[70vh] bg-gray-50 dark:bg-black py-8 px-6">
       <div className="flex  items-center justify-center">
         <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
           Explore venues

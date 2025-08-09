@@ -43,11 +43,11 @@ const Navbar = () => {
   return (
     <>
       <div
-        className="px-8 py-3 w-screen flex md:justify-between items-center sticky top-0 z-50 border-b-2 border-gray-200 backdrop-blur-md bg-transparent"
+        className="px-8 py-3 w-screen flex md:justify-between items-center sticky top-0 z-50 border-b-2 border-gray-200 backdrop-blur-md !bg-transparent"
         style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
       >
         <div className="flex w-full items-center justify-between ">
-          <div className="w-40  md:scale-150 h-12  flex items-center justify-center">
+          <div className="w-40  md:scale-150 h-12 drop-shadow-[0_0_4px_#fff]  flex items-center justify-center">
             <Link href="/">
               <Image src={Logo} alt="logo" width={100} height={100} />
             </Link>

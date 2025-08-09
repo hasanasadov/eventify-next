@@ -44,7 +44,7 @@ const VenueDetail = () => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-black">
         <div className="flex flex-col justify-center items-center min-h-screen">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
           <p className="mt-4 text-green-500 font-semibold">
@@ -56,7 +56,7 @@ const VenueDetail = () => {
 
   if (isError)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-red-50">
+      <div className="flex justify-center items-center min-h-screen bg-red-50 dark:bg-black">
         <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
           <p className="font-semibold">Error:</p>
           <button
@@ -70,7 +70,7 @@ const VenueDetail = () => {
     );
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-black">
       <Toaster position="top-right" reverseOrder={false} />
       <div className="container mx-auto py-6">
         <div className="flex flex-col gap-6 bg-white p-6 rounded-xl border-2">

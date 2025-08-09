@@ -62,7 +62,7 @@ const EventDetail = () => {
 
   if (isError)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-red-50">
+      <div className="flex justify-center items-center min-h-screen bg-red-50 dark:bg-black">
         <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
           <p className="font-semibold">Error:</p>
           <button
@@ -76,7 +76,7 @@ const EventDetail = () => {
     );
 
   return (
-    <div className="p-6 my-6 container mx-auto bg-gradient-to-r bg-white rounded-lg border-2">
+    <div className="p-6 my-6 container mx-auto bg-gradient-to-r bg-white dark:bg-black rounded-lg border-2">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex items-center justify-between mb-6">
         <Link href="/events" className="text-sm text-blue-500 hover:underline">
@@ -96,7 +96,7 @@ const EventDetail = () => {
             <p className="text-gray-500">No Poster Available</p>
           </div>
         </Renderif>
-        <div className="bg-white p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
+        <div className="bg-white dark:bg-black p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
           <div className="space-y-4">
             <h1 className="text-4xl font-extrabold text-green-500 mb-4">
               {event?.title || "Event Title"}
@@ -106,7 +106,7 @@ const EventDetail = () => {
             <div>
               <span
                 className="
-            text-xl font-semibold text-gray-800 mb-4
+            text-xl font-semibold text-gray-800 dark:text-white mb-4
             "
               >
                 Date :
@@ -133,7 +133,7 @@ const EventDetail = () => {
             <Renderif condition={event?.goto}>
               <Button
                 onClick={() => window.open(event.goto, "_blank").focus()}
-                className="bg-black hover:bg-opacity-40 text-white hover:bg-black text-xl font-sans p-5 md:w-1/2 w-full "
+                className="bg-black dark:bg-white hover:bg-opacity-40 text-white dark:text-black hover:bg-black text-xl font-sans p-5 md:w-1/2 w-full "
               >
                 Buy Ticket
               </Button>
@@ -173,7 +173,7 @@ const EventDetail = () => {
       </div>
       {location?.lat && location?.lng && (
         <div className="mt-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
             Location
           </h2>
           <Map
@@ -184,13 +184,13 @@ const EventDetail = () => {
         </div>
       )}
       <div className="mt-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Comments</h2>
         <div className="space-y-4">
           <Renderif condition={eventComments?.length && !isError}>
             {eventComments?.slice(0, sliceCount).map((comment, index) => (
               <div
                 key={index}
-                className="bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2"
+                className="bg-gray-100 dark:bg-black p-4 flex items-center justify-between rounded-lg border-2"
               >
                 <p>{comment.comment.content}</p>
                 <p className="text-gray-500 text-sm">

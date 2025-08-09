@@ -8,7 +8,7 @@ const VenueItem = ({ venue }) => {
     <Link
       href={`/venues/${venue.id}`}
       key={venue.id}
-      className="group block bg-white hover:shadow-lg hover:border-blue-300  rounded-lg border-2 overflow-hidden  transition-all duration-300"
+      className="group block bg-white dark:bg-black hover:shadow-lg hover:border-blue-300  rounded-lg border-2 overflow-hidden  transition-all duration-300"
     >
       <div className="relative overflow-hidden">
         <img

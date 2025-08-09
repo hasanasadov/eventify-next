@@ -22,9 +22,9 @@ const VenueSideBarItem = ({ venue }) => {
       //   setIsHovered("block");
       // }}
       // onMouseLeave={() => setIsHovered("hidden")}
-      className="bg-white hover:shadow-xl hover:border-blue-300 duration-200 flex items-center flex-col p-4 gap-4 w-[90%] border-2  transition-all rounded-lg relative "
+      className="bg-white dark:bg-white/10 hover:shadow-xl hover:border-blue-300 duration-200 flex items-center flex-col p-4 gap-4 w-[90%] border-2  transition-all rounded-lg relative "
     >
-      <div className="w-full h-48  bg-white flex items-center justify-center overflow-hidden ">
+      <div className="w-full h-48  bg-white dark:bg-white/10 flex items-center justify-center overflow-hidden ">
         <img
           src={venue.imageURL || LOGO}
           alt={venue.title || "venue"}
