@@ -13,45 +13,32 @@ export const columns = [
       return (
         <img
           src={data.row.original.imageURL}
-          alt="V"
+          alt="Location Picture"
           className="w-10 h-10 object-cover rounded-lg"
         />
       );
     },
   },
+
   {
-    accessorKey: "title",
-    header: "Title",
+    accessorKey: "lng",
+    header: "Longitude",
   },
   {
-    accessorKey: "location",
-    header: "Location",
-    cell: (data) => {
-      return data.row.original.location?.title || "No Location";
-    },
+    accessorKey: "lat",
+    header: "Latitude",
   },
-  {
-    accessorKey: "openAT",
-    header: "Open",
-  },
-  {
-    accessorKey: "closeAT",
-    header: "Close",
-  },
-  {
-    accessorKey: "type",
-    header: "Type",
-  },
+
   {
     accessorKey: "",
     header: "Actions",
     cell: (data) => {
       return (
         <div className=" text-yellow-500 flex items-center justify-center gap-4">
-          <Link href={paths.DASHBOARD.VENUES.EDIT(data.row.original.id)}>
+          <Link href={paths.DASHBOARD.LOCATIONS.EDIT(data.row.original.id)}>
             <Edit2Icon className="w-4 h-4 hover:scale-110" />
           </Link>
-          <Link href={paths.DASHBOARD.VENUES.DELETE(data.row.original.id)}>
+          <Link href={paths.DASHBOARD.LOCATIONS.DELETE(data.row.original.id)}>
             <Trash2Icon className="w-4 h-4 text-red-600 hover:scale-110" />
           </Link>
         </div>

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import VenueItem from "./VenueItem";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
-import venueServices from "@/services/venues";
+import { getVenues } from "@/actions/venues";
 
 const VenuesPage = () => {
   const {
@@ -13,7 +13,7 @@ const VenuesPage = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.VENUES],
-    queryFn: venueServices.getVenues,
+    queryFn: getVenues,
   });
 
   if (isError) {
@@ -30,9 +30,9 @@ const VenuesPage = () => {
   console.log("venuespage", venues);
   if (isLoading || !venues) {
     return (
-      <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
+      <div className="min-h-[70vh] bg-gray-50 dark:bg-black py-8 px-6">
         <div className="flex  items-center justify-center">
-          <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
+          <h1 className="text-4xl text-center pb-8 mr-4 font-bold text-[#075E54]">
             Explore Venues
           </h1>
         </div>
@@ -47,7 +47,7 @@ const VenuesPage = () => {
   }
 
   return (
-    <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
+    <div className="min-h-[70vh] bg-gray-50 dark:bg-black py-8 px-6">
       <div className="flex  items-center justify-center">
         <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
           Explore venues

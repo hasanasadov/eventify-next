@@ -4,16 +4,15 @@ import React from "react";
 import LOGO from "@/assets/logo.png";
 
 const EventItem = ({ event }) => {
-  // console.log(event);
   return (
     <Link
       href={`/events/${event.id}`}
       key={event.id}
-      className="group block hover:shadow-lg hover:border-green-300  bg-white rounded-lg border-2 overflow-hidden  transition-all duration-300"
+      className="group block hover:shadow-lg hover:border-green-300  bg-white dark:bg-black rounded-lg border-2 overflow-hidden  transition-all duration-300"
     >
       <div className="relative overflow-hidden">
         <img
-          src={event.poster_image_link || LOGO}
+          src={event.imageURL || LOGO}
           alt={event.title || "event"}
           width={500}
           height={300}

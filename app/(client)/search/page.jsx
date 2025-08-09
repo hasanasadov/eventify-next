@@ -7,8 +7,8 @@ import EventItem from "../events/EventItem";
 import VenueItem from "../venues/VenueItem";
 import { Renderif } from "@/lib/utils";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
-import eventServices from "@/services/events";
-import venueServices from "@/services/venues";
+import eventServices from "@/actions/events";
+import venueServices from "@/actions/venues";
 
 const SearchResult = () => {
   const searchtext =

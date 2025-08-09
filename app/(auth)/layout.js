@@ -7,10 +7,12 @@ import Image from "next/image";
 import AccountImage from "@/assets/logo.png";
 
 export const metadata = {
-  title: "Events App",
-  description: "MyEvents app for all your event needs",
+  title: "My Events",
+  description: "My Events App",
+  verification: {
+    google: "Kgwc7apwSgQ78KHX9S3HLqqZCET7TAQk-OGZJGVJ1mg",
+  },
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

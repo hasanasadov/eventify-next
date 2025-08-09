@@ -4,7 +4,7 @@ import Map from "@/components/shared/Map";
 import { Button } from "@/components/ui/button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { Renderif } from "@/lib/utils";
-import  eventServices  from "@/services/events";
+import eventServices, { getEventById } from "@/actions/events";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
 import { useQuery } from "@tanstack/react-query";
@@ -22,29 +22,31 @@ const EventDetail = () => {
   const [sliceCount, setSliceCount] = useState(3);
 
   const {
-    data: eventData,
+    data: event,
     isError,
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS, id],
-    queryFn: () => eventServices.getEventById(id),
+    queryFn: () => getEventById(id),
   });
 
-  const {
-    data: eventComments,
-    isError: commentsError,
-    isLoading: commentsLoading,
-  } = useQuery({
-    queryKey: [QUERY_KEYS.EVENT_COMMENTS, id],
-    queryFn: () => eventServices.getEventComments(id),
+  const eventDate = new Date(event?.date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  const eventStart = new Date(event?.start).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+  });
+  const eventEnd = new Date(event?.end).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
   });
 
-  console.log(eventData, eventComments);
+  const eventComments = event?.comments || [];
+  const location = event?.location || {};
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    toast.success(isFavorite ? "Removed from favorites" : "Added to favorites");
-  };
 
   if (isLoading)
     return (
@@ -60,7 +62,7 @@ const EventDetail = () => {
 
   if (isError)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-red-50">
+      <div className="flex justify-center items-center min-h-screen bg-red-50 dark:bg-black">
         <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
           <p className="font-semibold">Error:</p>
           <button
@@ -73,10 +75,8 @@ const EventDetail = () => {
       </div>
     );
 
-  const { event, location } = eventData || {};
-
   return (
-    <div className="p-6 my-6 container mx-auto bg-gradient-to-r bg-white rounded-lg border-2">
+    <div className="p-6 my-6 container mx-auto bg-gradient-to-r bg-white dark:bg-black rounded-lg border-2">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex items-center justify-between mb-6">
         <Link href="/events" className="text-sm text-blue-500 hover:underline">
@@ -84,53 +84,44 @@ const EventDetail = () => {
         </Link>
       </div>
       <div className="flex flex-col md:flex-row gap-6">
-        <Renderif condition={event?.poster_image_link}>
+        <Renderif condition={event?.imageURL}>
           <img
-            src={event.poster_image_link}
+            src={event?.imageURL}
             alt={event?.title || "Event Poster"}
             className="w-full md:max-w-[50%]  h-full  object-contain rounded-lg border-2"
           />
         </Renderif>
-        <Renderif condition={!event?.poster_image_link}>
+        <Renderif condition={!event?.imageURL}>
           <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
             <p className="text-gray-500">No Poster Available</p>
           </div>
         </Renderif>
-        <div className="bg-white p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
+        <div className="bg-white dark:bg-black p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
           <div className="space-y-4">
             <h1 className="text-4xl font-extrabold text-green-500 mb-4">
               {event?.title || "Event Title"}
-              <span className="text-xl"> ({event?.event_type})</span>
+              <span className="text-xl"> ({event?.type})</span>
             </h1>
 
             <div>
               <span
                 className="
-            text-xl font-semibold text-gray-800 mb-4
+            text-xl font-semibold text-gray-800 dark:text-white mb-4
             "
               >
                 Date :
               </span>
-              <span>
-                {" "}
-                {event?.date
-                  ? new Date(event.date).toLocaleDateString("en-GB", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                    })
-                  : "No date available"}
-              </span>
+              <span> {eventDate || "Not specified"}</span>
             </div>
 
             <div className="flex items-center gap-4">
               <p>
                 <span className="font-semibold ">From : </span>{" "}
-                {event?.start || "Not specified"}
+                {eventStart || "Not specified"}
               </p>
               <p>
                 <span className="font-semibold ">To : </span>{" "}
-                {event?.finish || "Not specified"}
+                {eventEnd || "Not specified"}
               </p>
             </div>
 
@@ -142,7 +133,7 @@ const EventDetail = () => {
             <Renderif condition={event?.goto}>
               <Button
                 onClick={() => window.open(event.goto, "_blank").focus()}
-                className="bg-black hover:bg-opacity-40 text-white hover:bg-black text-xl font-sans p-5 md:w-1/2 w-full "
+                className="bg-black dark:bg-white hover:bg-opacity-40 text-white dark:text-black hover:bg-black text-xl font-sans p-5 md:w-1/2 w-full "
               >
                 Buy Ticket
               </Button>
@@ -151,7 +142,7 @@ const EventDetail = () => {
 
           {/* <p>
             <span className="font-semibold text-yellow-600">Event Type:</span>{" "}
-            {event?.event_type || "Type not specified"}
+            {event?.type || "Type not specified"}
           </p> */}
           {/* <p>
             <span className="font-semibold text-red-600">Likes:</span>{" "}
@@ -182,24 +173,24 @@ const EventDetail = () => {
       </div>
       {location?.lat && location?.lng && (
         <div className="mt-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
             Location
           </h2>
           <Map
-            imageSource={event?.poster_image_link}
+            imageSource={event?.imageURL}
             title={event?.title}
             location={location}
           />
         </div>
       )}
       <div className="mt-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Comments</h2>
         <div className="space-y-4">
-          <Renderif condition={eventComments?.length && !commentsError}>
+          <Renderif condition={eventComments?.length && !isError}>
             {eventComments?.slice(0, sliceCount).map((comment, index) => (
               <div
                 key={index}
-                className="bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2"
+                className="bg-gray-100 dark:bg-black p-4 flex items-center justify-between rounded-lg border-2"
               >
                 <p>{comment.comment.content}</p>
                 <p className="text-gray-500 text-sm">
@@ -209,7 +200,7 @@ const EventDetail = () => {
             ))}
           </Renderif>
 
-          <Renderif condition={commentsLoading}>
+          <Renderif condition={isLoading}>
             <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
               <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
               <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
@@ -223,17 +214,16 @@ const EventDetail = () => {
               <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
             </div>
           </Renderif>
-          <Renderif condition={!eventComments?.length && !commentsLoading}>
+          <Renderif condition={!eventComments?.length && !isLoading}>
             <p className="text-gray-500">No comments yet.</p>
           </Renderif>
           <Button
-            disabled={!eventComments?.length || commentsLoading}
+            disabled={!eventComments?.length || isLoading}
             onClick={() => {
               sliceCount === -1 ? setSliceCount(3) : setSliceCount(-1);
             }}
             className={`mt-4 ${
-              commentsError ||
-              (!commentsError && !commentsLoading && !eventComments.length)
+              isError || (!isError && !isLoading && !eventComments.length)
                 ? "hidden"
                 : ""
             } `}

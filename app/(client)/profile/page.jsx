@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getCurrentUser } from "@/services/users";
+import { getCurrentUser } from "@/actions/users";
 
 const UserProfile = () => {
   const [token, setToken] = useState("");

@@ -8,12 +8,12 @@ import LoadingComp from "@/components/shared/Loading";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
-import { getVenues } from "@/actions/venues";
+import { getLocations } from "@/actions/location";
 
-const DashboardEventsPage = () => {
+const DashboardLocationsPage = () => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: [QUERY_KEYS.VENUES],
-    queryFn: getVenues,
+    queryKey: [QUERY_KEYS.LOCATIONS],
+    queryFn: getLocations,
   });
 
   if (isLoading) {
@@ -36,13 +36,13 @@ const DashboardEventsPage = () => {
   return (
     <div className="pt-6 ">
       <div className="flex justify-between items-center mb-6">
-        <h2 className=" text-green-500 font-bold text-2xl ">Venues</h2>
+        <h2 className=" text-green-500 font-bold text-2xl ">Locations</h2>
         <Button asChild>
           <Link
             className="!bg-green-700 hover:scale-105 "
-            href={paths.DASHBOARD.VENUES.CREATE}
+            href={paths.DASHBOARD.LOCATIONS.CREATE}
           >
-            Create Venue
+            Create Location
           </Link>
         </Button>
       </div>
@@ -51,4 +51,4 @@ const DashboardEventsPage = () => {
   );
 };
 
-export default DashboardEventsPage;
+export default DashboardLocationsPage;

@@ -8,19 +8,18 @@ import LoadingComp from "@/components/shared/Loading";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
-import  eventServices  from "@/services/events";
+import   { getEvents }  from "@/actions/events";
 
 const DashboardEventsPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS],
-    queryFn: eventServices.getEvents,
+    queryFn: getEvents,
   });
 
   if (isLoading) {
     <LoadingComp />;
   }
 
-  console.log(data);
   if (isError) {
     return (
       <div className="flex flex-col gap-1 jkustify-center items-center mt-32">

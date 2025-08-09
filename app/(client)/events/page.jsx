@@ -1,13 +1,10 @@
 "use client";
 
 import EventItem from "./EventItem";
-import  eventServices  from "@/services/events";
+import { getEvents } from "@/actions/events";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
-
-// const ITEMS_PER_PAGE = 8;
-// const ITEMS_PER_SCROLL = 4;
 
 const EventsPage = () => {
   const {
@@ -16,8 +13,10 @@ const EventsPage = () => {
     isLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS],
-    queryFn: eventServices.getEvents,
+    queryFn: getEvents,
   });
+
+  console.log("Events:", events);
 
   if (isError) {
     return (
@@ -32,7 +31,7 @@ const EventsPage = () => {
 
   if (isLoading || !events) {
     return (
-      <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
+      <div className="min-h-[70vh] bg-gray-50 dark:bg-black  py-8 px-6">
         <div className="flex  items-center justify-center">
           <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
             Explore Events
@@ -49,7 +48,7 @@ const EventsPage = () => {
   }
 
   return (
-    <div className="min-h-[70vh] bg-gray-50  py-8 px-6">
+    <div className="min-h-[70vh] bg-gray-50 dark:bg-black py-8 px-6">
       <div className="flex  items-center justify-center">
         <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
           Explore Events

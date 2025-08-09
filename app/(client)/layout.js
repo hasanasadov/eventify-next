@@ -3,6 +3,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { Toaster } from "sonner";
 import "../globals.css";
+import { ThemeProvider } from "next-themes";
 // import store from "@/store";
 // import { Provider } from "react-redux";
 
@@ -16,17 +17,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      {/* <Provider store={store}> */}
+    <html lang="en" suppressHydrationWarning data-qb-installed>
       <body className="mb-[40px] lg:mb-0">
-        <Navbar />
-        <main className="flex-grow">
-          <QueryProvider>{children}</QueryProvider>
-        </main>
-        <Footer />
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem={false}
+        >
+          <Navbar />
+          <main className="flex-grow">
+            <QueryProvider>{children}</QueryProvider>
+          </main>
+          <Footer />
+          <Toaster />
+        </ThemeProvider>
       </body>
-      {/* </Provider> */}
     </html>
   );
 }

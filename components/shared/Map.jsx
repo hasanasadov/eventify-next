@@ -12,7 +12,9 @@ const mapContainerStyle = {
   height: "400px",
 };
 
-const Map = ({ imageSource, title, location }) => {
+const Map = ({ location }) => {
+  const title = location?.title || "No Title";
+  const imageSource = location?.imageURL || "";
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
@@ -61,11 +63,12 @@ const Map = ({ imageSource, title, location }) => {
     }
   }, [currentPosition, routeVisible, isLoaded, location]);
 
-  if (!location ||
-      !location.lat ||
-      !location.lng ||
-      Number.isNaN(+location.lat) ||
-      Number.isNaN(+location.lng)
+  if (
+    !location ||
+    !location.lat ||
+    !location.lng ||
+    Number.isNaN(+location.lat) ||
+    Number.isNaN(+location.lng)
   ) {
     return null;
   }

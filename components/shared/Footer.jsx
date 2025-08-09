@@ -16,6 +16,7 @@ import { useState, useEffect } from "react";
 import Logo from "@/assets/logo.png";
 import { Task } from "@mui/icons-material";
 import { toast } from "sonner";
+import ToggleTheme from "./Toggle";
 
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -78,12 +79,12 @@ const Footer = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 py-16 relative overflow-hidden"
+      className="py-16 relative overflow-hidden"
     >
-      <div className="absolute inset-0 pointer-events-none">
+      {/* <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-64 h-64 bg-green-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-200/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
-      </div>
+      </div> */}
 
       <div className="px-6 sm:px-12 lg:px-24 relative z-10">
         <motion.div
@@ -111,7 +112,7 @@ const Footer = () => {
             className="flex flex-col items-center md:items-start"
           >
             <Link href="/" className="group">
-              <motion.div className="w-40 h-12  flex items-center justify-center mb-4">
+              <motion.div className="w-40 h-12 drop-shadow-[0_0_4px_#fff] flex items-center justify-center mb-4">
                 <Image src={Logo} alt="logo" width={240} height={120} />
               </motion.div>
             </Link>
@@ -229,10 +230,11 @@ const Footer = () => {
           transition={{ delay: 0.5 }}
           className="mt-12 border-t border-gray-300 pt-6 flex flex-col md:flex-row justify-between items-center"
         >
-          <p className="text-sm text-black">
+          <p className="text-sm ">
             &copy; {new Date().getFullYear()} Myevents. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
+            <ToggleTheme />
             {socialLinks.map(({ Icon, href, color }) => (
               <motion.a
                 key={href}
@@ -241,7 +243,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className={`text-black ${color} transition-all`}
+                className={` ${color} transition-all`}
               >
                 <Icon size={24} />
               </motion.a>

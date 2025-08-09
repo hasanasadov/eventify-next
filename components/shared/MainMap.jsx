@@ -8,7 +8,9 @@ import {
   DirectionsRenderer,
   useLoadScript,
 } from "@react-google-maps/api";
-import { getLocations } from "@/services/location";
+import { getLocations } from "@/actions/location";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import { useQuery } from "@tanstack/react-query";
 
 const mapContainerStyle = {
   width: "100%",
@@ -16,7 +18,6 @@ const mapContainerStyle = {
 };
 
 const MainMap = () => {
-  const [locations, setLocations] = useState([]);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   });
@@ -27,9 +28,11 @@ const MainMap = () => {
 
   // console.log("selectedLocation", locations);
 
-  useEffect(() => {
-    getLocations().then((locations) => setLocations(locations));
-  }, []);
+  const { data: locations } = useQuery({
+    queryKey: [QUERY_KEYS.LOCATIONS],
+    queryFn: getLocations,
+  });
+
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -87,7 +90,7 @@ const MainMap = () => {
       </div>
     );
 
-    // console.log("locations", locations);
+  // console.log("locations", locations);
   return (
     <GoogleMap
       mapContainerStyle={mapContainerStyle}
@@ -131,11 +134,11 @@ const MainMap = () => {
         >
           <div style={{ maxWidth: "200px" }}>
             <img
-              src={selectedLocation?.image || "@/assets/logo.png"}
-              alt={selectedLocation.name}
+              src={selectedLocation?.imageURL || "@/assets/logo.png"}
+              alt={selectedLocation.title}
               style={{ width: "100%", borderRadius: "5px" }}
             />
-            <h4>{selectedLocation.name}</h4>
+            <h4>{selectedLocation.title}</h4>
             {currentPosition && (
               <button
                 onClick={() => setShowRoute(true)}

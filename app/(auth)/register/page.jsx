@@ -1,6 +1,6 @@
 "use client";
 
-import { handleRegister } from "@/services/users";
+import { handleRegister } from "@/actions/users";
 import { PasswordOutlined } from "@mui/icons-material";
 import { EmailOutlined } from "@mui/icons-material";
 import { useFormik } from "formik";

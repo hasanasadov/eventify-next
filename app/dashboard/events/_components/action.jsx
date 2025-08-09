@@ -18,7 +18,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { RenderIf } from "@/components/shared/RenderIf";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import eventServices from "@/services/events";
+import eventServices, {
+  createEvent,
+  deleteEvent,
+  editEvent,
+  getEventById,
+} from "@/actions/events";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
@@ -28,15 +33,15 @@ const getFormSchema = ({ isEdit, isDelete }) =>
     title: z.string().min(2),
     date: z.string().min(2),
     description: z.string().min(2),
-    event_type: z.string().min(2),
+    type: z.string().min(2),
     start: z.string().min(2),
-    finish: z.string().min(2),
+    end: z.string().min(2),
     goto: z.string().min(2),
 
-    venue_id: z.string().min(1),
+    venueId: z.string().min(1),
     organizer_id: z.string().min(1),
-    poster_image_link: isEdit || isDelete ? z.string().optional() : z.string(),
-    // poster_image_link:
+    imageURL: isEdit || isDelete ? z.string().optional() : z.string(),
+    // imageURL:
     //   isEdit || isDelete
     //     ? z.any().optional()
     //     : z
@@ -78,20 +83,14 @@ const ActionForm = ({ type }) => {
   const isDelete = type === "delete";
 
   const { id } = useParams();
-  const { data } = useQuery({
+  const { data: editItem } = useQuery({
     queryKey: [QUERY_KEYS.EVENT_COMMENTS, id],
-    queryFn: () => eventServices.getEventById(id),
+    queryFn: () => getEventById(id),
     enabled: isEdit || isDelete,
   });
 
-  const editItem = data?.event || null;
-  const editLocation = data?.location || null;
-  console.log("data", data);
-
-  console.log("editItem", editItem);
-
   const { mutate: mutateCreate } = useMutation({
-    mutationFn: eventServices.createEvent,
+    mutationFn: createEvent,
     onSuccess: () => {
       toast.success("Event created successfully.");
     },
@@ -99,7 +98,7 @@ const ActionForm = ({ type }) => {
   });
 
   const { mutate: mutateUpdate } = useMutation({
-    mutationFn: eventServices.edit,
+    mutationFn: editEvent,
     onSuccess: () => {
       toast.success("Event updated successfully.");
       navigate(paths.DASHBOARD.EVENTS.LIST);
@@ -108,7 +107,7 @@ const ActionForm = ({ type }) => {
   });
 
   const { mutate: mutateDelete } = useMutation({
-    mutationFn: eventServices.remove,
+    mutationFn: deleteEvent,
     onSuccess: () => {
       toast.success("Event deleted successfully.");
       navigate(paths.DASHBOARD.EVENTS.LIST);
@@ -126,15 +125,13 @@ const ActionForm = ({ type }) => {
       title: "",
       date: "",
       description: "",
-      event_type: "",
+      type: "",
       start: "",
-      finish: "",
+      end: "",
       goto: "",
-      venue_id: "",
+      venueId: "",
       organizer_id: "",
-      poster_image_link: "",
-      lat: "",
-      lng: "",
+      imageURL: "",
     },
     resolver: zodResolver(formSchema),
   });
@@ -142,37 +139,32 @@ const ActionForm = ({ type }) => {
   useEffect(() => {
     if (editItem) {
       form.setValue("title", editItem?.title);
-      form.setValue("poster_image_link", editItem?.poster_image_link);
+      form.setValue("imageURL", editItem?.imageURL);
       form.setValue("date", editItem?.date);
       form.setValue("description", editItem?.description);
-      form.setValue("event_type", editItem?.event_type);
+      form.setValue("type", editItem?.type);
       form.setValue("start", editItem?.start);
-      form.setValue("finish", editItem?.finish);
+      form.setValue("end", editItem?.end);
       form.setValue("goto", editItem?.goto);
-      form.setValue("venue_id", editItem?.venue_id);
+      form.setValue("venueId", editItem?.venueId);
       form.setValue("organizer_id", editItem?.organizer_id);
-      form.setValue("lat", editLocation?.lat);
-      form.setValue("lng", editLocation?.lng);
     }
   }, [editItem]);
 
   function onSubmit(values) {
     const data = {
       title: values.title,
-      poster_image_link: values.poster_image_link,
+      imageURL: values.imageURL,
       date: values.date,
       description: values.description,
-      event_type: values.event_type,
+      type: values.type,
       start: values.start,
-      finish: values.finish,
+      end: values.end,
       goto: values.goto,
-      venue_id: values.venue_id,
-      organizer_id: values.organizer_id,
-      lat: values.lat,
-      lng: values.lng,
+      // venueId: values.venueId,
+      // organizer_id: values.organizer_id,
     };
 
-    console.log(data);
     if (type === "create") {
       mutateCreate(data);
     } else if (type === "update") {
@@ -252,7 +244,7 @@ const ActionForm = ({ type }) => {
             />
             <FormField
               control={form.control}
-              name="event_type"
+              name="type"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Event Type</FormLabel>
@@ -287,15 +279,15 @@ const ActionForm = ({ type }) => {
             />
             <FormField
               control={form.control}
-              name="finish"
+              name="end"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Finish</FormLabel>
+                  <FormLabel>end</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
                       type="time"
-                      placeholder="Finish"
+                      placeholder="end"
                       {...field}
                     />
                   </FormControl>
@@ -322,7 +314,7 @@ const ActionForm = ({ type }) => {
             />
             <FormField
               control={form.control}
-              name="venue_id"
+              name="venueId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Venue ID</FormLabel>
@@ -340,7 +332,7 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="organizer_id"
               render={({ field }) => (
@@ -359,9 +351,9 @@ const ActionForm = ({ type }) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="lat"
               render={({ field }) => (
@@ -401,11 +393,11 @@ const ActionForm = ({ type }) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             {/* <FormField
               control={form.control}
-              name="poster_image_link"
+              name="imageURL"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Image</FormLabel>
@@ -427,7 +419,7 @@ const ActionForm = ({ type }) => {
 
             <FormField
               control={form.control}
-              name="poster_image_link"
+              name="imageURL"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Image</FormLabel>
@@ -446,16 +438,14 @@ const ActionForm = ({ type }) => {
           </div>
 
           <RenderIf
-            condition={
-              !!editItem?.poster_image_link && !!form.watch("poster_image_link")
-            }
+            condition={!!editItem?.imageURL && !!form.watch("imageURL")}
           >
             <div className="mt-4">
               <h4>Existing Image</h4>
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
                 <RenderIf condition={!!editItem}>
                   <img
-                    src={editItem?.poster_image_link}
+                    src={editItem?.imageURL}
                     alt="Event Image"
                     className="w-full object-cover rounded-lg"
                   />
