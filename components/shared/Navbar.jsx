@@ -14,6 +14,7 @@ import { AccountPopOver } from "./AccountPopover";
 import { RenderIf } from "../../utils/RenderIf";
 import { paths } from "@/constants/paths";
 import { ControlPoint } from "@mui/icons-material";
+import ToggleTheme from "./Toggle";
 
 const Navbar = () => {
   // const [token, setToken] = useState("");
@@ -55,6 +56,7 @@ const Navbar = () => {
           <div className="w-full md:px-10 px-4">
             <InputWithButton />
           </div>
+          <ToggleTheme />
         </div>
 
         <div className="lg:flex md:flex-row flex-col gap-8 hidden">
@@ -90,7 +92,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <MobileNavbar user={user} />
+        {/* <MobileNavbar user={user} /> */}
       </div>
     </>
   );

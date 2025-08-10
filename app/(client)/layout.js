@@ -1,6 +1,5 @@
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
-import { Container } from "@/components/ui/Container";
 import "../globals.css";
 export const metadata = {
   title: "My Events",
@@ -14,8 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <>
       <Navbar />
-      <div className="!p-6 md:!px-0">{children}</div>
-      <Footer />
+      <div className="!p-6 md:!px-0">
+        {children}
+        <Footer />
+      </div>
     </>
   );
 }

@@ -30,7 +30,7 @@ const ToggleTheme = () => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="flex items-center justify-end mr-0.5"
+      className="flex items-center justify-end "
     >
       <label className="relative transition-all duration-500 inline-flex items-center justify-end cursor-pointer w-10 h-5">
         <input

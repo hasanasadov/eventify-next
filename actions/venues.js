@@ -74,7 +74,7 @@ export const searchVenues = async (searchText) => {
     const venues = await prisma.venue.findMany({
       where: {
         OR: [
-          { name: { contains: searchText, mode: "insensitive" } },
+          { title: { contains: searchText, mode: "insensitive" } },
           { description: { contains: searchText, mode: "insensitive" } },
         ],
       },
