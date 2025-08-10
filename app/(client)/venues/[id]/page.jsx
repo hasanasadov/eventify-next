@@ -36,8 +36,8 @@ const VenueDetail = () => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen ">
-        <div className="flex flex-col justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-[70vh]">
+        <div className="flex flex-col justify-center items-center">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
           <p className="mt-4 text-green-500 font-semibold">
             Loading venue details...
@@ -50,13 +50,13 @@ const VenueDetail = () => {
 
   return (
     <Container>
-      <div className="flex flex-col gap-6 p-6  md:!p-0">
+      <div className="flex flex-col gap-6 ">
         <div className="flex items-center justify-between glass-button w-fit">
           <Link href="/venues" className="text-sm  px-3 py-1  ">
             Back to list
           </Link>
         </div>
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-12">
           <RenderIf condition={venue?.imageURL}>
             <img
               src={venue.imageURL}
@@ -111,7 +111,7 @@ const LocationSection = ({ venueLocation }) => {
   return (
     <div>
       {venueLocation?.lat && venueLocation?.lng && (
-        <div className="mt-6 ">
+        <div className=" ">
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
             Location
           </h2>
@@ -155,7 +155,7 @@ const LocationSection = ({ venueLocation }) => {
 
 const UpcomingEventsSection = ({ venueEvents }) => {
   return (
-    <div className="mt-8">
+    <div className="">
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
         Upcoming Events
       </h2>

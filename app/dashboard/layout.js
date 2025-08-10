@@ -2,7 +2,6 @@
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "./_components/DashboardSidebar";
-import "../globals.css";
 import QueryProvider from "@/providers/QueryProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

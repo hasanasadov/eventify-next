@@ -1,7 +1,5 @@
-import QueryProvider from "@/providers/QueryProvider";
-import { Toaster } from "sonner";
-import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import "@/styles/globals.css";
+import CustomLayout from "@/providers/CustomLayout";
 
 export const metadata = {
   title: "My Events",
@@ -14,17 +12,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning data-qb-installed>
-      <body className="mb-[40px]] lg:mb-0 ">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem={false}
-        >
-          <main className="flex-grow ">
-            <QueryProvider>{children}</QueryProvider>
-          </main>
-          <Toaster />
-        </ThemeProvider>
+      <body className="mb-5 lg:mb-0 ">
+        <CustomLayout>{children}</CustomLayout>
       </body>
     </html>
   );

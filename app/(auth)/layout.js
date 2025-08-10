@@ -1,5 +1,4 @@
 import Link from "next/link";
-import "../globals.css";
 import { ArrowBack } from "@mui/icons-material";
 import { Toaster } from "sonner";
 import React from "react";

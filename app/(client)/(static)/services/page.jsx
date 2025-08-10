@@ -3,9 +3,9 @@ import React from "react";
 
 const ServicesPage = () => {
   return (
-    <div className="py-20 bg-gray-100 p-8">
+    <div className="py-20  p-8">
       <Container>
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
+        <h1 className="text-4xl font-bold text-center0 mb-8">
           Our Services
         </h1>
 

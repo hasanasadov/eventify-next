@@ -73,7 +73,7 @@ const Footer = () => {
             className="flex flex-col items-center md:items-start"
           >
             <Link href="/" className="group">
-              <motion.div className="w-40 h-12 drop-shadow-[0_0_4px_#fff] flex items-center justify-center mb-4">
+              <motion.div className="w-40 h-12 dark:drop-shadow-[0_0_4px_#fff] dark:invert flex items-center justify-center mb-4">
                 <Image src={Logo} alt="logo" width={240} height={120} />
               </motion.div>
             </Link>
@@ -89,7 +89,7 @@ const Footer = () => {
             }}
             className="space-y-4"
           >
-            <h3 className="text-lg font-semibold  border-b-2 border-green-400 pb-2">
+            <h3 className="text-lg font-semibold  border-b border-green-400 pb-2">
               Quick Links
             </h3>
             <ul className="space-y-2 text-sm">
@@ -120,7 +120,7 @@ const Footer = () => {
             }}
             className="space-y-4"
           >
-            <h3 className="md:text-lg font-semibold  border-b-2 border-green-400 pb-2">
+            <h3 className="md:text-lg font-semibold  border-b border-green-400 pb-2">
               Contact Us
             </h3>
             <ul className="space-y-3 text-sm">
@@ -154,7 +154,7 @@ const Footer = () => {
               visible: { opacity: 1, x: 0 },
             }}
           >
-            <h3 className="md:text-lg font-semibold mb-4 border-b-2 border-green-400 pb-2">
+            <h3 className="md:text-lg font-semibold mb-4 border-b border-green-400 pb-2">
               Subscribe
             </h3>
             <form
