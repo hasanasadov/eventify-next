@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import eventServices from "@/actions/events";
 import { getVenueById } from "@/actions/venues";
 import { RenderIf } from "@/utils/RenderIf";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 import IsError from "@/components/shared/IsError";
 
 const VenueDetail = () => {

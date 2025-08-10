@@ -14,7 +14,7 @@ import { Toaster } from "react-hot-toast";
 import { toast } from "sonner";
 import { RenderIf } from "@/utils/RenderIf";
 import IsError from "@/components/shared/IsError";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 
 const EventDetail = () => {
   const { id } = useParams();

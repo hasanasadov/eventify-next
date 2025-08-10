@@ -1,6 +1,7 @@
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
-
+import { Container } from "@/components/ui/Container";
+import "../globals.css";
 export const metadata = {
   title: "My Events",
   description: "My Events App",
@@ -11,12 +12,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <div>
+    <>
       <Navbar />
-      <div className="!p-6 md:!px-0 min-h-[70vh] bg-gray-50 dark:bg-black">
-        {children}
-      </div>
+      <div className="!p-6 md:!px-0">{children}</div>
       <Footer />
-    </div>
+    </>
   );
 }

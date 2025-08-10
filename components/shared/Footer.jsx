@@ -18,7 +18,7 @@ import { Task } from "@mui/icons-material";
 import { toast } from "sonner";
 import ToggleTheme from "./Toggle";
 import { Button } from "../ui/button";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 
 const Footer = () => {
   const [email, setEmail] = useState("");

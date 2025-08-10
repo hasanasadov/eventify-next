@@ -15,7 +15,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getCurrentUser } from "@/actions/users";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 
 const UserProfile = () => {
   const [token, setToken] = useState("");

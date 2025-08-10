@@ -5,8 +5,7 @@ import { getEvents } from "@/actions/events";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
-import { Button } from "@/components/ui/button";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 import IsError from "@/components/shared/IsError";
 
 const EventsPage = () => {
@@ -43,7 +42,7 @@ const EventsPage = () => {
   }
 
   return (
-    <Container>
+    <Container className="">
       <div className="flex  items-center justify-center">
         <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-[#18f3d9]">
           Explore Events

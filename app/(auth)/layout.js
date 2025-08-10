@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 import React from "react";
 import Image from "next/image";
 import AccountImage from "@/assets/logo.png";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 
 export const metadata = {
   title: "My Events",

@@ -1,4 +1,4 @@
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 import React from "react";
 
 const ServicesPage = () => {

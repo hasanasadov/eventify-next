@@ -10,7 +10,7 @@ import { searchEvents } from "@/actions/events";
 import { searchVenues } from "@/actions/venues";
 import { RenderIf } from "@/utils/RenderIf";
 import IsError from "@/components/shared/IsError";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 
 const SearchResult = () => {
   const searchtext =

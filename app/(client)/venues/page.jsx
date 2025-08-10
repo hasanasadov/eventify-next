@@ -6,7 +6,7 @@ import VenueItem from "./VenueItem";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
 import { getVenues } from "@/actions/venues";
 import { Button } from "@/components/ui/button";
-import { Container } from "@/utils/Container";
+import { Container } from "@/components/ui/Container";
 import IsError from "@/components/shared/IsError";
 
 const VenuesPage = () => {
