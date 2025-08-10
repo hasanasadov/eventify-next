@@ -12,8 +12,8 @@ model Event {
     title       String
     description String
     imageURL    String
-    start       DateTime @default(now())
-    end         DateTime @default(now())
+    start       String?
+    end         String?
     date        DateTime @default(now())
     goto        String
     type        String

@@ -3,8 +3,9 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { EventSideBarItem } from "./EventSideBarItem";
 import { useQuery } from "@tanstack/react-query";
-import PulseSkeleton from "../PulseSkeleton";
 import { getEvents } from "@/actions/events";
+import PulseSkeleton from "@/components/shared/PulseSkeleton";
+import IsError from "@/components/shared/IsError";
 
 const EventsSection = () => {
   const {
@@ -18,22 +19,17 @@ const EventsSection = () => {
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center justify-center gap-3">
-        <h2 className="text-lg font-bold text-center">Something went wrong</h2>
-        <p className="text-sm text-center">
-          We could not fetch the events at the moment. Please try again later.
-        </p>
-      </div>
+      <IsError text="events" />
     );
   }
 
   if (isLoading || !events) {
     return (
-      <>
+      <div className="p-4">
         <PulseSkeleton />
         <PulseSkeleton />
         <PulseSkeleton />
-      </>
+      </div>
     );
   }
 

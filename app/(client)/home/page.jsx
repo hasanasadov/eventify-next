@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import SideBarLeft from "@/components/shared/SideBarLeft";
-import SideBarRight from "@/components/shared/SideBarRight";
+import SideBarLeft from "@/app/(client)/home/_components/SideBarLeft";
+import SideBarRight from "@/app/(client)/home/_components/SideBarRight";
 import MainMap from "@/components/shared/MainMap";
 // import { useAppSelector } from "@/hooks/redux";
 // import { selectAuth } from "@/store/auth";
@@ -24,7 +24,7 @@ export default function HomePage() {
   return (
     <div className="flex justify-between flex-col md:flex-row p-8 w-full bg-gray-50 dark:bg-black">
       <SideBarLeft />{" "}
-      <div className="flex-grow min-h-[70vh] rounded-xl overflow-hidden md:mx-6 my-6 md:my-0">
+      <div className="flex-grow min-h-[70vh]  glass rounded-xl overflow-hidden md:mx-6 my-6 md:my-0">
         <MainMap />
       </div>
       <SideBarRight />{" "}

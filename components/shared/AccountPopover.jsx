@@ -5,7 +5,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Link from "next/link";
-import { RenderIf } from "./RenderIf";
+import { RenderIf } from "../../utils/RenderIf";
 import { paths } from "@/constants/paths";
 
 export function AccountPopOver({ user }) {
@@ -16,13 +16,13 @@ export function AccountPopOver({ user }) {
       <PopoverTrigger asChild>
         <Button
           className={`${!!user ? "border border-green-500" : ""}`}
-          variant="outline"
+          variant="glass"
         >
           Account
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-40 mr-8">
-        <div className="grid gap-1">
+      <PopoverContent className="w-40 mr-8 glass">
+        <div className="grid gap-1 ">
           <Link
             href="/login"
             className={`w-full 
@@ -75,7 +75,6 @@ export function AccountPopOver({ user }) {
             {" "}
             Logout
           </Button>
-          
         </div>
       </PopoverContent>
     </Popover>

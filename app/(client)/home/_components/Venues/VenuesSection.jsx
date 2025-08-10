@@ -3,8 +3,9 @@
 import { VenueSideBarItem } from "./VenueSideBarItem";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import PulseSkeleton from "../PulseSkeleton";
 import { getVenues } from "@/actions/venues";
+import PulseSkeleton from "@/components/shared/PulseSkeleton";
+import IsError from "@/components/shared/IsError";
 
 const VenuesSection = () => {
   const {
@@ -17,23 +18,16 @@ const VenuesSection = () => {
   });
 
   if (isError) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-3">
-        <h2 className="text-lg font-bold text-center">Something went wrong</h2>
-        <p className="text-sm text-center">
-          We could not fetch the venues at the moment. Please try again later.
-        </p>
-      </div>
-    );
+    return <IsError text="venues" />;
   }
 
   if (isLoading || !venues) {
     return (
-      <>
+      <div className="p-4">
         <PulseSkeleton />
         <PulseSkeleton />
         <PulseSkeleton />
-      </>
+      </div>
     );
   }
   return (

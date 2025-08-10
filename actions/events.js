@@ -68,3 +68,20 @@ export const deleteEvent = async (id) => {
     return null;
   }
 };
+
+export const searchEvents = async (searchText) => {
+  try {
+    const events = await prisma.event.findMany({
+      where: {
+        OR: [
+          { title: { contains: searchText, mode: "insensitive" } },
+          { description: { contains: searchText, mode: "insensitive" } },
+        ],
+      },
+    });
+    return events || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};

@@ -68,3 +68,20 @@ export const createVenue = async (data) => {
     return null;
   }
 };
+
+export const searchVenues = async (searchText) => {
+  try {
+    const venues = await prisma.venue.findMany({
+      where: {
+        OR: [
+          { name: { contains: searchText, mode: "insensitive" } },
+          { description: { contains: searchText, mode: "insensitive" } },
+        ],
+      },
+    });
+    return venues || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};

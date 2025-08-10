@@ -8,7 +8,7 @@ const FavoritesLayout = ({ children }) => {
 
   return (
     <div className=" bg-gray-50 py-8 px-6 min-h-[70vh]">
-      <h1 className="text-4xl text-center pb-6 font-bold text-[#075E54]">
+      <h1 className="text-4xl text-center pb-6 font-bold text-[#075E54] dark:text-[#18f3d9]">
         Your Favorites
       </h1>
       <div className="flex mb-6 items-center justify-center">

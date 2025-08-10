@@ -2,7 +2,7 @@
 
 import { LOGO } from "@/constants";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 // import { FavoriteBorderOutlined } from "@mui/icons-material";
 // import { Favorite } from "@mui/icons-material";
 
@@ -22,7 +22,7 @@ const EventSideBarItem = ({ item }) => {
       //   setIsHovered("block");
       // }}
       // onMouseLeave={() => setIsHovered("hidden")}
-      className="flex hover:shadow-xl hover:border-green-300 duration-200 items-center flex-col  p-4 gap-4 w-[90%] bg-white dark:bg-white/10 border-2   rounded-lg  relative "
+      className="flex glass-border hover:border-green-300 duration-200 items-center flex-col  p-4 gap-4 w-[90%] bg-white dark:bg-white/10 border-2   rounded-lg  relative "
     >
       <div className="w-full !h-48  bg-white dark:bg-white/10 flex items-center justify-center overflow-hidden ">
         <img
@@ -36,7 +36,7 @@ const EventSideBarItem = ({ item }) => {
         {/* Event Details */}
         <div className="flex flex-col gap-1 items-start justify-center">
           <h1 className="font-semibold text-lg line-clamp-1">{item.title}</h1>
-          <p className="text-sm text-gray-600 line-clamp-3">
+          <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
             {item.description}
           </p>
         </div>

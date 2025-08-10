@@ -5,10 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import EventItem from "../events/EventItem";
 import VenueItem from "../venues/VenueItem";
-import { Renderif } from "@/lib/utils";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
-import eventServices from "@/actions/events";
-import venueServices from "@/actions/venues";
+import { searchEvents } from "@/actions/events";
+import { searchVenues } from "@/actions/venues";
+import { RenderIf } from "@/utils/RenderIf";
+import IsError from "@/components/shared/IsError";
 
 const SearchResult = () => {
   const searchtext =
@@ -20,77 +21,90 @@ const SearchResult = () => {
     isLoading: eventsLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.SEARCH_EVENTS, searchtext],
-    queryFn: () => eventServices.searchEvents(searchtext),
+    queryFn: () => searchEvents(searchtext),
   });
 
-  let {
+  const {
     data: venuesData,
     isError: venuesError,
     isLoading: venuesLoading,
   } = useQuery({
     queryKey: [QUERY_KEYS.SEARCH_VENUES, searchtext],
-    queryFn: () => venueServices.searchVenues(searchtext),
+    queryFn: () => searchVenues(searchtext),
   });
 
+  console.log("Events Data:", eventsData);
+  console.log("Venues Data:", venuesData);
+
   if (eventsError || venuesError) {
-    return (
-      <div className="flex flex-col items-center gap-3 min-h-[70vh]">
-        <h2 className="text-lg font-bold text-center">Something went wrong</h2>
-        <p className="text-sm text-center">
-          We could not fetch the data at the moment. Please try again later.
-        </p>
-      </div>
-    );
+    return <IsError text="search results" />;
   }
   return (
-    <div className="min-h-[70vh] bg-gray-50  py-8 px-6 flex flex-col gap-10">
+    <div className="min-h-[70vh] bg-gray-50 dark:bg-black   ">
+      <div className="container mx-auto flex flex-col gap-10 py-8 px-6">
+        <EventsSection eventsData={eventsData} eventsLoading={eventsLoading} />
+        <VenuesSection venuesData={venuesData} venuesLoading={venuesLoading} />
+      </div>
+    </div>
+  );
+};
+
+const EventsSection = ({ eventsData, eventsLoading }) => {
+  return (
+    <>
       <div className="flex  items-center justify-start">
-        <h1 className="text-2xl text-center  font-bold text-[#075E54]">
-          <Renderif condition={eventsData?.length > 0 || eventsLoading}>
+        <h1 className="text-2xl text-center  font-bold text-[#075E54] dark:text-[#18f3d9]">
+          <RenderIf condition={eventsData?.length > 0 || eventsLoading}>
             Found Events
-          </Renderif>
-          <Renderif condition={eventsData?.length === 0}>
+          </RenderIf>
+          <RenderIf condition={eventsData?.length === 0}>
             {" "}
             No Events Found
-          </Renderif>
+          </RenderIf>
         </h1>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <Renderif condition={eventsLoading}>
+        <RenderIf condition={eventsLoading}>
           <PulseSkeleton className={"h-96 m-0"} />
           <PulseSkeleton className={"h-96 m-0"} />
           <PulseSkeleton className={"h-96 m-0"} />
           <PulseSkeleton className={"h-96 m-0"} />
-        </Renderif>
+        </RenderIf>
 
         {eventsData?.map((item) => (
           <EventItem key={item.id} event={item} />
         ))}
       </div>
+    </>
+  );
+};
 
+const VenuesSection = ({ venuesData, venuesLoading }) => {
+  return (
+    <>
       <div className="flex py-4 items-center justify-start">
-        <h1 className="text-2xl text-center  font-bold text-[#075E54]">
-          <Renderif condition={venuesData?.length > 0 || venuesLoading}>
+        <h1 className="text-2xl text-center  font-bold text-[#075E54] dark:text-[#18f3d9]">
+          <RenderIf condition={venuesData?.length > 0 || venuesLoading}>
             Found Venues
-          </Renderif>
-          <Renderif condition={venuesData?.length === 0}>
+          </RenderIf>
+          <RenderIf condition={venuesData?.length === 0}>
             {" "}
             No Venues Found
-          </Renderif>
+          </RenderIf>
         </h1>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <Renderif condition={venuesLoading}>
+        <RenderIf condition={venuesLoading}>
           <PulseSkeleton className={"h-96 m-0"} />
           <PulseSkeleton className={"h-96 m-0"} />
           <PulseSkeleton className={"h-96 m-0"} />
           <PulseSkeleton className={"h-96 m-0"} />
-        </Renderif>
+        </RenderIf>
         {venuesData?.map((item) => (
           <VenueItem key={item.id} venue={item} />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

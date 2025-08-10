@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { RenderIf } from "./RenderIf";
+import { RenderIf } from "../../utils/RenderIf";
 
 export function DataTable({ columns, data = [] }) {
   const table = useReactTable({

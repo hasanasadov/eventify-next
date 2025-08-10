@@ -16,7 +16,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { RenderIf } from "@/components/shared/RenderIf";
+import { RenderIf } from "@/utils/RenderIf";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import eventServices from "@/actions/events";
 import { useParams } from "next/navigation";

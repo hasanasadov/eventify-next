@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 // import { getCurrentUser } from "@/services/users";
 import MobileNavbar from "./MobileNavbar";
 import { AccountPopOver } from "./AccountPopover";
-import { RenderIf } from "./RenderIf";
+import { RenderIf } from "../../utils/RenderIf";
 import { paths } from "@/constants/paths";
 import { ControlPoint } from "@mui/icons-material";
 

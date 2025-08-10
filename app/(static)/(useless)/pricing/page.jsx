@@ -99,7 +99,7 @@ const Pricing = () => {
               className={`${
                 !isAnnual
                   ? "bg-[#128C7E] text-white"
-                  : "bg-white text-[#075E54] hover:bg-gray-100"
+                  : "bg-white text-[#075E54] dark:text-[#18f3d9] hover:bg-gray-100"
               } font-medium py-2 px-6 rounded-l-full transition-all duration-300`}
               onClick={() => handleTogglePricing(false)}
             >
@@ -109,7 +109,7 @@ const Pricing = () => {
               className={`${
                 isAnnual
                   ? "bg-[#128C7E] text-white"
-                  : "bg-white text-[#075E54] hover:bg-gray-100"
+                  : "bg-white text-[#075E54] dark:text-[#18f3d9] hover:bg-gray-100"
               } font-medium py-2 px-6 rounded-r-full transition-all duration-300`}
               onClick={() => handleTogglePricing(true)}
             >
@@ -138,7 +138,7 @@ const Pricing = () => {
 
               {/* Plan Details */}
               <div className="mt-4">
-                <h3 className="text-xl font-semibold text-[#075E54]">
+                <h3 className="text-xl font-semibold text-[#075E54] dark:text-[#18f3d9]">
                   {plan.type}
                 </h3>
                 <p className="text-4xl font-extrabold text-[#128C7E] mt-2">

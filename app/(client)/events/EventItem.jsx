@@ -8,7 +8,7 @@ const EventItem = ({ event }) => {
     <Link
       href={`/events/${event.id}`}
       key={event.id}
-      className="group block hover:shadow-lg hover:border-green-300  bg-white dark:bg-black rounded-lg border-2 overflow-hidden  transition-all duration-300"
+      className="group glass-border block  hover:!border-green-300  bg-white dark:bg-black rounded-lg border-2 overflow-hidden  transition-all duration-300"
     >
       <div className="relative overflow-hidden">
         <img
@@ -27,7 +27,7 @@ const EventItem = ({ event }) => {
         <h2 className="text-lg font-semibold  group-hover:text-green-600 transition-colors duration-300">
           {event.title}
         </h2>
-        <p className="text-sm text-gray-600 mt-2 line-clamp-5">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 line-clamp-5">
           {event.description}
         </p>
       </div>

@@ -5,6 +5,7 @@ import { getEvents } from "@/actions/events";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
+import { Button } from "@/components/ui/button";
 
 const EventsPage = () => {
   const {
@@ -20,28 +21,49 @@ const EventsPage = () => {
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center gap-3 min-h-[70vh]">
-        <h2 className="text-lg font-bold text-center">Something went wrong</h2>
-        <p className="text-sm text-center">
-          We could not fetch the events at the moment. Please try again later.
+      <div className="flex flex-col items-center justify-center h-[70vh] gap-4 p-4">
+        <svg
+          className="w-12 h-12 text-red-500 mb-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 48 48"
+        >
+          <circle cx="24" cy="24" r="22" strokeWidth="4" />
+          <line x1="16" y1="16" x2="32" y2="32" strokeWidth="4" />
+          <line x1="32" y1="16" x2="16" y2="32" strokeWidth="4" />
+        </svg>
+        <h2 className="text-lg font-semibold text-center text-red-600">
+          Unable to load venues
+        </h2>
+        <p className="text-sm text-center text-gray-500">
+          There was a problem fetching the venues. Please check your connection
+          and try again.
         </p>
+        <Button
+          variant="glass"
+          className="mt-2 px-4 py-2 !bg-red-500 text-white rounded hover:!bg-red-600 transition"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </Button>
       </div>
     );
   }
-
   if (isLoading || !events) {
     return (
       <div className="min-h-[70vh] bg-gray-50 dark:bg-black  py-8 px-6">
-        <div className="flex  items-center justify-center">
-          <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
-            Explore Events
-          </h1>
-        </div>
-        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:grid-cols-4 w-full overflow-y-auto h-full pb-4">
-          <PulseSkeleton className={"h-96 m-0"} />
-          <PulseSkeleton className={"h-96 m-0"} />
-          <PulseSkeleton className={"h-96 m-0"} />
-          <PulseSkeleton className={"h-96 m-0"} />
+        <div className="container mx-auto">
+          <div className="flex  items-center justify-center">
+            <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-[#18f3d9] dark:text-[#18f3d9]">
+              Explore Events
+            </h1>
+          </div>
+          <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:grid-cols-4 w-full overflow-y-auto h-full pb-4">
+            <PulseSkeleton className={"h-96 m-0"} />
+            <PulseSkeleton className={"h-96 m-0"} />
+            <PulseSkeleton className={"h-96 m-0"} />
+            <PulseSkeleton className={"h-96 m-0"} />
+          </div>
         </div>
       </div>
     );
@@ -49,80 +71,20 @@ const EventsPage = () => {
 
   return (
     <div className="min-h-[70vh] bg-gray-50 dark:bg-black py-8 px-6">
-      <div className="flex  items-center justify-center">
-        <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]">
-          Explore Events
-        </h1>
+      <div className="container mx-auto">
+        <div className="flex  items-center justify-center">
+          <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-[#18f3d9] dark:text-[#18f3d9]">
+            Explore Events
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {events.map((item) => (
+            <EventItem key={item.id} event={item} />
+          ))}
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {events.map((item) => (
-          <EventItem key={item.id} event={item} />
-        ))}
-      </div>
-
-      {/* {hasMore && (
-            <div className="text-center text-gray-500 mt-8">
-              <p className="text-sm font-medium">
-                {events.length - displayedEvents.length} more events available.
-                Scroll down to load more!
-              </p>
-            </div>
-          )}
-
-          {loadingMore && (
-            <div className="flex justify-center items-center mt-8">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
-              <p className="ml-4 text-green-500 font-semibold">
-                Loading more events...
-              </p>
-            </div>
-          )}
-
-          {!loadingMore && !hasMore && (
-            <div className="text-center text-gray-600 mt-8">
-              <p className="text-lg font-semibold text-gray-500">
-                🎉 You{"'"}ve reached the end! No more events available.
-              </p>
-            </div>
-          )}
-
-          {!loadingMore && events.length === 0 && (
-            <div className="text-center text-gray-600 mt-16">
-              <p>No events available at the moment. Please check back later!</p>
-            </div>
-          )} */}
     </div>
   );
 };
 
 export default EventsPage;
-
-// const handleLoadMore = () => {
-//   if (!hasMore || loadingMore) return;
-
-//   setLoadingMore(true);
-//   setTimeout(() => {
-//     const nextBatch = displayedVenues.length + ITEMS_PER_SCROLL;
-//     if (nextBatch >= venues.length) {
-//       setDisplayedVenues(venues);
-//       setHasMore(false);
-//     } else {
-//       setDisplayedVenues(venues.slice(0, nextBatch));
-//     }
-//     setLoadingMore(false);
-//   }, 500);
-// };
-
-// const handleScroll = () => {
-//   if (
-//     window.innerHeight + window.scrollY >=
-//     document.body.offsetHeight - 100
-//   ) {
-//     handleLoadMore();
-//   }
-// };
-
-// useEffect(() => {
-//   window.addEventListener("scroll", handleScroll);
-//   return () => window.removeEventListener("scroll", handleScroll);
-// }, [displayedVenues, hasMore, loadingMore]);
