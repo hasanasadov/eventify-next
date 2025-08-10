@@ -3,7 +3,6 @@
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
-import { Toaster } from "react-hot-toast";
 import { FavoriteBorder } from "@mui/icons-material";
 import { Favorite } from "@mui/icons-material";
 import EventItem from "../../events/EventItem";
@@ -15,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import eventServices from "@/actions/events";
 import { getVenueById } from "@/actions/venues";
 import { RenderIf } from "@/utils/RenderIf";
+import { Container } from "@/utils/Container";
+import IsError from "@/components/shared/IsError";
 
 const VenueDetail = () => {
   const { id } = useParams();
@@ -35,7 +36,7 @@ const VenueDetail = () => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-black">
+      <div className="flex justify-center items-center min-h-screen ">
         <div className="flex flex-col justify-center items-center min-h-screen">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
           <p className="mt-4 text-green-500 font-semibold">
@@ -45,83 +46,64 @@ const VenueDetail = () => {
       </div>
     );
 
-  if (isError)
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-red-50 dark:bg-black">
-        <div className="bg-red-100  border-red-400 text-red-700 px-4 py-3 rounded border-2">
-          <p className="font-semibold">Error:</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
+  if (isError) return <IsError text="venue details" />;
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-black">
-      <Toaster position="top-right" reverseOrder={false} />
-      <div className="container mx-auto py-6">
-        <div className="flex flex-col gap-6 p-6 ">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/venues"
-              className="text-sm glass-button px-3 py-1 text-blue-500 "
-            >
-              Back to list
-            </Link>
-          </div>
-          <div className="flex flex-col md:flex-row gap-8 md:gap-12">
-            <RenderIf condition={venue?.imageURL}>
-              <img
-                src={venue.imageURL}
-                alt={venue.title}
-                className="w-full md:max-w-[50%] glass h-full  object-contain rounded-lg border-2"
-              />
-            </RenderIf>
-            <RenderIf condition={!venue?.imageURL}>
-              <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
-                <p className="text-gray-500">No Image Available</p>
-              </div>
-            </RenderIf>
-            <div className="bg-white glass p-6 flex-1 rounded-lg border-2 space-y-6 relative">
-              <div className="text-blue-500">
-                <span className="text-3xl font-bold ">{venue.title}</span>{" "}
-                <span className="text-md!">({venue.type})</span>
-              </div>
+    <Container>
+      <div className="flex flex-col gap-6 p-6  md:!p-0">
+        <div className="flex items-center justify-between glass-button w-fit">
+          <Link href="/venues" className="text-sm  px-3 py-1  ">
+            Back to list
+          </Link>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+          <RenderIf condition={venue?.imageURL}>
+            <img
+              src={venue.imageURL}
+              alt={venue.title}
+              className="w-full md:max-w-[50%] glass h-full  object-contain rounded-lg border-2"
+            />
+          </RenderIf>
+          <RenderIf condition={!venue?.imageURL}>
+            <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
+              <p className="text-gray-500">No Image Available</p>
+            </div>
+          </RenderIf>
+          <div className="bg-white glass p-6 flex-1 rounded-lg border-2 space-y-6 relative">
+            <div className="text-blue-500">
+              <span className="text-3xl font-bold ">{venue.title}</span>{" "}
+              <span className="text-md!">({venue.type})</span>
+            </div>
 
-              <div className="flex flex-col  justify-between gap-8 ">
-                <div className="w-full md:w-1/2 space-y-2">
-                  <h3 className="text-2xl font-semibold ">Working Hours</h3>
-                  <p className="text-md text-gray-600 dark:text-white ">
-                    Open: <span className="font-medium">{venue.openAT}</span> -
-                    Close: <span className="font-medium">{venue.closeAT}</span>
-                  </p>
-                </div>
-                <div>
-                  <h2 className="text-2xl  text-gray-800 dark:text-white  mb-4 font-semibold">
-                    Description
-                  </h2>
-                  <p className="text-md text-gray-600 dark:text-white ">
-                    {venue.description}
-                  </p>
-                </div>
+            <div className="flex flex-col  justify-between gap-8 ">
+              <div className="w-full md:w-1/2 space-y-2">
+                <h3 className="text-2xl font-semibold ">Working Hours</h3>
+                <p className="text-md text-gray-600 dark:text-white ">
+                  Open: <span className="font-medium">{venue.openAT}</span> -
+                  Close: <span className="font-medium">{venue.closeAT}</span>
+                </p>
+              </div>
+              <div>
+                <h2 className="text-2xl  text-gray-800 dark:text-white  mb-4 font-semibold">
+                  Description
+                </h2>
+                <p className="text-md text-gray-600 dark:text-white ">
+                  {venue.description}
+                </p>
               </div>
             </div>
           </div>
-
-          <LocationSection venueLocation={venueLocation} />
-          <CommentsSection
-            venueComments={venueComments}
-            isLoading={isLoading}
-            isError={isError}
-          />
-          <UpcomingEventsSection venueEvents={venueEvents} />
         </div>
+
+        <LocationSection venueLocation={venueLocation} />
+        <CommentsSection
+          venueComments={venueComments}
+          isLoading={isLoading}
+          isError={isError}
+        />
+        <UpcomingEventsSection venueEvents={venueEvents} />
       </div>
-    </div>
+    </Container>
   );
 };
 
@@ -129,16 +111,41 @@ const LocationSection = ({ venueLocation }) => {
   return (
     <div>
       {venueLocation?.lat && venueLocation?.lng && (
-        <div className="mt-6">
+        <div className="mt-6 ">
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
             Location
           </h2>
-          <div className="glass !overflow-hidden">
-            <Map
-              imageSource={venueLocation?.imageURL}
-              title={venueLocation?.title}
-              location={venueLocation}
-            />
+          <div className="flex flex-col lg:flex-row gap-6 ">
+            <div className="glass w-full md:w-1/4 p-6 ">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Address</h3>
+                <p className="text-sm text-gray-600 dark:text-white">
+                  {venueLocation?.title || "Unknown"}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-white">
+                  {venueLocation?.lng || "Unknown"}
+                  {" N"}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-white">
+                  {venueLocation?.lat || "Unknown"}
+                  {" E"}
+                </p>
+              </div>
+              <div className="flex items-center justify-end">
+                <img
+                  src={venueLocation?.imageURL}
+                  alt={venueLocation?.title}
+                  className=" glass w-40"
+                />
+              </div>
+            </div>
+            <div className="glass  w-full md:w-3/4 h-80 overflow-hidden ">
+              <Map
+                imageSource={venueLocation?.imageURL}
+                title={venueLocation?.title}
+                location={venueLocation}
+              />
+            </div>
           </div>
         </div>
       )}

@@ -23,7 +23,7 @@ const VenuesSection = () => {
 
   if (isLoading || !venues) {
     return (
-      <div className="p-4">
+      <div className="flex flex-col gap-4 px-4">
         <PulseSkeleton />
         <PulseSkeleton />
         <PulseSkeleton />

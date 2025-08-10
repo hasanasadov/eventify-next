@@ -15,6 +15,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getCurrentUser } from "@/actions/users";
+import { Container } from "@/utils/Container";
 
 const UserProfile = () => {
   const [token, setToken] = useState("");
@@ -37,7 +38,7 @@ const UserProfile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b ">
-      <div className="container mx-auto py-8 px-4">
+      <Container className="py-8 px-4">
         {/* User Info Header */}
         <div className="mb-8 bg-white rounded-2xl p-6 shadow-lg border border-green-200">
           <div className="flex items-center gap-4">
@@ -236,7 +237,7 @@ const UserProfile = () => {
             </Card>
           </TabsContent> */}
         </Tabs>
-      </div>
+      </Container>
     </div>
   );
 };

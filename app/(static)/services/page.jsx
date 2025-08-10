@@ -1,9 +1,10 @@
+import { Container } from "@/utils/Container";
 import React from "react";
 
 const ServicesPage = () => {
   return (
     <div className="py-20 bg-gray-100 p-8">
-      <div className="max-w-7xl mx-auto">
+      <Container>
         <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
           Our Services
         </h1>
@@ -52,7 +53,7 @@ const ServicesPage = () => {
             </button>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 };

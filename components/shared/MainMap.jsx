@@ -11,6 +11,7 @@ import {
 import { getLocations } from "@/actions/location";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { useQuery } from "@tanstack/react-query";
+import { Button } from "../ui/button";
 
 const mapContainerStyle = {
   width: "100%",
@@ -32,7 +33,6 @@ const MainMap = () => {
     queryKey: [QUERY_KEYS.LOCATIONS],
     queryFn: getLocations,
   });
-
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -78,15 +78,15 @@ const MainMap = () => {
 
   const handleLocationClose = () => {
     setSelectedLocation(null);
-    setShowRoute(false);
-    setDirections(null);
+    setShowRoute(true);
+    // setDirections(null);
   };
 
   if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded || !locations)
     return (
       <div className="w-full h-full animate-pulse bg-black bg-opacity-40 flex justify-center items-center">
-        Loading Maps...
+        <p className="animate-ping">Loading Maps...</p>
       </div>
     );
 
@@ -129,32 +129,28 @@ const MainMap = () => {
       {/* Info window */}
       {selectedLocation && (
         <InfoWindow
-          position={{ lat: +selectedLocation.lat, lng: +selectedLocation.lng }}
+          position={{
+            lat: +selectedLocation.lat,
+            lng: +selectedLocation.lng,
+          }}
           onCloseClick={handleLocationClose}
+          options={{
+            maxWidth: 200,
+          }}
         >
-          <div style={{ maxWidth: "200px" }}>
+          <div className="flex flex-col gap-2">
+            <h2 className="font-bold text-center text-lg">
+              {selectedLocation.title}
+            </h2>
             <img
+              className="glass"
               src={selectedLocation?.imageURL || "@/assets/logo.png"}
               alt={selectedLocation.title}
-              style={{ width: "100%", borderRadius: "5px" }}
             />
-            <h4>{selectedLocation.title}</h4>
             {currentPosition && (
-              <button
-                onClick={() => setShowRoute(true)}
-                style={{
-                  background: "#007bff",
-                  color: "#fff",
-                  padding: "8px 12px",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  marginTop: "10px",
-                  width: "100%",
-                }}
-              >
+              <Button variant="glass" onClick={() => setShowRoute(true)}>
                 Show Route
-              </button>
+              </Button>
             )}
           </div>
         </InfoWindow>

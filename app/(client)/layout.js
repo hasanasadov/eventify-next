@@ -13,7 +13,9 @@ export default function RootLayout({ children }) {
   return (
     <div>
       <Navbar />
-      {children}
+      <div className="!p-6 md:!px-0 min-h-[70vh] bg-gray-50 dark:bg-black">
+        {children}
+      </div>
       <Footer />
     </div>
   );

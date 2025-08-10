@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import { toast } from "sonner";
 import { RenderIf } from "@/utils/RenderIf";
 import IsError from "@/components/shared/IsError";
+import { Container } from "@/utils/Container";
 
 const EventDetail = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const EventDetail = () => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="flex justify-center items-center min-h-screen ">
         <div className="flex flex-col justify-center items-center min-h-screen">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
           <p className="mt-4 text-green-500 font-semibold">
@@ -60,83 +61,80 @@ const EventDetail = () => {
   if (isError) return <IsError />;
 
   return (
-    <div className="p-6 my-6 container mx-auto bg-gradient-to-r bg-white dark:bg-black rounded-lg ">
-      <Toaster position="top-center" reverseOrder={false} />
-      <div className="flex items-center justify-between mb-6">
-        <Link
-          href="/events"
-          className="text-sm glass-button px-3 py-1 text-blue-500 "
-        >
-          Back to list
-        </Link>
-      </div>
-      <div className="flex flex-col md:flex-row gap-6">
-        <RenderIf condition={event?.imageURL}>
-          <img
-            src={event?.imageURL}
-            alt={event?.title || "Event Poster"}
-            className="w-full md:max-w-[50%] glass h-full  object-contain rounded-lg border-2"
-          />
-        </RenderIf>
-        <RenderIf condition={!event?.imageURL}>
-          <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
-            <p className="text-gray-500">No Poster Available</p>
-          </div>
-        </RenderIf>
-        <div className="bg-white dark:bg-black glass p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
-          <div className="space-y-4">
-            <h1 className="text-4xl font-extrabold text-green-500 mb-4">
-              {event?.title || "Event Title"}
-              <span className="text-xl"> ({event?.type})</span>
-            </h1>
+    <Container>
+      <div className="flex flex-col gap-6 p-6  md:!p-0">
+        <div className="flex items-center justify-between glass-button w-fit">
+          <Link href="/venues" className="text-sm  px-3 py-1  ">
+            Back to list
+          </Link>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+          <RenderIf condition={event?.imageURL}>
+            <img
+              src={event?.imageURL}
+              alt={event?.title || "Event Poster"}
+              className="w-full md:max-w-[50%] glass h-full  object-contain rounded-lg border-2"
+            />
+          </RenderIf>
+          <RenderIf condition={!event?.imageURL}>
+            <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
+              <p className="text-gray-500">No Poster Available</p>
+            </div>
+          </RenderIf>
+          <div className="bg-white dark:bg-black glass p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-extrabold text-green-500 mb-4">
+                {event?.title || "Event Title"}
+                <span className="text-xl"> ({event?.type})</span>
+              </h1>
 
-            <div>
-              <span
-                className="
+              <div>
+                <span
+                  className="
             text-xl font-semibold text-gray-800 dark:text-white mb-4
             "
-              >
-                Date :
-              </span>
-              <span> {eventDate || "Not specified"}</span>
+                >
+                  Date :
+                </span>
+                <span> {eventDate || "Not specified"}</span>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <p>
+                  <span className="font-semibold ">From : </span>{" "}
+                  {eventStart || "Not specified"}
+                </p>
+                <p>
+                  <span className="font-semibold ">To : </span>{" "}
+                  {eventEnd || "Not specified"}
+                </p>
+              </div>
+
+              <p className="text-md">
+                {event?.description || "No description provided"}
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <RenderIf condition={event?.goto}>
+                <Button
+                  onClick={() => window.open(event.goto, "_blank").focus()}
+                  variant="glass"
+                  className="!bg-black dark:!bg-white  !text-white dark:!text-black  text-xl font-sans p-5 md:w-1/2 w-full "
+                >
+                  Buy Ticket
+                </Button>
+              </RenderIf>
             </div>
 
-            <div className="flex items-center gap-4">
-              <p>
-                <span className="font-semibold ">From : </span>{" "}
-                {eventStart || "Not specified"}
-              </p>
-              <p>
-                <span className="font-semibold ">To : </span>{" "}
-                {eventEnd || "Not specified"}
-              </p>
-            </div>
-
-            <p className="text-md">
-              {event?.description || "No description provided"}
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <RenderIf condition={event?.goto}>
-              <Button
-                onClick={() => window.open(event.goto, "_blank").focus()}
-                variant="glass"
-                className="!bg-black dark:!bg-white  !text-white dark:!text-black  text-xl font-sans p-5 md:w-1/2 w-full "
-              >
-                Buy Ticket
-              </Button>
-            </RenderIf>
-          </div>
-
-          {/* <p>
+            {/* <p>
             <span className="font-semibold text-yellow-600">Event Type:</span>{" "}
             {event?.type || "Type not specified"}
           </p> */}
-          {/* <p>
+            {/* <p>
             <span className="font-semibold text-red-600">Likes:</span>{" "}
             {event?.num_likes || 0}
           </p> */}
-          {/* <div className="mt-6 absolute top-1 right-4">
+            {/* <div className="mt-6 absolute top-1 right-4">
             {isFavorite ? (
               <Favorite
                 style={{
@@ -157,15 +155,16 @@ const EventDetail = () => {
               />
             )}
           </div> */}
+          </div>
         </div>
+        <LocationSection location={location} />
+        <CommentsSection
+          eventComments={eventComments}
+          isError={isError}
+          isLoading={isLoading}
+        />
       </div>
-      <LocationSection location={location} />
-      <CommentsSection
-        eventComments={eventComments}
-        isError={isError}
-        isLoading={isLoading}
-      />
-    </div>
+    </Container>
   );
 };
 

@@ -22,7 +22,7 @@ export default function HomePage() {
   }, [router]);
 
   return (
-    <div className="flex justify-between flex-col md:flex-row p-8 w-full bg-gray-50 dark:bg-black">
+    <div className="flex justify-between flex-col md:flex-row px-8 py-2 w-full ">
       <SideBarLeft />{" "}
       <div className="flex-grow min-h-[70vh]  glass rounded-xl overflow-hidden md:mx-6 my-6 md:my-0">
         <MainMap />

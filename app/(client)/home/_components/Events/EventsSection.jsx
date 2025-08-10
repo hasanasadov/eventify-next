@@ -25,7 +25,7 @@ const EventsSection = () => {
 
   if (isLoading || !events) {
     return (
-      <div className="p-4">
+      <div className="flex flex-col gap-4 px-4">
         <PulseSkeleton />
         <PulseSkeleton />
         <PulseSkeleton />

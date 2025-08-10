@@ -6,6 +6,7 @@ import {
   DirectionsRenderer,
   useLoadScript,
 } from "@react-google-maps/api";
+import { Button } from "../ui/button";
 
 const mapContainerStyle = {
   width: "100%",
@@ -91,30 +92,26 @@ const Map = ({ location }) => {
 
       {showInfo && (
         <InfoWindow
-          position={destination}
-          onCloseClick={() => setShowInfo(false)}
+          position={{
+            lat: +location.lat,
+            lng: +location.lng,
+          }}
+          options={{
+            maxWidth: 200,
+          }}
         >
-          <div style={{ maxWidth: "200px" }}>
+          <div className="flex flex-col gap-2">
+            <h2 className="font-bold text-center text-lg">{title}</h2>
             <img
-              src={imageSource}
-              alt="Location"
-              style={{ width: "100%", borderRadius: "5px" }}
+              className="glass"
+              src={imageSource || "@/assets/logo.png"}
+              alt={title}
             />
-            <p>{title}</p>
-            <button
-              style={{
-                background: "#007bff",
-                color: "#fff",
-                padding: "8px 12px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-                marginTop: "10px",
-              }}
-              onClick={() => setRouteVisible(true)}
-            >
-              Show Route
-            </button>
+            {currentPosition && (
+              <Button variant="glass" onClick={() => setRouteVisible(true)}>
+                Show Route
+              </Button>
+            )}
           </div>
         </InfoWindow>
       )}

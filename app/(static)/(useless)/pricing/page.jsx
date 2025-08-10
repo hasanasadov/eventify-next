@@ -1,5 +1,6 @@
 "use client";
 
+import { Container } from "@mui/material";
 import React, { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 
@@ -81,7 +82,7 @@ const Pricing = () => {
 
   return (
     <div className="bg-gradient-to-r from-[#075E54] to-[#128C7E] p-8 lg:px-24">
-      <div className="max-w-7xl mx-auto">
+      <Container>
         {/* Heading Section */}
         <div className="text-center text-white">
           <h1 className="text-4xl font-semibold tracking-wide mb-4">
@@ -189,7 +190,7 @@ const Pricing = () => {
             {actionMessage}
           </div>
         )}
-      </div>
+      </Container>
     </div>
   );
 };

@@ -14,13 +14,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning data-qb-installed>
-      <body className="mb-[40px] lg:mb-0">
+      <body className="mb-[40px] lg:mb-0 ">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem={false}
         >
-          <main className="flex-grow">
+          <main className="flex-grow ">
             <QueryProvider>{children}</QueryProvider>
           </main>
           <Toaster />

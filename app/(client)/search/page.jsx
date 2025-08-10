@@ -10,6 +10,7 @@ import { searchEvents } from "@/actions/events";
 import { searchVenues } from "@/actions/venues";
 import { RenderIf } from "@/utils/RenderIf";
 import IsError from "@/components/shared/IsError";
+import { Container } from "@/utils/Container";
 
 const SearchResult = () => {
   const searchtext =
@@ -40,12 +41,10 @@ const SearchResult = () => {
     return <IsError text="search results" />;
   }
   return (
-    <div className="min-h-[70vh] bg-gray-50 dark:bg-black   ">
-      <div className="container mx-auto flex flex-col gap-10 py-8 px-6">
-        <EventsSection eventsData={eventsData} eventsLoading={eventsLoading} />
-        <VenuesSection venuesData={venuesData} venuesLoading={venuesLoading} />
-      </div>
-    </div>
+    <Container className="flex flex-col gap-10 ">
+      <EventsSection eventsData={eventsData} eventsLoading={eventsLoading} />
+      <VenuesSection venuesData={venuesData} venuesLoading={venuesLoading} />
+    </Container>
   );
 };
 

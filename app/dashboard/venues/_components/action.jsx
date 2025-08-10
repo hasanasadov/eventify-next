@@ -22,10 +22,11 @@ import eventServices from "@/actions/events";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
-import venueServices, {
+import  {
   createVenue,
   deleteVenue,
   editVenue,
+  getVenueById,
 } from "@/actions/venues";
 
 // description: "The Baku Crystal Hall is a modern multi-functional indoor arena in Baku, Azerbaijan, known for hosting events such as the Eurovision Song Contest 2012 and various sports and cultural events.";
@@ -97,7 +98,7 @@ const ActionForm = ({ type }) => {
   const { id } = useParams();
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.VENUE_COMMENTS, id],
-    queryFn: () => venueServices.getVenueById(id),
+    queryFn: () => getVenueById(id),
     enabled: isEdit || isDelete,
   });
 
