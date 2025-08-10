@@ -81,7 +81,7 @@ const EventDetail = () => {
               <p className="text-gray-500">No Poster Available</p>
             </div>
           </RenderIf>
-          <div className="bg-white dark:bg-black glass p-6 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
+          <div className="bg-white dark:bg-black glass md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
             <div className="space-y-4">
               <h1 className="text-4xl font-extrabold text-green-500 mb-4">
                 {event?.title || "Event Title"}
@@ -192,7 +192,7 @@ const CommentsSection = ({ eventComments, isError, isLoading }) => {
   const [newComment, setNewComment] = useState("");
   const [sliceCount, setSliceCount] = useState(3);
   return (
-    <div className="">
+    <div className="glass md:p-6 p-4">
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
         Comments
       </h2>

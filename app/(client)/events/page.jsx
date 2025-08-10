@@ -44,7 +44,7 @@ const EventsPage = () => {
   return (
     <Container className="">
       <div className="flex  items-center justify-center">
-        <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-green-500">
+        <h1 className="text-4xl hidden md:block text-center pb-4 font-bold text-[#075E54] dark:text-green-500">
           Explore Events
         </h1>
       </div>

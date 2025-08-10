@@ -8,7 +8,6 @@ import { AccountPopOver } from "./AccountPopover";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import ToggleTheme from "./Toggle";
 import { Search } from "@mui/icons-material";
 import { useTheme } from "next-themes";
 
@@ -51,7 +50,7 @@ const HamburgerMenu = ({ user, setIsOpen }) => {
   return (
     <div className="">
       <div className=" h-full !absolute top-0 left-0  !bg-white dark:!bg-black p-2 glass">
-        <div className="flex  gap-5">
+        <div className="flex ">
           <Link
             onClick={() => setIsOpen(false)}
             href={"/search"}
@@ -81,10 +80,6 @@ const HamburgerMenu = ({ user, setIsOpen }) => {
               </Link>
             )
           )}
-
-          <div className="flex items-center">
-            <ToggleTheme />
-          </div>
         </div>
       </div>
     </div>

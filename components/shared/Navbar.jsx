@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { InputWithButton } from "../ui/search";
 import { Button } from "../ui/button";
 import Logo from "@/assets/logo.png";
@@ -15,6 +15,7 @@ import { RenderIf } from "../../utils/RenderIf";
 import { paths } from "@/constants/paths";
 import { ControlPoint } from "@mui/icons-material";
 import ToggleTheme from "./Toggle";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   // const [token, setToken] = useState("");
@@ -40,11 +41,18 @@ const Navbar = () => {
   //   // }
   // }
   const isAdmin = user?.is_admin === true || user?.first_name === "Hasanali";
-
+  const pathName = usePathname();
+  console.log("Pathname:", pathName);
+  const homePage = pathName == "/";
+  const eventsPage = pathName == "/events";
+  const eventItemPage = pathName.includes("/events/");
+  const venuesPage = pathName == "/venues";
+  const venueItemPage = pathName.includes("/venues/");
+  const mapPage = pathName.includes("/map");
   return (
     <>
       <div
-        className="md:px-8 px-1 md:py-3 py-1 w-screen flex md:justify-between items-center sticky top-0 z-50 border-b-2 border-gray-200 backdrop-blur-md dark:!bg-transparent"
+        className="md:px-8 glass mx-4 mt-4 px-1 md:py-3 py-1 flex md:justify-between items-center !sticky top-2 z-50 border-b-2 border-gray-200 backdrop-blur-md dark:!bg-transparent"
         style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
       >
         <div className="flex w-full items-center justify-between ">
@@ -53,8 +61,16 @@ const Navbar = () => {
               <Image src={Logo} alt="logo" width={100} height={100} />
             </Link>
           </div>
-          <div className="w-full md:pl-4">
+          <div className="w-full md:pl-4 md:block hidden">
             <InputWithButton />
+          </div>
+          <div className="flex-1 font-bold text-[#075E54] dark:text-green-500 md:hidden">
+            {(eventsPage || homePage) && "Explore Events"}
+            {eventItemPage && " Event Details"}
+
+            {venuesPage && "Explore Venues"}
+            {venueItemPage && " Venue Details"}
+            {mapPage && "Explore Map"}
           </div>
           <div className="hidden md:flex justify-center items-center px-4">
             <ToggleTheme />

@@ -3,8 +3,13 @@ import React from "react";
 
 const MapPage = () => {
   return (
-    <div className="lg:h-[93vh] h-[85vh] w-screen -translate-x-6 md:translate-x-0 -translate-y-6 md:scale-100">
-      <MainMap />
+    <div>
+      <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-green-500">
+        Explore Map
+      </h1>
+      <div className="h-[90vh]">
+        <MainMap />
+      </div>
     </div>
   );
 };

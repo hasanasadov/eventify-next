@@ -69,7 +69,7 @@ const VenueDetail = () => {
               <p className="text-gray-500">No Image Available</p>
             </div>
           </RenderIf>
-          <div className="bg-white glass p-6 flex-1 rounded-lg border-2 space-y-6 relative">
+          <div className="bg-white glass md:p-6 p-4 flex-1 rounded-lg border-2 space-y-6 relative">
             <div className="text-blue-500">
               <span className="text-3xl font-bold ">{venue.title}</span>{" "}
               <span className="text-md!">({venue.type})</span>
@@ -109,7 +109,7 @@ const VenueDetail = () => {
 
 const LocationSection = ({ venueLocation }) => {
   return (
-    <div>
+    <div className="glass md:p-6 p-4 ">
       {venueLocation?.lat && venueLocation?.lng && (
         <div className=" ">
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
@@ -155,7 +155,7 @@ const LocationSection = ({ venueLocation }) => {
 
 const UpcomingEventsSection = ({ venueEvents }) => {
   return (
-    <div className="">
+    <div className="glass md:p-6 p-4 ">
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
         Upcoming Events
       </h2>
@@ -177,7 +177,7 @@ const CommentsSection = ({ venueComments, isError, isLoading }) => {
   const [newComment, setNewComment] = useState("");
   const [sliceCount, setSliceCount] = useState(3);
   return (
-    <div className="mt-6">
+    <div className="glass md:p-6 p-4 ">
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
         Comments
       </h2>

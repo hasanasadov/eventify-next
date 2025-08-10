@@ -40,7 +40,7 @@ const Footer = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="pt-8 pb-2 mt-10  relative  border-t border-green-400"
+      className="pt-8 pb-2 px-4 md:px-0 mt-4  relative glass md:m-4 !mb-0 border-t border-green-400"
     >
       {/* <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-64 h-64 bg-green-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -53,23 +53,23 @@ const Footer = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0, y: 50 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.3,
-              },
-            },
-          }}
+          // variants={{
+          //   hidden: { opacity: 0, y: 50 },
+          //   visible: {
+          //     opacity: 1,
+          //     y: 0,
+          //     transition: {
+          //       staggerChildren: 0.2,
+          //       delayChildren: 0.3,
+          //     },
+          //   },
+          // }}
         >
           <motion.div
-            variants={{
-              hidden: { opacity: 0, x: -50 },
-              visible: { opacity: 1, x: 0 },
-            }}
+            // variants={{
+            //   hidden: { opacity: 0, x: -50 },
+            //   visible: { opacity: 1, x: 0 },
+            // }}
             className="flex flex-col items-center md:items-start"
           >
             <Link href="/" className="group">
@@ -83,10 +83,10 @@ const Footer = () => {
           </motion.div>
 
           <motion.div
-            variants={{
-              hidden: { opacity: 0, x: -50 },
-              visible: { opacity: 1, x: 0 },
-            }}
+            // variants={{
+            //   hidden: { opacity: 0, x: -50 },
+            //   visible: { opacity: 1, x: 0 },
+            // }}
             className="space-y-4"
           >
             <h3 className="text-lg font-semibold  border-b border-green-400 pb-2">
@@ -149,10 +149,10 @@ const Footer = () => {
           </motion.div> */}
 
           <motion.div
-            variants={{
-              hidden: { opacity: 0, x: 50 },
-              visible: { opacity: 1, x: 0 },
-            }}
+            // variants={{
+            //   hidden: { opacity: 0, x: 50 },
+            //   visible: { opacity: 1, x: 0 },
+            // }}
           >
             <h3 className="md:text-lg font-semibold mb-4 border-b border-green-400 pb-2">
               Subscribe
@@ -215,11 +215,11 @@ const FooterBottom = () => {
       href: "mailto:info@myeventsaz.com",
       color: "hover:text-red-500",
     },
-    {
-      Icon: FaTelegramPlane,
-      href: "https://t.me/myeventsaz",
-      color: "hover:text-black/40 dark:hover:text-white/60",
-    },
+    // {
+    //   Icon: FaTelegramPlane,
+    //   href: "https://t.me/myeventsaz",
+    //   color: "hover:text-black/40 dark:hover:text-white/60",
+    // },
     {
       Icon: FaWhatsapp,
       href: "https://wa.me/+994502068605",
@@ -230,11 +230,11 @@ const FooterBottom = () => {
       href: "https://facebook.com",
       color: "hover:text-blue-500",
     },
-    {
-      Icon: FaTwitter,
-      href: "https://twitter.com",
-      color: "hover:text-sky-400",
-    },
+    // {
+    //   Icon: FaTwitter,
+    //   href: "https://twitter.com",
+    //   color: "hover:text-sky-400",
+    // },
     {
       Icon: FaInstagram,
       href: "https://instagram.com",
@@ -249,10 +249,10 @@ const FooterBottom = () => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 }}
+        // initial={{ opacity: 0 }}
+        // whileInView={{ opacity: 1 }}
+        // viewport={{ once: true }}
+        // transition={{ delay: 0.5 }}
         className="mt-4 md:mt-12 border-t border-gray-300 pt-6 flex flex-col md:flex-row justify-between items-center"
       >
         <p className="text-sm ">

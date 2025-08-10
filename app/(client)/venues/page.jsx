@@ -45,7 +45,7 @@ const VenuesPage = () => {
   return (
     <Container>
       <div className="flex  items-center justify-center">
-        <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-[#18f3d9]">
+        <h1 className="text-4xl text-center hidden md:block pb-8 font-bold text-[#075E54] dark:text-[#18f3d9]">
           Explore Venues
         </h1>
       </div>
