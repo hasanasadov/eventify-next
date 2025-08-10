@@ -54,7 +54,7 @@ const EventsPage = () => {
       <div className="min-h-[70vh] bg-gray-50 dark:bg-black  py-8 px-6">
         <div className="container mx-auto">
           <div className="flex  items-center justify-center">
-            <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-[#18f3d9] dark:text-[#18f3d9]">
+            <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]  dark:text-[#18f3d9]">
               Explore Events
             </h1>
           </div>
@@ -73,7 +73,7 @@ const EventsPage = () => {
     <div className="min-h-[70vh] bg-gray-50 dark:bg-black py-8 px-6">
       <div className="container mx-auto">
         <div className="flex  items-center justify-center">
-          <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-[#18f3d9] dark:text-[#18f3d9]">
+          <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54] dark:text-[#18f3d9]">
             Explore Events
           </h1>
         </div>
