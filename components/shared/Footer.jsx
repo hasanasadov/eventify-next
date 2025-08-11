@@ -181,7 +181,7 @@ const FooterBottom = () => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className={` ${color} transition-all glass-border p-2`}
+              className={` ${color} transition-all border rounded-full p-2 `}
             >
               <Icon size={22} />
             </a>

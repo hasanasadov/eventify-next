@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className="md:px-8 glass mx-4 mt-4 px-1 md:py-3 py-1 flex md:justify-between items-center !sticky top-2 z-50 border-b-2 border-gray-200 backdrop-blur-md dark:!bg-transparent"
+        className="md:px-8 glasss  px-1 md:py-3 py-1 flex md:justify-between items-center !sticky top-0 z-50 border-b border-gray-200 backdrop-blur-md !bg-transparen !bg-white/30 dark:!bg-black/30"
         style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
       >
         <div className="flex w-full items-center justify-between ">
@@ -24,7 +24,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="flex-1 font-bold text-[#075E54] dark:text-green-500 md:text-3xl md:pl-10">
+          <div className="flex-1 font-bold hover:text-[#075E54] dark:hover:text-green-500 md:text-xl md:pl-10 cursor-pointer transition-all duration-300 ease-in-out">
             <NavbarText />
           </div>
         </div>
