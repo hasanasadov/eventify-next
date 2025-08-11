@@ -1,6 +1,6 @@
 {
-  "name": "eventify-next",
-  "version": "0.1.0",
+  "name": "myevents",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "prisma generate && next dev",
