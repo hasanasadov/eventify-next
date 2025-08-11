@@ -12,12 +12,13 @@ const NavbarText = () => {
   const searchPage = pathName.includes("/search");
   return (
     <div>
-      {(eventsPage || homePage) && "Explore Events"}
+      {eventsPage && "Explore Events"}
       {eventItemPage && " Event Details"}
       {venuesPage && "Explore Venues"}
       {venueItemPage && " Venue Details"}
       {mapPage && "Explore Map"}
       {searchPage && "Search All"}
+      <div className="flex md:hidden">{homePage && "Explore Events"}</div>
     </div>
   );
 };

@@ -1,5 +1,4 @@
-import { Home, Calendar1Icon } from "lucide-react";
-import { MuseumOutlined } from "@mui/icons-material";
+import { Home } from "lucide-react";
 
 import {
   Sidebar,
@@ -12,6 +11,8 @@ import {
 } from "@/components/ui/sidebar";
 import { paths } from "@/constants/paths";
 import { PinDrop } from "@mui/icons-material";
+import { Building2Icon } from "lucide-react";
+import { EventNoteSharp } from "@mui/icons-material";
 
 export const SideBarItems = [
   {
@@ -22,12 +23,12 @@ export const SideBarItems = [
   {
     title: "Events",
     url: paths.DASHBOARD.EVENTS.LIST,
-    icon: Calendar1Icon,
+    icon: EventNoteSharp,
   },
   {
     title: "Venues",
     url: paths.DASHBOARD.VENUES.LIST,
-    icon: MuseumOutlined,
+    icon: Building2Icon,
   },
   {
     title: "Locations",

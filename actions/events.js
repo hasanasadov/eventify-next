@@ -2,6 +2,7 @@
 
 // import { BASE_URL } from "@/constants";
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export const getEvents = async () => {
   try {
@@ -37,6 +38,8 @@ export const createEvent = async (data) => {
     const event = await prisma.event.create({
       data,
     });
+    revalidatePath(`/dashboard/events`);
+
     return event;
   } catch (error) {
     console.error(error);
@@ -44,12 +47,14 @@ export const createEvent = async (data) => {
   }
 };
 
-export const editEvent = async (id, data) => {
+export const editEvent = async ({ id, data }) => {
   try {
+    console.log("Editing event:", id, data);
     const event = await prisma.event.update({
       where: { id },
       data,
     });
+    revalidatePath(`/dashboard/events`);
     return event;
   } catch (error) {
     console.error(error);
@@ -62,6 +67,8 @@ export const deleteEvent = async (id) => {
     const event = await prisma.event.delete({
       where: { id },
     });
+    revalidatePath(`/dashboard/events`);
+
     return event;
   } catch (error) {
     console.error(error);

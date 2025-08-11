@@ -19,7 +19,10 @@ export const columns = [
       );
     },
   },
-
+  {
+    accessorKey: "title",
+    header: "Title",
+  },
   {
     accessorKey: "lng",
     header: "Longitude",

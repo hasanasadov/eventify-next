@@ -36,7 +36,7 @@ const Map = ({ location }) => {
           });
         },
         () => {
-          console.error("Error fetching current position");
+          console.log("Error fetching current position");
         }
       );
     }
@@ -58,7 +58,7 @@ const Map = ({ location }) => {
           if (status === window.google.maps.DirectionsStatus.OK) {
             setDirections(result);
           } else {
-            console.error(`Error fetching directions: ${status}`);
+            console.log(`Error fetching directions: ${status}`);
           }
         }
       );

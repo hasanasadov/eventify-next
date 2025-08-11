@@ -39,7 +39,7 @@ const DashboardLocationsPage = () => {
         <h2 className=" text-green-500 font-bold text-2xl ">Locations</h2>
         <Button asChild>
           <Link
-            className="!bg-green-700 hover:scale-105 "
+            className="!bg-green-700 glass-button text-white hover:scale-105 "
             href={paths.DASHBOARD.LOCATIONS.CREATE}
           >
             Create Location

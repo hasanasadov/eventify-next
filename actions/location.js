@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export const getLocations = async () => {
   try {
@@ -22,23 +23,26 @@ export const getLocationById = async (id) => {
   }
 };
 
-export const createLocation = async (values) => {
+export const createLocation = async (data) => {
   try {
     const location = await prisma.location.create({
-      data: values,
+      data: data,
     });
+    revalidatePath(`/dashboard/locations`);
     return location;
   } catch (error) {
     console.log("Error:", error);
   }
 };
 
-export const editLocation = async (id, values) => {
+export const editLocation = async ({ id, data }) => {
   try {
+    console.log("Editing location:", id, data);
     const location = await prisma.location.update({
       where: { id },
-      data: values,
+      data: data,
     });
+    revalidatePath(`/dashboard/locations`);
     return location;
   } catch (error) {
     console.log("Error:", error);
@@ -50,6 +54,7 @@ export const deleteLocation = async (id) => {
     const location = await prisma.location.delete({
       where: { id },
     });
+    revalidatePath(`/dashboard/locations`);
     return location;
   } catch (error) {
     console.log("Error:", error);

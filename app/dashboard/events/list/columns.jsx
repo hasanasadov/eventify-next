@@ -33,16 +33,10 @@ export const columns = [
   {
     accessorKey: "start",
     header: "Start",
-    cell: (data) => {
-      return new Date(data.row.original.start).toLocaleTimeString();
-    },
   },
   {
     accessorKey: "end",
     header: "Finish",
-    cell: (data) => {
-      return new Date(data.row.original.end).toLocaleTimeString();
-    },
   },
   {
     accessorKey: "date",

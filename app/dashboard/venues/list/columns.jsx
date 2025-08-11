@@ -43,6 +43,13 @@ export const columns = [
     header: "Type",
   },
   {
+    accessorKey: "events",
+    header: "Events",
+    cell: (data) => {
+      return data.row.original.events.map((event) => event.title) || 0;
+    },
+  },
+  {
     accessorKey: "",
     header: "Actions",
     cell: (data) => {

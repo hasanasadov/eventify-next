@@ -18,8 +18,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { RenderIf } from "@/utils/RenderIf";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
 import {
@@ -29,47 +28,20 @@ import {
   getLocationById,
 } from "@/actions/location";
 
+// -------- schema --------
 const getFormSchema = ({ isEdit, isDelete }) =>
   z.object({
-    title: z.string().min(2),
-    lng: z.optional(),
-    lat: z.optional(),
-    imageURL: isEdit || isDelete ? z.string().optional() : z.string(),
-    // imageURL:
-    //   isEdit || isDelete
-    //     ? z.any().optional()
-    //     : z
-    //         .instanceof(FileList, { message: "Images are required" })
-    //         .refine((list) => list.length <= 1, "Only one image is required")
-    //         .transform((list) => Array.from(list))
-    //         .refine(
-    //           (files) => {
-    //             const allowedTypes = {
-    //               "image/jpeg": true,
-    //               "image/png": true,
-    //               "image/webp": true,
-    //               "image/*": true,
-    //             };
-    //             return Array.from(files).every(
-    //               (file) => allowedTypes[file.type]
-    //             );
-    //           },
-    //           {
-    //             message: "Invalid file type. Allowed types: JPG, PNG",
-    //           }
-    //         )
-    //         .refine(
-    //           (files) => {
-    //             return Array.from(files).every((file) => file.size <= 4);
-    //           },
-    //           {
-    //             message: "File size should not exceed 5MB",
-    //           }
-    //         ),
+    title: z.string().min(2, "Title is required"),
+    lng: z.string().optional(),
+    lat: z.string().optional(),
+    imageURL:
+      isEdit || isDelete
+        ? z.string().optional()
+        : z.string().min(1, "Image is required"),
   });
 
 const onError = (error) => {
-  toast.error(error.response?.data.message ?? "Something went wrong!");
+  toast.error(error?.response?.data?.message ?? "Something went wrong!");
 };
 
 const ActionForm = ({ type }) => {
@@ -77,36 +49,12 @@ const ActionForm = ({ type }) => {
   const isDelete = type === "delete";
 
   const { id } = useParams();
-  const { data: editItem } = useQuery({
+  const router = useRouter();
+
+  const { data: editItem, isFetching } = useQuery({
     queryKey: [QUERY_KEYS.LOCATION, id],
     queryFn: () => getLocationById(id),
-    enabled: isEdit || isDelete,
-  });
-
-  const { mutate: mutateCreate } = useMutation({
-    mutationFn: createLocation,
-    onSuccess: () => {
-      toast.success("Location created successfully.");
-    },
-    onError,
-  });
-
-  const { mutate: mutateUpdate } = useMutation({
-    mutationFn: editLocation,
-    onSuccess: () => {
-      toast.success("Location updated successfully.");
-      navigate(paths.DASHBOARD.LOCATIONS.LIST);
-    },
-    onError,
-  });
-
-  const { mutate: mutateDelete } = useMutation({
-    mutationFn: deleteLocation,
-    onSuccess: () => {
-      toast.success("Location deleted successfully.");
-      navigate(paths.DASHBOARD.LOCATIONS.LIST);
-    },
-    onError,
+    enabled: Boolean((isEdit || isDelete) && id),
   });
 
   const formSchema = useMemo(
@@ -115,53 +63,95 @@ const ActionForm = ({ type }) => {
   );
 
   const form = useForm({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       lng: "",
       lat: "",
       imageURL: "",
     },
-    resolver: zodResolver(formSchema),
+    mode: "onSubmit",
   });
 
   useEffect(() => {
     if (editItem) {
-      form.setValue("title", editItem?.title);
-      form.setValue("imageURL", editItem?.imageURL);
-      form.setValue("lng", editItem?.lng);
-      form.setValue("lat", editItem?.lat);
+      form.reset({
+        title: editItem.title ?? "",
+        imageURL: editItem.imageURL ?? "",
+        lng:
+          editItem.lng !== undefined && editItem.lng !== null
+            ? String(editItem.lng)
+            : "",
+        lat:
+          editItem.lat !== undefined && editItem.lat !== null
+            ? String(editItem.lat)
+            : "",
+      });
     }
-  }, [editItem]);
+  }, [editItem, form]);
+
+  const { mutate: mutateCreate, isPending: creating } = useMutation({
+    mutationFn: createLocation,
+    onSuccess: async () => {
+      toast.success("Location created successfully.");
+      router.push(paths.DASHBOARD.LOCATIONS.LIST);
+    },
+    onError,
+  });
+
+  const { mutate: mutateUpdate, isPending: updating } = useMutation({
+    mutationFn: editLocation,
+    onSuccess: async () => {
+      toast.success("Location updated successfully.");
+      router.push(paths.DASHBOARD.LOCATIONS.LIST);
+    },
+    onError,
+  });
+
+  const { mutate: mutateDelete, isPending: deleting } = useMutation({
+    mutationFn: deleteLocation,
+    onSuccess: async () => {
+      toast.success("Location deleted successfully.");
+      router.push(paths.DASHBOARD.LOCATIONS.LIST);
+    },
+    onError,
+  });
 
   function onSubmit(values) {
+    const parsedLng = values.lng?.trim() ? parseFloat(values.lng) : undefined;
+    const parsedLat = values.lat?.trim() ? parseFloat(values.lat) : undefined;
+
     const data = {
       title: values.title,
-      imageURL: values.imageURL,
-      lng: values.lng,
-      lat: values.lat,
+      imageURL: values.imageURL || "",
+      lng: parsedLng,
+      lat: parsedLat,
     };
+
     if (type === "create") {
       mutateCreate(data);
     } else if (type === "update") {
-      mutateUpdate({
-        id,
-        data,
-      });
+      mutateUpdate({ id, data });
     } else if (type === "delete") {
-      mutateDelete({
-        id,
-      });
+      if (confirm("Are you sure you want to delete this location?")) {
+        mutateDelete({ id });
+      }
     }
   }
 
+  const isBusy = creating || updating || deleting || isFetching;
+
   return (
     <div className="pt-6">
-      <h1 className="text-2xl font-bold  text-green-500 mb-4">
+      <h1 className="text-2xl font-bold text-green-500 mb-4">
         {isEdit ? "Edit" : isDelete ? "Delete" : "Create"} Location
       </h1>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={isBusy ? "opacity-75 pointer-events-none" : ""}
+        >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FormField
               control={form.control}
@@ -172,7 +162,7 @@ const ActionForm = ({ type }) => {
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Mercedes"
+                      placeholder="Location title"
                       {...field}
                     />
                   </FormControl>
@@ -180,6 +170,7 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="lng"
@@ -189,17 +180,18 @@ const ActionForm = ({ type }) => {
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Longitude"
+                      type="number"
+                      step="any"
+                      placeholder="e.g. 49.8671"
                       {...field}
-                      onChange={(e) =>
-                        field.onChange(e.target.value.toString())
-                      }
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            />{" "}
+            />
+
             <FormField
               control={form.control}
               name="lat"
@@ -209,17 +201,18 @@ const ActionForm = ({ type }) => {
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Latitude"
+                      type="number"
+                      step="any"
+                      placeholder="e.g. 40.4093"
                       {...field}
-                      onChange={(e) =>
-                        field.onChange(e.target.value.toString())
-                      }
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="imageURL"
@@ -256,27 +249,35 @@ const ActionForm = ({ type }) => {
               </div>
             </div>
           </RenderIf>
+
           <div className="flex justify-end mt-4">
             <RenderIf condition={isDelete}>
-              <Button type="submit" variant={"destructive"} className="mt-4">
-                Delete
+              <Button
+                type="submit"
+                variant="destructive"
+                className="mt-4"
+                disabled={isBusy}
+              >
+                {deleting ? "Deleting..." : "Delete"}
               </Button>
             </RenderIf>
+
             <RenderIf condition={!isDelete}>
-              <Button asChild variant="secondary">
+              <Button asChild variant="secondary" disabled={isBusy}>
                 <Link
                   href={paths.DASHBOARD.LOCATIONS.LIST}
-                  className="hover:scale-105 mr-2  !bg-transparent !text-green-400 !border-green-100 !border"
+                  className="hover:scale-105 mr-2 !bg-transparent !text-green-400 !border-green-100 !border"
                 >
                   Back
                 </Link>
               </Button>
               <Button
-                variant={"blacked"}
+                variant="blacked"
                 type="submit"
                 className="border-green-500 border rounded-md hover:scale-105"
+                disabled={isBusy}
               >
-                Submit
+                {creating || updating ? "Saving..." : "Submit"}
               </Button>
             </RenderIf>
           </div>

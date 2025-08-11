@@ -16,6 +16,8 @@ const DashboardEventsPage = () => {
     queryFn: getVenues,
   });
 
+  console.log(data);
+
   if (isLoading) {
     <LoadingComp />;
   }
@@ -39,7 +41,7 @@ const DashboardEventsPage = () => {
         <h2 className=" text-green-500 font-bold text-2xl ">Venues</h2>
         <Button asChild>
           <Link
-            className="!bg-green-700 hover:scale-105 "
+            className="!bg-green-700 glass-button text-white hover:scale-105 "
             href={paths.DASHBOARD.VENUES.CREATE}
           >
             Create Venue

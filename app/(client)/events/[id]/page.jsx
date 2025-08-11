@@ -170,17 +170,44 @@ const EventDetail = () => {
 
 const LocationSection = ({ location }) => {
   return (
-    <div>
+    <div className="glass md:p-6 p-4 ">
       {location?.lat && location?.lng && (
-        <div className="">
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+        <div className=" ">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
             Location
           </h2>
-          <Map
-            imageSource={location?.imageURL}
-            title={location?.title}
-            location={location}
-          />
+          <div className="flex flex-col lg:flex-row gap-6 ">
+            <div className="glass w-full md:w-1/4 p-6 ">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Address</h3>
+                <p className="text-sm text-gray-600 dark:text-white">
+                  {location?.title || "Unknown"}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-white">
+                  {location?.lng || "Unknown"}
+                  {" N"}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-white">
+                  {location?.lat || "Unknown"}
+                  {" E"}
+                </p>
+              </div>
+              <div className="flex items-center justify-end">
+                <img
+                  src={location?.imageURL}
+                  alt={location?.title}
+                  className=" glass w-40"
+                />
+              </div>
+            </div>
+            <div className="glass  w-full md:w-3/4 h-80 overflow-hidden ">
+              <Map
+                imageSource={location?.imageURL}
+                title={location?.title}
+                location={location}
+              />
+            </div>
+          </div>
         </div>
       )}
     </div>

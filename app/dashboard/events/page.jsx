@@ -8,7 +8,7 @@ import LoadingComp from "@/components/shared/Loading";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
-import   { getEvents }  from "@/actions/events";
+import { getEvents } from "@/actions/events";
 
 const DashboardEventsPage = () => {
   const { data, isLoading, isError } = useQuery({
@@ -38,7 +38,10 @@ const DashboardEventsPage = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className=" text-green-500 font-bold text-2xl ">Events</h2>
         <Button asChild>
-          <Link className="!bg-green-700 hover:scale-105 " href={paths.DASHBOARD.EVENTS.CREATE}>
+          <Link
+            className="!bg-green-700 glass-button text-white hover:scale-105 "
+            href={paths.DASHBOARD.EVENTS.CREATE}
+          >
             Create Event
           </Link>
         </Button>

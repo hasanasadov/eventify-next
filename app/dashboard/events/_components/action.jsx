@@ -18,32 +18,43 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { RenderIf } from "@/utils/RenderIf";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import eventServices, {
+import {
   createEvent,
   deleteEvent,
   editEvent,
   getEventById,
 } from "@/actions/events";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
+import { toDateTimeLocal, toTimeInput } from "@/utils/toTimeInput";
 
 const getFormSchema = ({ isEdit, isDelete }) =>
   z.object({
-    title: z.string().min(2),
-    date: z.string().min(2),
-    description: z.string().min(2),
-    type: z.string().min(2),
-    start: z.string().min(2),
-    end: z.string().min(2),
-    goto: z.string().min(2),
+    title: z.string().trim().min(2, "Title is required"),
+    description: z.string().trim().min(2, "Description is required"),
+    type: z.string().trim().min(2, "Event type is required"),
 
-    venueId: z.string().min(1),
-    imageURL: isEdit || isDelete ? z.string().optional() : z.string(),
+    start: z.string().trim().optional().or(z.literal("")),
+    end: z.string().trim().optional().or(z.literal("")),
+
+    date: z
+      .string()
+      .min(2, "Date is required")
+      .refine((v) => !Number.isNaN(new Date(v).getTime()), "Invalid date"),
+
+    goto: z.string().trim().min(2, "Goto (link/slug) is required"),
+
+    venueId: z.string().trim().optional().or(z.literal("")),
+    locationId: z.string().trim().optional().or(z.literal("")),
+    imageURL:
+      isEdit || isDelete
+        ? z.string().trim().optional()
+        : z.string().trim().min(1, "Image is required"),
   });
 
 const onError = (error) => {
-  toast.error(error.response?.data.message ?? "Something went wrong!");
+  toast.error(error?.response?.data?.message ?? "Something went wrong!");
 };
 
 const ActionForm = ({ type }) => {
@@ -51,36 +62,12 @@ const ActionForm = ({ type }) => {
   const isDelete = type === "delete";
 
   const { id } = useParams();
-  const { data: editItem } = useQuery({
-    queryKey: [QUERY_KEYS.EVENT_COMMENTS, id],
+  const router = useRouter();
+
+  const { data: editItem, isFetching } = useQuery({
+    queryKey: [QUERY_KEYS.EVENT_BY_ID, id],
     queryFn: () => getEventById(id),
-    enabled: isEdit || isDelete,
-  });
-
-  const { mutate: mutateCreate } = useMutation({
-    mutationFn: createEvent,
-    onSuccess: () => {
-      toast.success("Event created successfully.");
-    },
-    onError,
-  });
-
-  const { mutate: mutateUpdate } = useMutation({
-    mutationFn: editEvent,
-    onSuccess: () => {
-      toast.success("Event updated successfully.");
-      navigate(paths.DASHBOARD.EVENTS.LIST);
-    },
-    onError,
-  });
-
-  const { mutate: mutateDelete } = useMutation({
-    mutationFn: deleteEvent,
-    onSuccess: () => {
-      toast.success("Event deleted successfully.");
-      navigate(paths.DASHBOARD.EVENTS.LIST);
-    },
-    onError,
+    enabled: Boolean((isEdit || isDelete) && id),
   });
 
   const formSchema = useMemo(
@@ -89,69 +76,106 @@ const ActionForm = ({ type }) => {
   );
 
   const form = useForm({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      date: "",
       description: "",
       type: "",
       start: "",
       end: "",
+      date: "",
       goto: "",
       venueId: "",
+      locationId: "",
       imageURL: "",
     },
-    resolver: zodResolver(formSchema),
+    mode: "onSubmit",
   });
 
   useEffect(() => {
     if (editItem) {
-      form.setValue("title", editItem?.title);
-      form.setValue("imageURL", editItem?.imageURL);
-      form.setValue("date", editItem?.date);
-      form.setValue("description", editItem?.description);
-      form.setValue("type", editItem?.type);
-      form.setValue("start", editItem?.start);
-      form.setValue("end", editItem?.end);
-      form.setValue("goto", editItem?.goto);
-      form.setValue("venueId", editItem?.venueId);
+      form.reset({
+        title: editItem.title ?? "",
+        description: editItem.description ?? "",
+        type: editItem.type ?? "",
+        start: toTimeInput(editItem.start), // << normalize here
+        end: toTimeInput(editItem.end),
+        date: toDateTimeLocal(editItem.date), // convert to datetime-local string
+        goto: editItem.goto ?? "",
+        venueId: editItem.venueId ?? "",
+        locationId: editItem.locationId ?? "",
+        imageURL: editItem.imageURL ?? "",
+      });
     }
   }, [editItem, form]);
 
+  const { mutate: mutateCreate, isPending: creating } = useMutation({
+    mutationFn: createEvent,
+    onSuccess: async () => {
+      toast.success("Event created successfully.");
+      router.push(paths.DASHBOARD.EVENTS.LIST);
+    },
+    onError,
+  });
+
+  const { mutate: mutateUpdate, isPending: updating } = useMutation({
+    mutationFn: editEvent,
+    onSuccess: async () => {
+      toast.success("Event updated successfully.");
+      router.push(paths.DASHBOARD.EVENTS.LIST);
+    },
+    onError,
+  });
+
+  const { mutate: mutateDelete, isPending: deleting } = useMutation({
+    mutationFn: deleteEvent,
+    onSuccess: async () => {
+      toast.success("Event deleted successfully.");
+      router.push(paths.DASHBOARD.EVENTS.LIST);
+    },
+    onError,
+  });
+
   function onSubmit(values) {
-    const data = {
+    // Normalize payload for your Prisma model
+    const payload = {
       title: values.title,
-      imageURL: values.imageURL,
-      date: values.date,
       description: values.description,
       type: values.type,
-      start: values.start,
-      end: values.end,
+      start: values.start || undefined,
+      end: values.end || undefined,
+      date: new Date(values.date), // convert to Date
       goto: values.goto,
-      venueId: values.venueId,
+      venueId: values.venueId || undefined,
+      locationId: values.locationId || undefined,
+      imageURL: values.imageURL || "", // required on create; optional otherwise
     };
 
     if (type === "create") {
-      mutateCreate(data);
+      mutateCreate(payload);
     } else if (type === "update") {
-      mutateUpdate({
-        id,
-        data,
-      });
+      mutateUpdate({ id, data: payload });
     } else if (type === "delete") {
-      mutateDelete({
-        id,
-      });
+      // Optional user safety: confirm
+      if (confirm("Are you sure you want to delete this event?")) {
+        mutateDelete({ id });
+      }
     }
   }
 
+  const isBusy = creating || updating || deleting || isFetching;
+
   return (
     <div className="pt-6">
-      <h1 className="text-2xl font-bold  text-green-500 mb-4">
+      <h1 className="text-2xl font-bold text-green-500 mb-4">
         {isEdit ? "Edit" : isDelete ? "Delete" : "Create"} Event
       </h1>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={isBusy ? "opacity-75 pointer-events-none" : ""}
+        >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FormField
               control={form.control}
@@ -176,12 +200,12 @@ const ActionForm = ({ type }) => {
               name="date"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date</FormLabel>
+                  <FormLabel>Date & Time</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
                       type="datetime-local"
-                      placeholder="2025-01-01"
+                      placeholder="2025-01-01T12:00"
                       {...field}
                     />
                   </FormControl>
@@ -207,6 +231,7 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="type"
@@ -224,12 +249,13 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="start"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Start</FormLabel>
+                  <FormLabel>Start (optional)</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
@@ -242,17 +268,18 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="end"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>end</FormLabel>
+                  <FormLabel>End (optional)</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
                       type="time"
-                      placeholder="end"
+                      placeholder="End"
                       {...field}
                     />
                   </FormControl>
@@ -260,6 +287,7 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="goto"
@@ -269,7 +297,7 @@ const ActionForm = ({ type }) => {
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Goto"
+                      placeholder="Slug or URL"
                       {...field}
                     />
                   </FormControl>
@@ -277,16 +305,38 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="venueId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Venue ID</FormLabel>
+                  <FormLabel>Venue ID (optional)</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
                       placeholder="Venue ID"
+                      {...field}
+                      onChange={(e) =>
+                        field.onChange(e.target.value.toString())
+                      }
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="locationId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location ID (optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-transparent border"
+                      placeholder="Location ID"
                       {...field}
                       onChange={(e) =>
                         field.onChange(e.target.value.toString())
@@ -319,42 +369,50 @@ const ActionForm = ({ type }) => {
           </div>
 
           <RenderIf
-            condition={!!editItem?.imageURL && !!form.watch("imageURL")}
+            condition={Boolean(editItem?.imageURL && form.watch("imageURL"))}
           >
             <div className="mt-4">
-              <h4>Existing Image</h4>
-              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
-                <RenderIf condition={!!editItem}>
+              <h4 className="mb-2">Existing Image</h4>
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2">
+                <RenderIf condition={!!editItem?.imageURL}>
                   <img
                     src={editItem?.imageURL}
                     alt="Event Image"
-                    className="w-full object-cover rounded-lg"
+                    className="w-full aspect-video object-cover rounded-lg border"
                   />
                 </RenderIf>
               </div>
             </div>
           </RenderIf>
+
           <div className="flex justify-end mt-4">
             <RenderIf condition={isDelete}>
-              <Button type="submit" variant={"destructive"} className="mt-4">
-                Delete
+              <Button
+                type="submit"
+                variant="destructive"
+                className="mt-4"
+                disabled={isBusy}
+              >
+                {deleting ? "Deleting..." : "Delete"}
               </Button>
             </RenderIf>
+
             <RenderIf condition={!isDelete}>
-              <Button asChild variant="secondary">
+              <Button asChild variant="secondary" disabled={isBusy}>
                 <Link
                   href={paths.DASHBOARD.EVENTS.LIST}
-                  className="hover:scale-105 mr-2  !bg-transparent !text-green-400 !border-green-100 !border"
+                  className="hover:scale-105 mr-2 !bg-transparent !text-green-400 !border-green-100 !border"
                 >
                   Back
                 </Link>
               </Button>
               <Button
-                variant={"blacked"}
+                variant="blacked"
                 type="submit"
+                disabled={isBusy}
                 className="border-green-500 border rounded-md hover:scale-105"
               >
-                Submit
+                {creating || updating ? "Saving..." : "Submit"}
               </Button>
             </RenderIf>
           </div>
