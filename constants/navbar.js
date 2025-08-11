@@ -1,30 +1,36 @@
-import { SubscriptionsOutlined } from "@mui/icons-material";
-import { MapOutlined } from "@mui/icons-material";
-import { MuseumOutlined } from "@mui/icons-material";
+import { SearchSharp } from "@mui/icons-material";
+import { EventAvailable } from "@mui/icons-material";
+import { Building2Icon } from "lucide-react";
 import { User2Icon } from "lucide-react";
 import { MessageCircleIcon } from "lucide-react";
-import { Calendar1Icon } from "lucide-react";
+import { FaMapPin } from "react-icons/fa";
+import { paths } from "./paths";
 
 export const NAVBAR_ITEM = [
   {
+    title: "Search",
+    icon: SearchSharp,
+    href: paths.SEARCH,
+  },
+  {
     title: "Events",
-    icon: Calendar1Icon,
-    href: "/events",
+    icon: EventAvailable,
+    href: paths.EVENTS,
   },
   {
     title: "Venues",
-    icon: MuseumOutlined,
-    href: "/venues",
+    icon: Building2Icon,
+    href: paths.VENUES,
   },
-  {
-    title: "Chat",
-    icon: MessageCircleIcon,
-    href: "/chat",
-  },
+  // {
+  //   title: "Chat",
+  //   icon: MessageCircleIcon,
+  //   href: paths.CHAT,
+  // },
   {
     title: "Map",
-    icon: MapOutlined,
-    href: "/map",
+    icon: FaMapPin,
+    href: paths.MAP,
   },
   // {
   //   title: "Subscriptions",
@@ -34,6 +40,6 @@ export const NAVBAR_ITEM = [
   {
     title: "Account",
     icon: User2Icon,
-    href: "/login",
+    href: paths.LOGIN,
   },
 ];

@@ -12,6 +12,7 @@ import { getLocations } from "@/actions/location";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../ui/button";
+import IsError from "./IsError";
 
 const mapContainerStyle = {
   width: "100%",
@@ -82,7 +83,7 @@ const MainMap = () => {
     // setDirections(null);
   };
 
-  if (loadError) return <div>Error loading maps</div>;
+  if (loadError) return <IsError text="Map" />;
   if (!isLoaded || !locations)
     return (
       <div className="w-full h-full animate-pulse bg-black bg-opacity-40 flex justify-center items-center">

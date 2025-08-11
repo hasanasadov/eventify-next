@@ -33,9 +33,9 @@ const ToggleTheme = () => {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="flex items-center justify-end pr-4"
+      className="flex items-center justify-end pr-4 glass p-2"
     >
-      <span className="hidden md:inline-block px-2">
+      <span className="hiddenn md:inline-block px-2">
         {isDark ? "Dark" : "Light"}
       </span>
       <label className="relative transition-all duration-500 inline-flex items-center justify-end cursor-pointer w-10 h-5">

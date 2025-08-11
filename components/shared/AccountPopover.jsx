@@ -5,8 +5,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Link from "next/link";
-import { RenderIf } from "../../utils/RenderIf";
-import { paths } from "@/constants/paths";
 
 export function AccountPopOver({ user }) {
   // const isOrganizer = user?.is_organizer === true;

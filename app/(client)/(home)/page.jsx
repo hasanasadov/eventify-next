@@ -1,9 +1,9 @@
 "use client";
 
-import SideBarLeft from "@/app/(client)/(home)/_components/SideBarLeft";
 import SideBarRight from "@/app/(client)/(home)/_components/SideBarRight";
-import MainMap from "@/components/shared/MainMap";
+import SideBarLeft from "@/app/(client)/(home)/_components/SideBarLeft";
 import EventsPage from "../events/page";
+import MainMap from "@/components/shared/MainMap";
 
 export default function HomePage() {
   return (

@@ -7,6 +7,7 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 import { Button } from "../ui/button";
+import IsError from "./IsError";
 
 const mapContainerStyle = {
   width: "100%",
@@ -74,7 +75,7 @@ const Map = ({ location }) => {
     return null;
   }
 
-  if (loadError) return <div>Error loading maps</div>;
+  if (loadError) return <IsError text="Map" />;
   if (!isLoaded) return <div>Loading Maps...</div>;
 
   const destination = {

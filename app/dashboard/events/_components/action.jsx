@@ -39,39 +39,7 @@ const getFormSchema = ({ isEdit, isDelete }) =>
     goto: z.string().min(2),
 
     venueId: z.string().min(1),
-    organizer_id: z.string().min(1),
     imageURL: isEdit || isDelete ? z.string().optional() : z.string(),
-    // imageURL:
-    //   isEdit || isDelete
-    //     ? z.any().optional()
-    //     : z
-    //         .instanceof(FileList, { message: "Images are required" })
-    //         .refine((list) => list.length <= 1, "Only one image is required")
-    //         .transform((list) => Array.from(list))
-    //         .refine(
-    //           (files) => {
-    //             const allowedTypes = {
-    //               "image/jpeg": true,
-    //               "image/png": true,
-    //               "image/webp": true,
-    //               "image/*": true,
-    //             };
-    //             return Array.from(files).every(
-    //               (file) => allowedTypes[file.type]
-    //             );
-    //           },
-    //           {
-    //             message: "Invalid file type. Allowed types: JPG, PNG",
-    //           }
-    //         )
-    //         .refine(
-    //           (files) => {
-    //             return Array.from(files).every((file) => file.size <= 4);
-    //           },
-    //           {
-    //             message: "File size should not exceed 5MB",
-    //           }
-    //         ),
   });
 
 const onError = (error) => {
@@ -130,7 +98,6 @@ const ActionForm = ({ type }) => {
       end: "",
       goto: "",
       venueId: "",
-      organizer_id: "",
       imageURL: "",
     },
     resolver: zodResolver(formSchema),
@@ -147,9 +114,8 @@ const ActionForm = ({ type }) => {
       form.setValue("end", editItem?.end);
       form.setValue("goto", editItem?.goto);
       form.setValue("venueId", editItem?.venueId);
-      form.setValue("organizer_id", editItem?.organizer_id);
     }
-  }, [editItem]);
+  }, [editItem, form]);
 
   function onSubmit(values) {
     const data = {
@@ -161,8 +127,7 @@ const ActionForm = ({ type }) => {
       start: values.start,
       end: values.end,
       goto: values.goto,
-      // venueId: values.venueId,
-      // organizer_id: values.organizer_id,
+      venueId: values.venueId,
     };
 
     if (type === "create") {
@@ -332,90 +297,6 @@ const ActionForm = ({ type }) => {
                 </FormItem>
               )}
             />
-            {/* <FormField
-              control={form.control}
-              name="organizer_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Organizer ID</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="bg-transparent border"
-                      placeholder="Organizer ID"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(e.target.value.toString())
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
-            {/* <FormField
-              control={form.control}
-              name="lat"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Latitude</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="bg-transparent border"
-                      placeholder="Latitude"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(e.target.value.toString())
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="lng"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Longitude</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="bg-transparent border"
-                      placeholder="Longitude"
-                      {...field}
-                      onChange={(e) =>
-                        field.onChange(e.target.value.toString())
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
-            {/* <FormField
-              control={form.control}
-              name="imageURL"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Image</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="bg-transparent border"
-                      multiple
-                      type="file"
-                      onChange={(e) => {
-                        field.onChange(e.target.files);
-                      }}
-                      accept="image/*"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
 
             <FormField
               control={form.control}

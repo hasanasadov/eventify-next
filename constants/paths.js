@@ -1,7 +1,13 @@
 export const paths = {
+  EVENTS: "/events",
+  VENUES: "/venues",
+  MAP: "/map",
+  SEARCH: "/search",
+  CHAT: "/chat",
+  LOGIN: "/login",
+  REGISTER: "/register",
   DASHBOARD: {
     MAIN: "/dashboard",
-
     EVENTS: {
       LIST: "/dashboard/events",
       CREATE: "/dashboard/events/create",

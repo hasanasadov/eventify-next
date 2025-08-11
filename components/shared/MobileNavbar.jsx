@@ -11,7 +11,31 @@ import { cn } from "@/lib/utils";
 import { Search } from "@mui/icons-material";
 import { useTheme } from "next-themes";
 
-const MobileNavbar = ({ user }) => {
+const MobileNavbar = () => {
+  // const [token, setToken] = useState("");
+
+  // useEffect(() => {
+  //   const storedToken = localStorage.getItem("access_token") || "";
+  //   setToken(storedToken);
+  // }, []);
+  const [user, setUser] = useState(null);
+  const isAdmin = user?.is_admin === true || user?.first_name === "Hasanali";
+
+  // useEffect(() => {
+  //   getUser();
+  // }, [token]);
+
+  // async function getUser() {
+  //   const data = await getCurrentUser(token);
+  //   if (data?.success) {
+  //     setUser(data.user);
+  //   }
+
+  //   // if (!data?.success) {
+  //   //   localStorage.removeItem("access_token");
+  //   //   localStorage.removeItem("refresh_token");
+  //   // }
+  // }
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedTheme } = useTheme();
   const [bgColor, setBgColor] = useState("black");
@@ -51,15 +75,6 @@ const HamburgerMenu = ({ user, setIsOpen }) => {
     <div className="">
       <div className=" h-full !absolute top-0 left-0  !bg-white dark:!bg-black p-2 glass">
         <div className="flex ">
-          <Link
-            onClick={() => setIsOpen(false)}
-            href={"/search"}
-            className={cn(`flex items-center gap-2 font-bold `)}
-          >
-            <Button variant="ghost" className={cn(``)}>
-              {<Search />}
-            </Button>
-          </Link>
           {NAVBAR_ITEM.map((item, index) =>
             item.title === "Account" ? (
               <AccountPopOver key={index} user={user} />
@@ -68,11 +83,7 @@ const HamburgerMenu = ({ user, setIsOpen }) => {
                 key={index}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className={cn(
-                  `flex items-center gap-2 font-bold ${
-                    item.title == "Chat" ? " hidden " : ""
-                  }`
-                )}
+                className="flex items-center gap-2 font-bold"
               >
                 <Button variant="ghost" className={cn(``)}>
                   {<item.icon />}

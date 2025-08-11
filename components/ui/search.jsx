@@ -1,26 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function InputWithButton() {
-  let [search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!search) return;
-    if (typeof window !== "undefined") {
-      localStorage.setItem("searchText", search);
-    }
-    redirect(`/search`);
-  };
+  const searchParams = new URLSearchParams(window.location.search);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (search) {
+        searchParams.set("s", search);
+        window.history.replaceState(
+          {},
+          "",
+          `${window.location.pathname}?${searchParams}`
+        );
+      }
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [search]);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex items-center space-x-2 relative max-w-xl glass-border"
-    >
+    <div className="flex items-center space-x-2 relative max-w-xl glass-border">
       <Input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -36,6 +39,6 @@ export function InputWithButton() {
       >
         <SearchIcon />
       </Button>
-    </form>
+    </div>
   );
 }

@@ -18,7 +18,6 @@ const EventsPage = () => {
     queryFn: getEvents,
   });
 
-  console.log("Events:", events);
 
   if (isError) {
     return <IsError text="events" />;
@@ -26,11 +25,11 @@ const EventsPage = () => {
   if (isLoading || !events) {
     return (
       <Container>
-        <div className="flex  items-center justify-center">
+        {/* <div className="flex  items-center justify-center">
           <h1 className="text-4xl text-center pb-8 font-bold text-[#075E54]  dark:text-[#18f3d9]">
             Explore Events
           </h1>
-        </div>
+        </div> */}
         <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:grid-cols-4 w-full overflow-y-auto h-full pb-4">
           <PulseSkeleton className={"h-96 m-0"} />
           <PulseSkeleton className={"h-96 m-0"} />
@@ -43,11 +42,11 @@ const EventsPage = () => {
 
   return (
     <Container className="">
-      <div className="flex  items-center justify-center">
+      {/* <div className="flex  items-center justify-center">
         <h1 className="text-4xl hidden md:block text-center pb-4 font-bold text-[#075E54] dark:text-green-500">
           Explore Events
         </h1>
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {events.map((item) => (
           <EventItem key={item.id} event={item} />
