@@ -4,11 +4,12 @@ import EventItem from "./EventItem";
 import { getEvents } from "@/actions/events";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import PulseSkeleton from "@/components/shared/PulseSkeleton";
 import { Container } from "@/components/ui/Container";
 import IsError from "@/components/shared/IsError";
 import HorizontalScroller from "@/components/shared/HorizontalScroller";
 import HeroSlider from "@/components/shared/HeroSlider";
+import IsNone from "@/components/shared/IsNone";
+import LoadingComp from "@/components/shared/Loading";
 
 // If you have a global util, move these there
 const titleCase = (s) =>
@@ -31,17 +32,12 @@ const EventsPage = () => {
 
   if (isError) return <IsError text="events" />;
 
-  if (isLoading || !events) {
-    return (
-      <Container>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-4">
-          <PulseSkeleton className="h-96 m-0" />
-          <PulseSkeleton className="h-96 m-0" />
-          <PulseSkeleton className="h-96 m-0" />
-          <PulseSkeleton className="h-96 m-0" />
-        </div>
-      </Container>
-    );
+  if (isLoading) {
+    return <LoadingComp />;
+  }
+
+  if (!events?.length) {
+    return <IsNone text="events" />;
   }
 
   // ---- group by `type` dynamically ----

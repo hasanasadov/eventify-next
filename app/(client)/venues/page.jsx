@@ -9,6 +9,8 @@ import { Container } from "@/components/ui/Container";
 import IsError from "@/components/shared/IsError";
 import HeroSlider from "@/components/shared/HeroSlider";
 import HorizontalScroller from "@/components/shared/HorizontalScroller";
+import IsNone from "@/components/shared/IsNone";
+import LoadingComp from "@/components/shared/Loading";
 
 // small helper
 const titleCase = (s) =>
@@ -31,17 +33,12 @@ const VenuesPage = () => {
 
   if (isError) return <IsError text="venues" />;
 
-  if (isLoading || !venues) {
-    return (
-      <Container>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:grid-cols-4 w-full overflow-y-auto h-full pb-4">
-          <PulseSkeleton className="h-96 m-0" />
-          <PulseSkeleton className="h-96 m-0" />
-          <PulseSkeleton className="h-96 m-0" />
-          <PulseSkeleton className="h-96 m-0" />
-        </div>
-      </Container>
-    );
+  if (isLoading) {
+    return <LoadingComp />;
+  }
+
+  if (!venues?.length) {
+    return <IsNone text="venues" />;
   }
 
   // ---- group by `type` dynamically ----

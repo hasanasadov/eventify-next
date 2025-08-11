@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getEvents } from "@/actions/events";
 import PulseSkeleton from "@/components/shared/PulseSkeleton";
 import IsError from "@/components/shared/IsError";
+import IsNone from "@/components/shared/IsNone";
+import LoadingComp from "@/components/shared/Loading";
 
 const EventsSection = () => {
   const {
@@ -18,19 +20,15 @@ const EventsSection = () => {
   });
 
   if (isError) {
-    return (
-      <IsError text="events" />
-    );
+    return <IsError text="events" />;
   }
 
-  if (isLoading || !events) {
-    return (
-      <div className="flex flex-col gap-4 px-4">
-        <PulseSkeleton />
-        <PulseSkeleton />
-        <PulseSkeleton />
-      </div>
-    );
+  if (isLoading) {
+    return <LoadingComp />;
+  }
+
+  if (!events.length) {
+    return <IsNone text="events" />;
   }
 
   return (

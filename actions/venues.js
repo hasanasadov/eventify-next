@@ -11,7 +11,7 @@ export const getVenues = async () => {
         events: true,
       },
     });
-    return items;
+    return items || [];
   } catch (error) {
     console.error(error);
     return null;

@@ -1,18 +1,18 @@
-import { CarFront } from "lucide-react";
 import { motion } from "framer-motion";
+import { LoaderCircleIcon } from "lucide-react";
 
-export const LoadingComp = () => {
+export const LoadingComp = ({ className }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] ">
+    <div className={`flex flex-col items-center  justify-center min-h-[70vh] ${className}`}>
       <motion.div
-        animate={{ scale: [1, 1.5, 1] }}
+        animate={{ rotate: [0, 360] }}
         transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
       >
-        <CarFront size={60} className="text-orange-500" />
+        <LoaderCircleIcon size={60} className="" />
       </motion.div>
-      <p className="mt-4 text-lg font-semibold text-gray-700">
-        Loading the best rides for you...
-      </p>
+      {/* <p className="mt-4 text-lg font-semibold text-center text-gray-700">
+        Loading ...
+      </p> */}
     </div>
   );
 };

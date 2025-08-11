@@ -11,7 +11,7 @@ export const getEvents = async () => {
         location: true,
       },
     });
-    return items;
+    return items || [];
   } catch (error) {
     console.error(error);
     return null;

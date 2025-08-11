@@ -4,8 +4,9 @@ import { VenueSideBarItem } from "./VenueSideBarItem";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { getVenues } from "@/actions/venues";
-import PulseSkeleton from "@/components/shared/PulseSkeleton";
 import IsError from "@/components/shared/IsError";
+import IsNone from "@/components/shared/IsNone";
+import LoadingComp from "@/components/shared/Loading";
 
 const VenuesSection = () => {
   const {
@@ -21,15 +22,14 @@ const VenuesSection = () => {
     return <IsError text="venues" />;
   }
 
-  if (isLoading || !venues) {
-    return (
-      <div className="flex flex-col gap-4 px-4">
-        <PulseSkeleton />
-        <PulseSkeleton />
-        <PulseSkeleton />
-      </div>
-    );
+  if (isLoading) {
+    return <LoadingComp />;
   }
+
+  if (!venues.length) {
+    return <IsNone text="venues" />;
+  }
+
   return (
     <div className="flex flex-col items-center gap-3 w-full overflow-y-auto h-full pb-4 ">
       {venues?.map((venue, idx) => (
