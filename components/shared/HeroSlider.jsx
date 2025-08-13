@@ -56,7 +56,7 @@ export default function HeroSlider({ slides, className, autoPlayMs = 5500 }) {
   return (
     <div
       className={cn(
-        "relative w-full rounded-2xl overflow-hidden bg-black/40",
+        "relative w-full rounded-3xl overflow-hidden bg-black/40",
         "shadow-lg border border-white/5",
         className
       )}

@@ -74,10 +74,9 @@ const EventDetail = () => {
       {/* Background image */}
       <div
         id="event-bg"
-        className="fixed top-0 !w-screen !h-screen left-0 w-ful h-ful bg-center bg-no-repeat transition-all duration-500"
+        className="fixed top-0 !w-screen md:!h-screen h-full left-0 md:cover bg-center bg-no-repeat transition-all duration-500"
         style={{
           backgroundImage: `url(${event?.imageURL || "/fallback.jpg"})`,
-          backgroundSize: "cover",
           // backgroundColor: "#000", // black fill for empty areas
         }}
       ></div>
@@ -94,7 +93,7 @@ const EventDetail = () => {
             </Link>
           </div>
           <div className="flex flex-col md:flex-row gap-6 md:gap-12">
-            {/* <RenderIf condition={event?.imageURL}>
+            <RenderIf condition={event?.imageURL}>
               <img
                 src={event?.imageURL}
                 alt={event?.title || "Event Poster"}
@@ -105,7 +104,7 @@ const EventDetail = () => {
               <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
                 <p className="text-gray-500">No Poster Available</p>
               </div>
-            </RenderIf> */}
+            </RenderIf>
             <div className=" glasss md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2 relative">
               <div className="space-y-4">
                 <h1 className="text-4xl font-extrabold text-green-500 mb-4">

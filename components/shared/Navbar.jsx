@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className="md:px-8 glassss  px-1 md:py-3 py-1 flex md:justify-between items-center !sticky top-0 z-50 border-bo border-gray-200 backdrop-blur-md !bg-transparen !bg-white/30 dark:!bg-black/30"
+        className="md:px-8 glassss  px-1 md:py-3 py-1 flex md:justify-between items-center !sticky top-0 z-50 border-bo border-gray-200 backdrop-blur-md !bg-transparen !bg-white/30 dark:!bg-background/30"
         style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
       >
         <div className="flex w-full items-center justify-between ">
