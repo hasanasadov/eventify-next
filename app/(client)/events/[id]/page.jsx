@@ -31,7 +31,7 @@ const EventDetail = () => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       if (bg) {
-        bg.style.filter = `blur(${Math.min(scrollY / 50, 100)}px)`; // Max 10px blur
+        bg.style.filter = `blur(${Math.min(scrollY / 50, 300)}px)`; // Max 10px blur
         bg.style.transform = `scale(${1 + Math.min(scrollY / 1000, 0.05)})`; // Slight zoom effect
       }
     };
@@ -49,18 +49,8 @@ const EventDetail = () => {
     : "Not specified";
 
   const eventStart = event?.start;
-  // ? new Date(event.start).toLocaleTimeString("en-US", {
-  //     hour: "numeric",
-  //     minute: "numeric",
-  //   })
-  // : "Not specified";
 
   const eventEnd = event?.end;
-  // ? new Date(event.end).toLocaleTimeString("en-US", {
-  //     hour: "numeric",
-  //     minute: "numeric",
-  //   })
-  // : "Not specified";
 
   const eventComments = event?.comments || [];
   const location = event?.location || {};
@@ -80,13 +70,15 @@ const EventDetail = () => {
   if (isError) return <IsError />;
 
   return (
-    <div className="relative">
+    <div className="relative !text-white">
       {/* Background image */}
       <div
         id="event-bg"
-        className="fixed top-0 left-0 w-full h-full bg-cover bg-center transition-all duration-500"
+        className="fixed top-0 !w-screen !h-screen left-0 w-ful h-ful bg-center bg-no-repeat transition-all duration-500"
         style={{
           backgroundImage: `url(${event?.imageURL || "/fallback.jpg"})`,
+          backgroundSize: "cover",
+          // backgroundColor: "#000", // black fill for empty areas
         }}
       ></div>
 
@@ -106,7 +98,7 @@ const EventDetail = () => {
               <img
                 src={event?.imageURL}
                 alt={event?.title || "Event Poster"}
-                className="w-full md:max-w-[50%] glass h-full object-contain rounded-lg border-2"
+                className="w-full md:max-w-[50%] glasss h-full object-contain rounded-lg border-2"
               />
             </RenderIf>
             <RenderIf condition={!event?.imageURL}>
@@ -114,7 +106,7 @@ const EventDetail = () => {
                 <p className="text-gray-500">No Poster Available</p>
               </div>
             </RenderIf> */}
-            <div className=" glass md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2 relative">
+            <div className=" glasss md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2 relative">
               <div className="space-y-4">
                 <h1 className="text-4xl font-extrabold text-green-500 mb-4">
                   {event?.title || "Event Title"}
@@ -122,7 +114,7 @@ const EventDetail = () => {
                 </h1>
 
                 <div>
-                  <span className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                  <span className="text-xl font-semibold text-gray-80000 dark:text-white mb-4">
                     Date :
                   </span>
                   <span> {eventDate}</span>
@@ -145,7 +137,7 @@ const EventDetail = () => {
                 <RenderIf condition={event?.goto}>
                   <Button
                     onClick={() => window.open(event.goto, "_blank")?.focus()}
-                    variant="glass"
+                    variant="glasss"
                     className="!bg-black dark:!bg-white !text-white dark:!text-black text-xl font-sans p-5 md:w-1/2 w-full"
                   >
                     Buy Ticket
@@ -168,24 +160,24 @@ const EventDetail = () => {
 
 const LocationSection = ({ location }) => {
   return (
-    <div className="glass md:p-6 p-4 ">
+    <div className="glasss md:p-6 p-4 ">
       {location?.lat && location?.lng && (
         <div className=" ">
-          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white  mb-4">
+          <h2 className="text-2xl font-semibold text-gray-8000 dark:text-white  mb-4">
             Location
           </h2>
           <div className="flex flex-col lg:flex-row gap-6 ">
-            <div className="glass w-full md:w-1/4 p-6 ">
+            <div className="glasss w-full md:w-1/4 p-6 ">
               <div>
                 <h3 className="text-lg font-semibold mb-2">Address</h3>
-                <p className="text-sm text-gray-600 dark:text-white">
+                <p className="text-sm text-gray-6000 dark:text-white">
                   {location?.title || "Unknown"}
                 </p>
-                <p className="text-sm text-gray-600 dark:text-white">
+                <p className="text-sm text-gray-6000 dark:text-white">
                   {location?.lng || "Unknown"}
                   {" N"}
                 </p>
-                <p className="text-sm text-gray-600 dark:text-white">
+                <p className="text-sm text-gray-6000 dark:text-white">
                   {location?.lat || "Unknown"}
                   {" E"}
                 </p>
@@ -194,11 +186,11 @@ const LocationSection = ({ location }) => {
                 <img
                   src={location?.imageURL}
                   alt={location?.title}
-                  className=" glass w-40"
+                  className=" glasss w-40"
                 />
               </div>
             </div>
-            <div className="glass  w-full md:w-3/4 h-80 overflow-hidden ">
+            <div className="glasss  w-full md:w-3/4 h-80 overflow-hidden ">
               <Map
                 imageSource={location?.imageURL}
                 title={location?.title}
@@ -217,8 +209,8 @@ const CommentsSection = ({ eventComments, isError, isLoading }) => {
   const [newComment, setNewComment] = useState("");
   const [sliceCount, setSliceCount] = useState(3);
   return (
-    <div className="glass md:p-6 p-4">
-      <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+    <div className="glasss md:p-6 p-4">
+      <h2 className="text-2xl font-semibold text-gray-8000 dark:text-white mb-4">
         Comments
       </h2>
       <div className="space-y-4">
@@ -277,13 +269,13 @@ const CommentsSection = ({ eventComments, isError, isLoading }) => {
           } Add a comment...`}
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          className="flex-1 glass-border border border-gray-300 rounded-lg px-4 py-2 focus:outline-none"
+          className="flex-1 glasss-border border border-gray-300 rounded-lg px-4 py-2 focus:outline-none"
         />
         <Button
           // onClick={handleAddComment}
           disabled={forceSignIn}
           className="ml-2 "
-          variant="glass"
+          variant="glasss"
         >
           Post
         </Button>

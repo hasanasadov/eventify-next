@@ -9,7 +9,7 @@ import { ArrowLeftIcon } from "lucide-react";
 export default function HorizontalScroller({
   className,
   children,
-  itemWidth = 320,
+  itemWidth = 200,
   gap = 24,
 }) {
   const ref = useRef(null);

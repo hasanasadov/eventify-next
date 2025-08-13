@@ -34,14 +34,14 @@ const Footer = () => {
   };
 
   return (
-    <footer className="p-5 px-4 md:px-0 mt-4  relative glass md:m-4 !mb-0 border-t border-green-400">
+    <footer className="p-5 backdrop-blur-md px-4 md:px-0 mt-4  relative glassss !bg-white/30 dark:!bg-black/30  border-t border-green-400">
       {/* <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-64 h-64 bg-green-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-200/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
       </div> */}
 
       <Container className="relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3  md:gap-10 gap-6">
+        <div className="flex justify-between md:flex-row flex-col   md:gap-10 gap-6">
           <div className="flex flex-col items-center md:items-start gap-2 p-2">
             <Link href="/" className="group">
               <div className="w-40 h-12 dark:drop-shadow-[0_0_4px_#fff] dark:invert flex items-center justify-center mb-4">
@@ -54,7 +54,7 @@ const Footer = () => {
             <ToggleTheme />
           </div>
 
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             <h3 className="text-lg font-semibold  border-b border-green-400 pb-2">
               Quick Links
             </h3>
@@ -73,7 +73,7 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           <div>
             <h3 className="md:text-lg font-semibold mb-4 border-b border-green-400 pb-2">

@@ -79,7 +79,7 @@ const EventsPage = () => {
 
           <HorizontalScroller>
             {list.map((item) => (
-              <div key={item.id} className="snap-start shrink-0 w-[280px]">
+              <div key={item.id} className="snap-start  w-[400px]">
                 <EventItem event={item} className="w-full" />
               </div>
             ))}

@@ -14,7 +14,7 @@ const EventItem = ({ event, className }) => {
         <img
           src={event.imageURL || LOGO}
           alt={event.title || "event"}
-          className="w-full h-[320px] object-cover group-hover:scale-[1.03] transition-transform duration-300"
+          className="min-w-[300px] min-h-[120px] object-cover group-hover:scale-[1.03] transition-transform duration-300"
         />
         <div className="absolute z-[9999] top-2 right-2 bg-gray-200 rounded-full p-1 group-hover:blockk hidden transition-colors duration-300">
           <FavoriteBorder className="text-gray-700 z-10 " />
@@ -25,7 +25,7 @@ const EventItem = ({ event, className }) => {
         <h2 className="text-lg font-semibold  group-hover:text-green-600 transition-colors duration-300">
           {event.title}
         </h2>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 line-clamp-5">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 line-clamp-3 md:line-clamp-5">
           {event.description}
         </p>
       </div>
