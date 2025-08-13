@@ -55,6 +55,8 @@ const ActionForm = ({ type }) => {
     queryKey: [QUERY_KEYS.LOCATION, id],
     queryFn: () => getLocationById(id),
     enabled: Boolean((isEdit || isDelete) && id),
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const formSchema = useMemo(

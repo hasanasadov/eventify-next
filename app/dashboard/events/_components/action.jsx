@@ -68,6 +68,8 @@ const ActionForm = ({ type }) => {
     queryKey: [QUERY_KEYS.EVENT_BY_ID, id],
     queryFn: () => getEventById(id),
     enabled: Boolean((isEdit || isDelete) && id),
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const formSchema = useMemo(
