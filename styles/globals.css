@@ -1,11 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 @font-face {
   font-family: "Open Sauce Sans";
   src: url("/fonts/OpenSauceSans/OpenSauceSans-Regular.ttf") format("truetype");
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+  .font-sauce {
+  font-family: "Open Sauce Sans", sans-serif !important;
+} */
+
+/* body {
+  scroll-behavior: smooth;
+  transition: all 0.5s ease-in-out;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "greycliff", sans-serif;
+  overflow-x: hidden;
+} */
+@font-face {
+  font-family: "greycliff";
+  src: url("/fonts/greycliff/fonnts.com-Greycliff_CF_Regular.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "greycliff";
+  src: url("/fonts/greycliff/fonnts.com-Greycliff_CF_Bold.otf")
+    format("opentype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -15,11 +44,8 @@ body {
   transition: all 0.5s ease-in-out;
   background: var(--background);
   color: var(--foreground);
-  font-family: "Open Sauce Sans", sans-serif;
+  font-family: "greycliff", sans-serif;
   overflow-x: hidden;
-}
-.font-sauce {
-  font-family: "Open Sauce Sans", sans-serif !important;
 }
 
 @layer base {
@@ -185,7 +211,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.6rem;
 }
-
 
 .glasss {
   position: relative;

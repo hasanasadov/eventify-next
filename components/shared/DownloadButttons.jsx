@@ -8,21 +8,26 @@ const DownloadButtons = () => {
 
   return (
     <div className="flex flex-col w-full gap-4 ">
-      <a href={iOSAppUrl} target="_blank" rel="noopener noreferrer">
-        <img
-          src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" // Store this in /public/badges/
-          alt="Download on the App Store"
-          className="hover:opacity-50   transition-all dark:inver"
-        />
-      </a>
+      <div>
+        <h3 className="font-bold">Get the Myevents app</h3>
+      </div>
+      <div className="flex flex-row w-full gap-4 ">
+        <a href={iOSAppUrl} target="_blank" rel="noopener noreferrer">
+          <img
+            src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" // Store this in /public/badges/
+            alt="Download on the App Store"
+            className="hover:opacity-50   transition-all dark:inver"
+          />
+        </a>
 
-      <a href={androidAppUrl} target="_blank" rel="noopener noreferrer">
-        <img
-          src="/badges/gpmarket.png" // Store this in /public/badges/
-          alt="Get it on Google Play"
-          className="hover:opacity-50 max-w-36  transition-all dark:invertt"
-        />
-      </a>
+        <a href={androidAppUrl} target="_blank" rel="noopener noreferrer">
+          <img
+            src="/badges/gpmarket.png" // Store this in /public/badges/
+            alt="Get it on Google Play"
+            className="hover:opacity-50 max-w-36  transition-all dark:invertt"
+          />
+        </a>
+      </div>
     </div>
   );
 };
