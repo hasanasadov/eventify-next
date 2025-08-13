@@ -28,7 +28,7 @@ const Footer = () => {
             <div>
               <h3 className="md:text-md font-extrabold mb-3">Company</h3>
               <div className="text-[15px] mb-1 cursor-pointer hover:opacity-60 duration-300 transition-all">
-                Sell on Tixr
+                Sell on MyEvent
               </div>
               <div className="text-[15px] mb-1 cursor-pointer hover:opacity-60 duration-300 transition-all">
                 About

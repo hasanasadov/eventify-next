@@ -24,8 +24,8 @@ export default function RootLayout({ children }) {
           </Link>
         </div>
         <div className="bg-gray-300 w-screen h-screen flex items-center justify-center p-6">
-          <Container className="relative max-w-[850px] w-full bg-white p-0 border-2">
-            <div className="right-0 z-10 lg:w-1/2 hidden lg:flex  items-center justify-center border-r ">
+          <Container className="relative max-w-[850px] w-full bg-white p-0 border-2 flex">
+            <div className=" z-10 lg:w-1/2 hidden lg:flex  items-center justify-center border-r ">
               <Image
                 src={AccountImage}
                 alt="image"

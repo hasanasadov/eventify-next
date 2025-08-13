@@ -24,7 +24,7 @@ const DownloadButtons = () => {
           <img
             src="/badges/gpmarket.png" // Store this in /public/badges/
             alt="Get it on Google Play"
-            className="hover:opacity-50 max-w-36  transition-all dark:invertt"
+            className="hover:opacity-50 max-w-36  scale-[0.945] -translate-y-[0.9px] transition-all dark:invertt"
           />
         </a>
       </div>
