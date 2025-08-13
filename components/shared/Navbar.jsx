@@ -18,13 +18,13 @@ const Navbar = () => {
         style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
       >
         <div className="flex w-full items-center justify-between ">
-          <div className="md:scale-150 dark:invert h-12 dark:drop-shadow-[0_0_4px_#fff]   flex items-center justify-center">
+          <div className="md:scale-150 pt-1 dark:invert h-12 dark:drop-shadow-[0_0_4px_#fff]   flex items-center justify-center">
             <Link href="/">
               <Image src={Logo} alt="logo" width={100} height={100} />
             </Link>
           </div>
 
-          <div className="flex-1 font-bold hover:text-[#075E54] dark:hover:text-green-500 md:text-xl md:pl-10 cursor-pointer transition-all duration-300 ease-in-out">
+          <div className="flex-1 font-bold hover:text-[#075E54] dark:hover:text-green-500 md:text-xl md:pl-16 pl-6 cursor-pointer transition-all duration-300 ease-in-out">
             <NavbarText />
           </div>
         </div>
