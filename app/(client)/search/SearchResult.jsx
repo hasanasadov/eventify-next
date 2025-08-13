@@ -46,18 +46,18 @@ const SearchResult = () => {
   }
 
   return (
-      <Container className="flex flex-col space-y-4 ">
-        {/* InputWithButton içində router.replace/push ilə ?s=... yenilə */}
-        <InputWithButton />
-        <EventsSection
-          eventsData={eventsData ?? []}
-          eventsLoading={eventsLoading}
-        />
-        <VenuesSection
-          venuesData={venuesData ?? []}
-          venuesLoading={venuesLoading}
-        />
-      </Container>
+    <Container className="flex flex-col space-y-4 ">
+      {/* InputWithButton içində router.replace/push ilə ?s=... yenilə */}
+      <InputWithButton />
+      <EventsSection
+        eventsData={eventsData ?? []}
+        eventsLoading={eventsLoading}
+      />
+      <VenuesSection
+        venuesData={venuesData ?? []}
+        venuesLoading={venuesLoading}
+      />
+    </Container>
   );
 };
 

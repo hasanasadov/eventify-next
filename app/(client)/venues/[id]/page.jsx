@@ -9,13 +9,12 @@ import EventItem from "../../events/EventItem";
 import Map from "@/components/shared/Map";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import eventServices from "@/actions/events";
 import { getVenueById } from "@/actions/venues";
 import { RenderIf } from "@/utils/RenderIf";
 import { Container } from "@/components/ui/Container";
 import IsError from "@/components/shared/IsError";
+import LoadingComp from "@/components/shared/Loading";
 
 const VenueDetail = () => {
   const { id } = useParams();
@@ -34,17 +33,7 @@ const VenueDetail = () => {
   const venueEvents = venue?.events || [];
   const venueLocation = venue?.location || {};
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center min-h-[70vh]">
-        <div className="flex flex-col justify-center items-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
-          <p className="mt-4 text-green-500 font-semibold">
-            Loading venue details...
-          </p>
-        </div>
-      </div>
-    );
+  if (isLoading) return <LoadingComp />;
 
   if (isError) return <IsError text="venue details" />;
 

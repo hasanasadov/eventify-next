@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { RenderIf } from "@/utils/RenderIf";
 import IsError from "@/components/shared/IsError";
 import { Container } from "@/components/ui/Container";
+import LoadingComp from "@/components/shared/Loading";
 
 const EventDetail = () => {
   const { id } = useParams();
@@ -55,17 +56,7 @@ const EventDetail = () => {
   const eventComments = event?.comments || [];
   const location = event?.location || {};
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center min-h-[70vh]">
-        <div className="flex flex-col justify-center items-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-600"></div>
-          <p className="mt-4 text-green-500 font-semibold">
-            Loading event details...
-          </p>
-        </div>
-      </div>
-    );
+  if (isLoading) return <LoadingComp />;
 
   if (isError) return <IsError />;
 

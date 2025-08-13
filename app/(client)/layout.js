@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <>
       <Navbar />
-      <div className="!p-4 md:!px-0">{children}</div>
+      <div className="!p-4 md:!px-0 min-h-[40vh]">{children}</div>
       <Footer />
     </>
   );
