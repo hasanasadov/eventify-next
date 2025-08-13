@@ -18,7 +18,7 @@ const Navbar = () => {
         style={{ backgroundColor: "rgba(255, 255, 255, 0.7)" }}
       >
         <div className="flex w-full items-center justify-between ">
-          <div className="pl-4 pt-1 dark:invert h-12 dark:drop-shadow-[0_0_4px_#fff]   flex items-center justify-center">
+          <div className="pl-4 md:pl-0 pt-1 dark:invert h-12 dark:drop-shadow-[0_0_4px_#fff]   flex items-center justify-center">
             <Link href="/">
               <Image src={Logo} alt="logo" width={100} height={100} />
             </Link>
