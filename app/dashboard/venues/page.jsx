@@ -14,6 +14,8 @@ const DashboardEventsPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEYS.VENUES],
     queryFn: getVenues,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   console.log(data);

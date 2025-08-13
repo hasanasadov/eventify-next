@@ -3,6 +3,8 @@
 import { useRef } from "react";
 import { cn } from "@/lib/utils"; // or replace with your own class joiner
 import { Button } from "../ui/button";
+import { ArrowRightIcon } from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 
 export default function HorizontalScroller({
   className,
@@ -32,7 +34,7 @@ export default function HorizontalScroller({
         aria-label="Scroll left"
         className="hidden md:flex !absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 items-center justify-center rounded-full  transition"
       >
-        ‹
+        <ArrowLeftIcon />
       </Button>
       <Button
         variant="glass"
@@ -40,7 +42,7 @@ export default function HorizontalScroller({
         aria-label="Scroll right"
         className="hidden md:flex !absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 items-center justify-center rounded-full  transition"
       >
-        ›
+        <ArrowRightIcon />
       </Button>
 
       {/* Track */}

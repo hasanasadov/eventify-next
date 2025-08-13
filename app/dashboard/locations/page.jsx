@@ -14,6 +14,8 @@ const DashboardLocationsPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEYS.LOCATIONS],
     queryFn: getLocations,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading) {

@@ -3,6 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { ArrowLeftIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
+import { Button } from "../ui/button";
 
 function fmtDate(d) {
   if (!d) return "";
@@ -61,7 +64,7 @@ export default function HeroSlider({ slides, className, autoPlayMs = 5500 }) {
       onMouseLeave={() => (hovering.current = false)}
     >
       {/* Slides track */}
-      <div className="relative h-[50vh] md:h-[60vh] lg:h-[70vh]">
+      <div className="relative h-[70vh] md:h-[75vh] lg:h-[85vh]">
         <div
           className="absolute inset-0 flex transition-transform duration-700 ease-out will-change-transform"
           style={widthStyle}
@@ -132,20 +135,22 @@ export default function HeroSlider({ slides, className, autoPlayMs = 5500 }) {
 
       {/* Arrows (bottom-right like screenshot) */}
       <div className="absolute bottom-5 right-5 z-20 flex gap-2">
-        <button
+        <Button
           aria-label="Previous slide"
+          variant="glass"
           onClick={prev}
-          className="h-10 w-10 rounded-full bg-white text-black/80 grid place-items-center shadow hover:bg-white/90"
+          className="h-10 w-10 rounded-full !bg-white text-black/80 grid place-items-center shadow hover:bg-white/90"
         >
-          ‹
-        </button>
-        <button
+          <ArrowLeftIcon />
+        </Button>
+        <Button
           aria-label="Next slide"
           onClick={next}
-          className="h-10 w-10 rounded-full bg-white text-black/80 grid place-items-center shadow hover:bg-white/90"
+          variant="glass"
+          className="h-10 w-10 rounded-full !bg-white text-black/80 grid place-items-center shadow hover:bg-white/90"
         >
-          ›
-        </button>
+          <ArrowRightIcon />
+        </Button>
       </div>
     </div>
   );

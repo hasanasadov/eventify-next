@@ -14,6 +14,8 @@ const DashboardEventsPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS],
     queryFn: getEvents,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   if (isLoading) {

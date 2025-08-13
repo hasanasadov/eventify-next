@@ -3,15 +3,11 @@
 import Map from "@/components/shared/Map";
 import { Button } from "@/components/ui/button";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import eventServices, { getEventById } from "@/actions/events";
-import { FavoriteBorder } from "@mui/icons-material";
-import { Favorite } from "@mui/icons-material";
+import { getEventById } from "@/actions/events";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
-import { Toaster } from "react-hot-toast";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
 import { RenderIf } from "@/utils/RenderIf";
 import IsError from "@/components/shared/IsError";
 import { Container } from "@/components/ui/Container";
@@ -29,19 +25,42 @@ const EventDetail = () => {
     queryFn: () => getEventById(id),
   });
 
-  const eventDate = new Date(event?.date).toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-  const eventStart = new Date(event?.start).toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-  });
-  const eventEnd = new Date(event?.end).toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-  });
+  useEffect(() => {
+    const bg = document.getElementById("event-bg");
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      if (bg) {
+        bg.style.filter = `blur(${Math.min(scrollY / 50, 100)}px)`; // Max 10px blur
+        bg.style.transform = `scale(${1 + Math.min(scrollY / 1000, 0.05)})`; // Slight zoom effect
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const eventDate = event?.date
+    ? new Date(event.date).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "Not specified";
+
+  const eventStart = event?.start;
+  // ? new Date(event.start).toLocaleTimeString("en-US", {
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //   })
+  // : "Not specified";
+
+  const eventEnd = event?.end;
+  // ? new Date(event.end).toLocaleTimeString("en-US", {
+  //     hour: "numeric",
+  //     minute: "numeric",
+  //   })
+  // : "Not specified";
 
   const eventComments = event?.comments || [];
   const location = event?.location || {};
@@ -61,110 +80,89 @@ const EventDetail = () => {
   if (isError) return <IsError />;
 
   return (
-    <Container>
-      <div className="flex flex-col gap-6 ">
-        <div className="flex items-center justify-between glass-button w-fit">
-          <Link href="/events" className="text-sm  px-3 py-1  ">
-            Back to list
-          </Link>
-        </div>
-        <div className="flex flex-col md:flex-row gap-6 md:gap-12">
-          <RenderIf condition={event?.imageURL}>
-            <img
-              src={event?.imageURL}
-              alt={event?.title || "Event Poster"}
-              className="w-full md:max-w-[50%] glass h-full  object-contain rounded-lg border-2"
-            />
-          </RenderIf>
-          <RenderIf condition={!event?.imageURL}>
-            <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
-              <p className="text-gray-500">No Poster Available</p>
-            </div>
-          </RenderIf>
-          <div className="bg-white dark:bg-black glass md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2  relative">
-            <div className="space-y-4">
-              <h1 className="text-4xl font-extrabold text-green-500 mb-4">
-                {event?.title || "Event Title"}
-                <span className="text-xl"> ({event?.type})</span>
-              </h1>
+    <div className="relative">
+      {/* Background image */}
+      <div
+        id="event-bg"
+        className="fixed top-0 left-0 w-full h-full bg-cover bg-center transition-all duration-500"
+        style={{
+          backgroundImage: `url(${event?.imageURL || "/fallback.jpg"})`,
+        }}
+      ></div>
 
-              <div>
-                <span
-                  className="
-            text-xl font-semibold text-gray-800 dark:text-white mb-4
-            "
-                >
-                  Date :
-                </span>
-                <span> {eventDate || "Not specified"}</span>
-              </div>
+      {/* Dark overlay for readability */}
+      <div className="fixed top-0 left-0 w-full h-full bg-black/40"></div>
 
-              <div className="flex items-center gap-4">
-                <p>
-                  <span className="font-semibold ">From : </span>{" "}
-                  {eventStart || "Not specified"}
-                </p>
-                <p>
-                  <span className="font-semibold ">To : </span>{" "}
-                  {eventEnd || "Not specified"}
-                </p>
-              </div>
-
-              <p className="text-md">
-                {event?.description || "No description provided"}
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <RenderIf condition={event?.goto}>
-                <Button
-                  onClick={() => window.open(event.goto, "_blank").focus()}
-                  variant="glass"
-                  className="!bg-black dark:!bg-white  !text-white dark:!text-black  text-xl font-sans p-5 md:w-1/2 w-full "
-                >
-                  Buy Ticket
-                </Button>
-              </RenderIf>
-            </div>
-
-            {/* <p>
-            <span className="font-semibold text-yellow-600">Event Type:</span>{" "}
-            {event?.type || "Type not specified"}
-          </p> */}
-            {/* <p>
-            <span className="font-semibold text-red-600">Likes:</span>{" "}
-            {event?.num_likes || 0}
-          </p> */}
-            {/* <div className="mt-6 absolute top-1 right-4">
-            {isFavorite ? (
-              <Favorite
-                style={{
-                  color: "red",
-                  fontSize: 30,
-                }}
-                className="cursor-pointer"
-                onClick={toggleFavorite}
-              />
-            ) : (
-              <FavoriteBorder
-                style={{
-                  color: "black",
-                  fontSize: 30,
-                }}
-                className="cursor-pointer"
-                onClick={toggleFavorite}
-              />
-            )}
-          </div> */}
+      {/* Foreground content */}
+      <Container className="relative z-10">
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between glass-button w-fit">
+            <Link href="/events" className="text-sm px-3 py-1">
+              Back to list
+            </Link>
           </div>
+          <div className="flex flex-col md:flex-row gap-6 md:gap-12">
+            {/* <RenderIf condition={event?.imageURL}>
+              <img
+                src={event?.imageURL}
+                alt={event?.title || "Event Poster"}
+                className="w-full md:max-w-[50%] glass h-full object-contain rounded-lg border-2"
+              />
+            </RenderIf>
+            <RenderIf condition={!event?.imageURL}>
+              <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
+                <p className="text-gray-500">No Poster Available</p>
+              </div>
+            </RenderIf> */}
+            <div className=" glass md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2 relative">
+              <div className="space-y-4">
+                <h1 className="text-4xl font-extrabold text-green-500 mb-4">
+                  {event?.title || "Event Title"}
+                  <span className="text-xl"> ({event?.type})</span>
+                </h1>
+
+                <div>
+                  <span className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+                    Date :
+                  </span>
+                  <span> {eventDate}</span>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <p>
+                    <span className="font-semibold">From : </span> {eventStart}
+                  </p>
+                  <p>
+                    <span className="font-semibold">To : </span> {eventEnd}
+                  </p>
+                </div>
+
+                <p className="text-md">
+                  {event?.description || "No description provided"}
+                </p>
+              </div>
+              <div className="flex justify-center">
+                <RenderIf condition={event?.goto}>
+                  <Button
+                    onClick={() => window.open(event.goto, "_blank")?.focus()}
+                    variant="glass"
+                    className="!bg-black dark:!bg-white !text-white dark:!text-black text-xl font-sans p-5 md:w-1/2 w-full"
+                  >
+                    Buy Ticket
+                  </Button>
+                </RenderIf>
+              </div>
+            </div>
+          </div>
+          <LocationSection location={location} />
+          <CommentsSection
+            eventComments={eventComments}
+            isError={isError}
+            isLoading={isLoading}
+          />
         </div>
-        <LocationSection location={location} />
-        <CommentsSection
-          eventComments={eventComments}
-          isError={isError}
-          isLoading={isLoading}
-        />
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 
