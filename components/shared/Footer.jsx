@@ -10,11 +10,11 @@ import DownloadButtons from "./DownloadButttons";
 
 const Footer = () => {
   return (
-    <footer className="p-5 py-8 backdrop-blur-md px-5 md:py-12 mt-4  relative glassss !bg-white/30 dark:!bg-black/30  border-t dark:border-white/10 border-black/10">
+    <footer className="p-5 py-8 backdrop-blur-md text-white px-5 md:py-12 mt-4  relative glassss !bg-white/30 dark:!bg-black/30  border-t dark:border-white/10 border-black/10">
       <Container className="relative z-10">
         <div className="flex justify-between flex-row md:pr-6  md:gap-10 gap-6">
           <div className="flex flex-col justify-between gap-5">
-            <div className=" dark:invert h-12 dark:drop-shadow-[0_0_4px_#fff]">
+            <div className="invert h-12 dark:drop-shadow-[0_0_4px_#fff]">
               <Link href="/">
                 <Image src={Logo} alt="logo" width={100} height={100} />
               </Link>
