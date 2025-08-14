@@ -36,7 +36,7 @@ export function AccountPopOver({ user: userProp }) {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-48 mr-8 glass !bg-white p-2">
+      <PopoverContent className="w-48 mr-8 glass !bg-white !text-black p-2">
         {/* Unauthenticated: Login / Register */}
         {!isAuthed && status !== "loading" && (
           <div className="grid gap-1">

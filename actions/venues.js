@@ -24,6 +24,20 @@ export const getVenueById = async (id) => {
       include: {
         location: true,
         events: true,
+        Comment: {
+          include: {
+            author: {
+              select: {
+                id: true,
+                name: true,
+                username: true,
+                email: true,
+                image: true,
+              },
+            },
+          },
+          orderBy: { createdAt: "desc" },
+        },
       },
     });
     return item;
@@ -102,7 +116,7 @@ export const createVenue = async (data) => {
   }
 };
 
-export const deleteVenue = async ({id}) => {
+export const deleteVenue = async ({ id }) => {
   try {
     const item = await prisma.venue.delete({
       where: { id },

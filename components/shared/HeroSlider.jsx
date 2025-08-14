@@ -52,6 +52,7 @@ export default function HeroSlider({ slides, className, autoPlayMs = 5500 }) {
   );
 
   if (slides.length === 0) return null;
+  console.log(slides);
 
   return (
     <div
@@ -99,7 +100,7 @@ export default function HeroSlider({ slides, className, autoPlayMs = 5500 }) {
                     <div className="text-white/85">
                       {s.subtitle && <div>{s.subtitle}</div>}
                       {s.date && (
-                        <div className="font-semibold">{fmtDate(s.date)}</div>
+                        <div className="font-semibold">{(s.date)}</div>
                       )}
                     </div>
                   )}

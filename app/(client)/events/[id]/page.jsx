@@ -1,21 +1,28 @@
 "use client";
 
-import Map from "@/components/shared/Map";
-import { Button } from "@/components/ui/button";
-import { QUERY_KEYS } from "@/constants/queryKeys";
-import { getEventById } from "@/actions/events";
-import { useQuery } from "@tanstack/react-query";
+import React, { useMemo } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { RenderIf } from "@/utils/RenderIf";
-import IsError from "@/components/shared/IsError";
+import { useQuery } from "@tanstack/react-query";
+
 import { Container } from "@/components/ui/Container";
 import LoadingComp from "@/components/shared/Loading";
+import IsError from "@/components/shared/IsError";
+import { RenderIf } from "@/utils/RenderIf";
 
-const EventDetail = () => {
-  const { id } = useParams();
-  const [isFavorite, setIsFavorite] = useState(false);
+import { getEventById } from "@/actions/events";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import useBackgroundBlur from "@/hooks/useBackgroundBlur";
+import CommentsSection from "@/components/sections/CommentsSection";
+import LocationSection from "@/components/sections/LocationSection";
+import { createEventComment, deleteEventComment } from "@/actions/comments";
+
+export default function EventDetail() {
+  const params = useParams();
+  const id = useMemo(() => {
+    const raw = params?.id;
+    return Array.isArray(raw) ? raw[0] : raw;
+  }, [params]);
 
   const {
     data: event,
@@ -24,254 +31,145 @@ const EventDetail = () => {
   } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS, id],
     queryFn: () => getEventById(id),
+    enabled: Boolean(id),
   });
 
-  useEffect(() => {
-    const bg = document.getElementById("event-bg");
+  const bgRef = useBackgroundBlur();
 
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      if (bg) {
-        bg.style.filter = `blur(${Math.min(scrollY / 50, 300)}px)`; // Max 10px blur
-        bg.style.transform = `scale(${1 + Math.min(scrollY / 1000, 0.05)})`; // Slight zoom effect
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const eventDate = event?.date
-    ? new Date(event.date).toLocaleDateString("en-US", {
+  const eventDate = React.useMemo(() => {
+    if (!event?.date) return "Not specified";
+    try {
+      return new Date(event.date).toLocaleDateString("en-US", {
         day: "numeric",
         month: "long",
         year: "numeric",
-      })
-    : "Not specified";
+      });
+    } catch {
+      return "Not specified";
+    }
+  }, [event?.date]);
 
-  const eventStart = event?.start;
-
-  const eventEnd = event?.end;
-
-  const eventComments = event?.comments || [];
+  const eventStart = event?.start ?? "—";
+  const eventEnd = event?.end ?? "—";
+  const eventComments = Array.isArray(event?.Comment) ? event.Comment : [];
   const location = event?.location || {};
 
   if (isLoading) return <LoadingComp />;
-
-  if (isError) return <IsError />;
+  if (isError || !event) return <IsError />;
 
   return (
-    <div className="relative !text-white">
+    <div className="relative text-white">
       {/* Background image */}
       <div
+        ref={bgRef}
         id="event-bg"
-        className="fixed top-0 !w-screen md:!h-screen h-full left-0 md:cover bg-center bg-no-repeat transition-all duration-500"
+        className="fixed inset-0 w-screen h-screen bg-center bg-no-repeat transition-all duration-300 will-change-transform will-change-filter"
         style={{
           backgroundImage: `url(${event?.imageURL || "/fallback.jpg"})`,
-          // backgroundColor: "#000", // black fill for empty areas
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
-      ></div>
+      />
 
       {/* Dark overlay for readability */}
-      <div className="fixed top-0 left-0 w-full h-full bg-black/40"></div>
+      <div className="fixed inset-0 bg-black/40" />
 
       {/* Foreground content */}
       <Container className="relative z-10">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 py-4">
           <div className="flex items-center justify-between glass-button w-fit">
             <Link href="/events" className="text-sm px-3 py-1">
               Back to list
             </Link>
           </div>
-          <div className="flex flex-col md:flex-row gap-6 md:gap-12">
-            <RenderIf condition={event?.imageURL}>
+
+          <section
+            aria-labelledby="event-hero"
+            className="flex flex-col md:flex-row gap-6 md:gap-12"
+          >
+            <RenderIf condition={Boolean(event?.imageURL)}>
               <img
                 src={event?.imageURL}
-                alt={event?.title || "Event Poster"}
-                className="w-full md:max-w-[50%] glasss h-full object-contain rounded-lg border-2"
+                alt={event?.title ? `${event.title} poster` : "Event Poster"}
+                className="w-full md:max-w-[50%] glass h-full object-contain rounded-lg border-2"
+                loading="eager"
+                decoding="async"
               />
             </RenderIf>
+
             <RenderIf condition={!event?.imageURL}>
-              <div className="w-full md:w-1/2 h-64 bg-gray-300 rounded-lg border-2 flex items-center justify-center">
-                <p className="text-gray-500">No Poster Available</p>
+              <div className="w-full md:w-1/2 h-64 bg-gray-300/60 rounded-lg border-2 flex items-center justify-center text-black">
+                <p className="text-gray-700">No Poster Available</p>
               </div>
             </RenderIf>
-            <div className=" glasss md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2 relative">
+
+            <div className="glass md:p-6 p-4 flex-1 flex flex-col justify-between gap-5 rounded-lg border-2 relative">
               <div className="space-y-4">
-                <h1 className="text-4xl font-extrabold text-green-500 mb-4">
-                  {event?.title || "Event Title"}
-                  <span className="text-xl"> ({event?.type})</span>
+                <h1
+                  id="event-hero"
+                  className="text-4xl font-extrabold text-green-400"
+                >
+                  {event?.title || "Event Title"}{" "}
+                  <span className="text-xl text-white/80">
+                    ({event?.type || "—"})
+                  </span>
                 </h1>
 
-                <div>
-                  <span className="text-xl font-semibold text-gray-80000 dark:text-white mb-4">
-                    Date :
-                  </span>
-                  <span> {eventDate}</span>
+                <div className="text-white/90">
+                  <span className="text-xl font-semibold">Date: </span>
+                  <span>{eventDate}</span>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 text-white/90">
                   <p>
-                    <span className="font-semibold">From : </span> {eventStart}
+                    <span className="font-semibold">From: </span> {eventStart}
                   </p>
                   <p>
-                    <span className="font-semibold">To : </span> {eventEnd}
+                    <span className="font-semibold">To: </span> {eventEnd}
                   </p>
                 </div>
 
-                <p className="text-md">
-                  {event?.description || "No description provided"}
+                <p className="text-base leading-relaxed">
+                  {event?.description || "No description provided."}
                 </p>
               </div>
+
               <div className="flex justify-center">
-                <RenderIf condition={event?.goto}>
-                  <Button
-                    onClick={() => window.open(event.goto, "_blank")?.focus()}
-                    variant="glasss"
-                    className="!bg-black dark:!bg-white !text-white dark:!text-black text-xl font-sans p-5 md:w-1/2 w-full"
+                <RenderIf condition={Boolean(event?.goto)}>
+                  <a
+                    href={event.goto}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-md border border-white/20 bg-white/20 px-5 py-2 text-base font-medium hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/40 transition"
                   >
                     Buy Ticket
-                  </Button>
+                  </a>
                 </RenderIf>
               </div>
             </div>
-          </div>
-          <LocationSection location={location} />
+          </section>
+
+          <LocationSection
+            location={event?.location}
+            title="Location"
+            listId="event-location"
+          />
+
           <CommentsSection
-            eventComments={eventComments}
+            initialComments={eventComments}
             isError={isError}
             isLoading={isLoading}
+            hookOptions={{
+              resourceId: id,
+              parentField: "eventId",
+              createFn: createEventComment,
+              deleteFn: deleteEventComment,
+              invalidateKey: [QUERY_KEYS.EVENTS, id],
+            }}
+            title="Comments"
           />
         </div>
       </Container>
     </div>
   );
-};
-
-const LocationSection = ({ location }) => {
-  return (
-    <div className="glasss md:p-6 p-4 ">
-      {location?.lat && location?.lng && (
-        <div className=" ">
-          <h2 className="text-2xl font-semibold text-gray-8000 dark:text-white  mb-4">
-            Location
-          </h2>
-          <div className="flex flex-col lg:flex-row gap-6 ">
-            <div className="glasss w-full md:w-1/4 p-6 ">
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Address</h3>
-                <p className="text-sm text-gray-6000 dark:text-white">
-                  {location?.title || "Unknown"}
-                </p>
-                <p className="text-sm text-gray-6000 dark:text-white">
-                  {location?.lng || "Unknown"}
-                  {" N"}
-                </p>
-                <p className="text-sm text-gray-6000 dark:text-white">
-                  {location?.lat || "Unknown"}
-                  {" E"}
-                </p>
-              </div>
-              <div className="flex items-center justify-end">
-                <img
-                  src={location?.imageURL}
-                  alt={location?.title}
-                  className=" glasss w-40"
-                />
-              </div>
-            </div>
-            <div className="glasss  w-full md:w-3/4 h-80 overflow-hidden ">
-              <Map
-                imageSource={location?.imageURL}
-                title={location?.title}
-                location={location}
-              />
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const CommentsSection = ({ eventComments, isError, isLoading }) => {
-  const forceSignIn = true;
-  const [newComment, setNewComment] = useState("");
-  const [sliceCount, setSliceCount] = useState(3);
-  return (
-    <div className="glasss md:p-6 p-4">
-      <h2 className="text-2xl font-semibold text-gray-8000 dark:text-white mb-4">
-        Comments
-      </h2>
-      <div className="space-y-4">
-        <RenderIf condition={eventComments?.length && !isError}>
-          {eventComments?.slice(0, sliceCount).map((comment, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 dark:bg-black p-4 flex items-center justify-between rounded-lg border-2"
-            >
-              <p>{comment.content}</p>
-              <p className="text-gray-500 text-sm">{comment.author}</p>
-            </div>
-          ))}
-        </RenderIf>
-
-        <RenderIf condition={isLoading}>
-          <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
-            <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
-            <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
-          </div>
-          <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
-            <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
-            <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
-          </div>
-          <div className="animate-pulse bg-gray-100 p-4 flex items-center justify-between rounded-lg border-2">
-            <div className="h-4 w-1/4 bg-gray-200 rounded-lg"></div>
-            <div className="h-4 w-1/12 bg-gray-200 rounded-lg"></div>
-          </div>
-        </RenderIf>
-        <RenderIf condition={!eventComments?.length && !isLoading}>
-          <p className="text-gray-500">No comments yet.</p>
-        </RenderIf>
-        <Button
-          disabled={!eventComments?.length || isLoading}
-          onClick={() => {
-            sliceCount === -1 ? setSliceCount(3) : setSliceCount(-1);
-          }}
-          className={`mt-4 ${
-            isError || (!isError && !isLoading && !eventComments.length)
-              ? "hidden"
-              : ""
-          } `}
-        >
-          <RenderIf condition={sliceCount === -1}>Hide Comments</RenderIf>
-          <RenderIf condition={sliceCount !== -1}>Show All Comments</RenderIf>
-          <RenderIf condition={eventComments?.length && sliceCount !== -1}>
-            ({eventComments?.length})
-          </RenderIf>
-        </Button>
-      </div>
-      <div className="mt-4 flex items-center">
-        <input
-          type="text"
-          placeholder={`${
-            forceSignIn ? "You need to sign in to" : ""
-          } Add a comment...`}
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          className="flex-1 glasss-border border border-gray-300 rounded-lg px-4 py-2 focus:outline-none"
-        />
-        <Button
-          // onClick={handleAddComment}
-          disabled={forceSignIn}
-          className="ml-2 "
-          variant="glasss"
-        >
-          Post
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-export default EventDetail;
+}

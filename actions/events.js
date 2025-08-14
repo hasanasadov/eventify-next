@@ -24,6 +24,13 @@ export const getEventById = async (id) => {
       where: { id },
       include: {
         location: true,
+        Comment: {
+          include: {
+            author: {
+              select: { id: true, name: true, username: true, image: true },
+            },
+          },
+        },
       },
     });
     return event;

@@ -221,3 +221,73 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.6rem;
 }
+
+/* globals.css */
+@layer utilities {
+  /* Core glass panel */
+  .glass-panel {
+    @apply relative rounded-2xl border border-white/15 dark:border-white/10
+           bg-white/10 dark:bg-white/5
+           backdrop-blur-xl
+           shadow-lg shadow-black/5 dark:shadow-black/30
+           ring-1 ring-black/5 dark:ring-white/10;
+    /* Avoid muddy text over transparency */
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+
+  /* Subtle gradient tint so text always has contrast */
+  .glass-tint::before {
+    content: "";
+    @apply pointer-events-none absolute inset-0 rounded-2xl
+           bg-gradient-to-br from-white/20 via-white/10 to-white/0
+           dark:from-white/10 dark:via-white/5 dark:to-transparent;
+  }
+
+  /* Inputs that sit nicely on glass */
+  .glass-input {
+    @apply rounded-lg border border-white/20 dark:border-white/15
+           bg-white/30 dark:bg-white/10
+           backdrop-blur-xl
+           px-4 py-2
+           text-gray-900 dark:text-gray-100
+           placeholder-white/70
+           focus:outline-none focus:ring-2 focus:ring-white/40 dark:focus:ring-white/30;
+  }
+
+  /* Buttons for glass surfaces */
+  .btn-glass {
+    @apply rounded-lg border border-white/20 dark:border-white/15
+           bg-white/30 dark:bg-white/10
+           backdrop-blur-xl
+           px-4 py-2 font-medium
+           shadow-sm
+           hover:border-white/30 hover:bg-white/40
+           active:translate-y-px
+           focus:outline-none focus:ring-2 focus:ring-white/40 dark:focus:ring-white/30
+           disabled:opacity-60 disabled:cursor-not-allowed;
+
+    &:hover {
+      background-color: rgba(255, 0, 0, 0.391) !important;
+    }
+  }
+
+  /* Skeletons that look right on translucent bg */
+  .glass-skeleton {
+    @apply animate-pulse rounded-lg bg-white/20 dark:bg-white/10;
+  }
+
+  /* Nice, subtle divider that works on glass */
+  .glass-divider {
+    @apply h-px bg-white/20 dark:bg-white/10;
+  }
+
+  /* Fallback when backdrop-filter unsupported */
+  @supports not (
+    (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))
+  ) {
+    .glass-panel {
+      @apply bg-white/70 dark:bg-black/60;
+    }
+  }
+}

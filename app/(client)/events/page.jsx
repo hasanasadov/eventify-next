@@ -61,7 +61,7 @@ const EventsPage = () => {
     id: e.id,
     title: e.title,
     subtitle: e.venue?.title ?? "",
-    date: e.start,
+    date: e.date.toLocaleDateString(),
     ctaHref: `/events/${e.id}`, // change to your route (slug if you have it)
     ctaText: "Get Tickets",
     imageUrl: e.imageURL,
