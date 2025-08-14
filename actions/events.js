@@ -62,13 +62,12 @@ export const editEvent = async ({ id, data }) => {
   }
 };
 
-export const deleteEvent = async (id) => {
+export const deleteEvent = async ({ id }) => {
   try {
     const event = await prisma.event.delete({
       where: { id },
     });
     revalidatePath(`/dashboard/events`);
-
     return event;
   } catch (error) {
     console.error(error);

@@ -34,17 +34,13 @@ const getFormSchema = ({ isEdit, isDelete }) =>
     title: z.string().trim().min(2, "Title is required"),
     description: z.string().trim().min(2, "Description is required"),
     type: z.string().trim().min(2, "Event type is required"),
-
     start: z.string().trim().optional().or(z.literal("")),
     end: z.string().trim().optional().or(z.literal("")),
-
     date: z
       .string()
       .min(2, "Date is required")
       .refine((v) => !Number.isNaN(new Date(v).getTime()), "Invalid date"),
-
     goto: z.string().trim().min(2, "Goto (link/slug) is required"),
-
     venueId: z.string().trim().optional().or(z.literal("")),
     locationId: z.string().trim().optional().or(z.literal("")),
     imageURL:
@@ -100,9 +96,9 @@ const ActionForm = ({ type }) => {
         title: editItem.title ?? "",
         description: editItem.description ?? "",
         type: editItem.type ?? "",
-        start: toTimeInput(editItem.start), // << normalize here
+        start: toTimeInput(editItem.start),
         end: toTimeInput(editItem.end),
-        date: toDateTimeLocal(editItem.date), // convert to datetime-local string
+        date: toDateTimeLocal(editItem.date),
         goto: editItem.goto ?? "",
         venueId: editItem.venueId ?? "",
         locationId: editItem.locationId ?? "",
@@ -139,18 +135,17 @@ const ActionForm = ({ type }) => {
   });
 
   function onSubmit(values) {
-    // Normalize payload for your Prisma model
     const payload = {
       title: values.title,
       description: values.description,
       type: values.type,
       start: values.start || undefined,
       end: values.end || undefined,
-      date: new Date(values.date), // convert to Date
+      date: new Date(values.date),
       goto: values.goto,
       venueId: values.venueId || undefined,
       locationId: values.locationId || undefined,
-      imageURL: values.imageURL || "", // required on create; optional otherwise
+      imageURL: values.imageURL || "",
     };
 
     if (type === "create") {
@@ -158,7 +153,6 @@ const ActionForm = ({ type }) => {
     } else if (type === "update") {
       mutateUpdate({ id, data: payload });
     } else if (type === "delete") {
-      // Optional user safety: confirm
       if (confirm("Are you sure you want to delete this event?")) {
         mutateDelete({ id });
       }
@@ -166,6 +160,7 @@ const ActionForm = ({ type }) => {
   }
 
   const isBusy = creating || updating || deleting || isFetching;
+  const allDisabled = isBusy || isDelete; // <<— delete modunda hər şey disable
 
   return (
     <div className="pt-6">
@@ -176,7 +171,9 @@ const ActionForm = ({ type }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={isBusy ? "opacity-75 pointer-events-none" : ""}
+          className={`${isBusy ? "opacity-75" : ""} ${
+            isBusy && !isDelete ? "pointer-events-none" : ""
+          }`}
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FormField
@@ -190,6 +187,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="Mercedes"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -209,6 +207,7 @@ const ActionForm = ({ type }) => {
                       type="datetime-local"
                       placeholder="2025-01-01T12:00"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -227,6 +226,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="Description"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -245,6 +245,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="Event Type"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -264,6 +265,7 @@ const ActionForm = ({ type }) => {
                       type="time"
                       placeholder="Start"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -283,6 +285,7 @@ const ActionForm = ({ type }) => {
                       type="time"
                       placeholder="End"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -301,6 +304,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="Slug or URL"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -322,6 +326,7 @@ const ActionForm = ({ type }) => {
                       onChange={(e) =>
                         field.onChange(e.target.value.toString())
                       }
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -343,6 +348,7 @@ const ActionForm = ({ type }) => {
                       onChange={(e) =>
                         field.onChange(e.target.value.toString())
                       }
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -362,6 +368,7 @@ const ActionForm = ({ type }) => {
                       type="text"
                       placeholder="Image URL"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -388,17 +395,19 @@ const ActionForm = ({ type }) => {
           </RenderIf>
 
           <div className="flex justify-end mt-4">
+            {/* DELETE mode: yalnız Delete düyməsi aktiv */}
             <RenderIf condition={isDelete}>
               <Button
                 type="submit"
                 variant="destructive"
                 className="mt-4"
-                disabled={isBusy}
+                disabled={deleting || isFetching}
               >
                 {deleting ? "Deleting..." : "Delete"}
               </Button>
             </RenderIf>
 
+            {/* Yoxsa: Back + Submit */}
             <RenderIf condition={!isDelete}>
               <Button asChild variant="secondary" disabled={isBusy}>
                 <Link

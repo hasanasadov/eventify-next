@@ -29,7 +29,7 @@ import {
 } from "@/actions/venues";
 import { toTimeInput } from "@/utils/toTimeInput";
 
-// Zod schema: make optional fields optional (matches Prisma)
+// Zod schema
 const getFormSchema = ({ isEdit, isDelete }) =>
   z.object({
     title: z.string().min(2, "Title is required"),
@@ -42,7 +42,8 @@ const getFormSchema = ({ isEdit, isDelete }) =>
         ? z.string().optional()
         : z.string().min(1, "Image is required"),
     locationId: z.string().optional().or(z.literal("")),
-    events: z.string().optional().or(z.literal("")), // comma list in the input
+    // Text input olduğu üçün string kimi saxlayırıq (vergüllə ayrılmış id-lər)
+    events: z.string().optional().or(z.literal("")),
   });
 
 const onError = (error) => {
@@ -57,7 +58,6 @@ const ActionForm = ({ type }) => {
   const router = useRouter();
 
   const { data: editItem, isFetching } = useQuery({
-    // use your actual key; this is a sensible default
     queryKey: [QUERY_KEYS.VENUE_BY_ID, id],
     queryFn: () => getVenueById(id),
     enabled: Boolean((isEdit || isDelete) && id),
@@ -80,7 +80,7 @@ const ActionForm = ({ type }) => {
       closeAT: "",
       imageURL: "",
       locationId: "",
-      events: [],
+      events: "", // string (comma-separated) — əvvəl [] idi
     },
     mode: "onSubmit",
   });
@@ -96,10 +96,10 @@ const ActionForm = ({ type }) => {
         closeAT: toTimeInput(editItem.closeAT) ?? "",
         imageURL: editItem.imageURL ?? "",
         locationId: editItem.locationId ?? "",
-        events:
-          editItem.events.map(
-            (event) => event.id.toString() // ensure events are strings
-          ) ?? [],
+        // mövcud event id-ləri vergüllə ayrılmış string kimi göstərək
+        events: Array.isArray(editItem.events)
+          ? editItem.events.map((e) => String(e.id)).join(",")
+          : "",
       });
     }
   }, [editItem, form]);
@@ -132,13 +132,11 @@ const ActionForm = ({ type }) => {
   });
 
   function onSubmit(values) {
-    // If you keep "events" as a single text input, treat it as comma-separated
-    const eventIds = Array.isArray(values.events)
-      ? values.events
-      : (values.events || "")
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
+    // "events" text inputunu vergüllə ayrılmış ID-lərə çeviririk
+    const eventIds = (values.events || "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
     const payload = {
       title: values.title,
@@ -147,11 +145,10 @@ const ActionForm = ({ type }) => {
       openAT: values.openAT || undefined,
       closeAT: values.closeAT || undefined,
       imageURL: values.imageURL || "",
-      // IMPORTANT: don't send empty string
       locationId: values.locationId?.trim()
         ? values.locationId.trim()
         : undefined,
-      eventIds, // send normalized event IDs separately
+      eventIds,
     };
 
     if (type === "create") {
@@ -160,13 +157,13 @@ const ActionForm = ({ type }) => {
       mutateUpdate({ id, data: payload });
     } else if (type === "delete") {
       if (confirm("Are you sure you want to delete this venue?")) {
-        // Your server action signature is deleteVenue(id), not deleteVenue({ id })
-        mutateDelete(id);
+        mutateDelete({ id });
       }
     }
   }
 
   const isBusy = creating || updating || deleting || isFetching;
+  const allDisabled = isBusy || isDelete; // delete modunda hər şey disable
 
   return (
     <div className="pt-6">
@@ -177,7 +174,9 @@ const ActionForm = ({ type }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={isBusy ? "opacity-75 pointer-events-none" : ""}
+          className={`${isBusy ? "opacity-75" : ""} ${
+            isBusy && !isDelete ? "pointer-events-none" : ""
+          }`}
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FormField
@@ -191,6 +190,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="Venue title"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -209,6 +209,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="Description"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -227,6 +228,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="e.g. Stadium, Hall"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -246,6 +248,7 @@ const ActionForm = ({ type }) => {
                       type="time"
                       placeholder="openAT"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -265,6 +268,7 @@ const ActionForm = ({ type }) => {
                       type="time"
                       placeholder="closeAT"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -286,6 +290,7 @@ const ActionForm = ({ type }) => {
                       onChange={(e) =>
                         field.onChange(e.target.value.toString())
                       }
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -293,20 +298,22 @@ const ActionForm = ({ type }) => {
               )}
             />
 
+            {/* Events: comma-separated ids */}
             <FormField
               control={form.control}
               name="events"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Events</FormLabel>
+                  <FormLabel>Events (comma separated IDs)</FormLabel>
                   <FormControl>
                     <Input
                       className="bg-transparent border"
-                      placeholder="Events array"
+                      placeholder="e.g. 1,2,3"
                       {...field}
                       onChange={(e) =>
                         field.onChange(e.target.value.toString())
                       }
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -326,6 +333,7 @@ const ActionForm = ({ type }) => {
                       type="text"
                       placeholder="Image URL"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -352,17 +360,19 @@ const ActionForm = ({ type }) => {
           </RenderIf>
 
           <div className="flex justify-end mt-4">
+            {/* DELETE mode: yalnız Delete düyməsi aktiv */}
             <RenderIf condition={isDelete}>
               <Button
                 type="submit"
                 variant="destructive"
                 className="mt-4"
-                disabled={isBusy}
+                disabled={deleting || isFetching}
               >
                 {deleting ? "Deleting..." : "Delete"}
               </Button>
             </RenderIf>
 
+            {/* Digər hallarda: Back + Submit */}
             <RenderIf condition={!isDelete}>
               <Button asChild variant="secondary" disabled={isBusy}>
                 <Link

@@ -1,4 +1,5 @@
 export const paths = {
+  HOME: "/",
   EVENTS: "/events",
   VENUES: "/venues",
   MAP: "/map",
@@ -13,6 +14,12 @@ export const paths = {
       CREATE: "/dashboard/events/create",
       EDIT: (id = ":id") => `/dashboard/events/edit/${id}`,
       DELETE: (id = ":id") => `/dashboard/events/delete/${id}`,
+    },
+    USERS: {
+      LIST: "/dashboard/users",
+      CREATE: "/dashboard/users/create",
+      EDIT: (id = ":id") => `/dashboard/users/edit/${id}`,
+      DELETE: (id = ":id") => `/dashboard/users/delete/${id}`,
     },
     VENUES: {
       LIST: "/dashboard/venues",

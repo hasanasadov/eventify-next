@@ -1,7 +1,7 @@
 "use client";
 
 import SideBarRight from "@/app/(client)/(home)/_components/SideBarRight";
-import SideBarLeft from "@/app/(client)/(home)/_components/SideBarLeft";
+// import SideBarLeft from "@/app/(client)/(home)/_components/SideBarLeft";
 import EventsPage from "../events/page";
 import MainMap from "@/components/shared/MainMap";
 

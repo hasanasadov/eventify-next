@@ -49,7 +49,7 @@ export const editLocation = async ({ id, data }) => {
   }
 };
 
-export const deleteLocation = async (id) => {
+export const deleteLocation = async ({ id }) => {
   try {
     const location = await prisma.location.delete({
       where: { id },

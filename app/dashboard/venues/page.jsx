@@ -21,7 +21,7 @@ const DashboardEventsPage = () => {
   console.log(data);
 
   if (isLoading) {
-    <LoadingComp />;
+    return <LoadingComp />;
   }
 
   if (isError) {

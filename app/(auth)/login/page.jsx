@@ -1,62 +1,49 @@
 "use client";
 
-import { Google } from "@mui/icons-material";
-import { PasswordOutlined } from "@mui/icons-material";
-import { useFormik } from "formik";
-import { User2Icon } from "lucide-react";
 import React from "react";
-import { handleLogin } from "@/actions/users";
-import { redirect, useRouter } from "next/navigation";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { PasswordOutlined } from "@mui/icons-material";
+import { User2 as User2Icon } from "lucide-react";
+import { signIn } from "next-auth/react";
 import GoogleBtn from "@/components/shared/GoogleBtn";
 
-const LoginPage = () => {
+export default function LoginPage() {
   const router = useRouter();
   const [errorMessages, setErrorMessages] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    validate: (values) => {
-      const errors = {};
-      if (!values.username) errors.username = "Username is required.";
-      if (!values.password) errors.password = "Password is required.";
-      return errors;
+    initialValues: { username: "", password: "" },
+    validate: (v) => {
+      const e = {};
+      if (!v.username) e.username = "Username or email is required.";
+      if (!v.password) e.password = "Password is required.";
+      return e;
     },
     onSubmit: async (values) => {
       setLoading(true);
       setErrorMessages([]);
       try {
-        const formData = new FormData();
-        formData.append("username", values.username);
-        formData.append("password", values.password);
-
-        const res = await handleLogin(formData);
+        const res = await signIn("credentials", {
+          redirect: false,
+          username: values.username,
+          password: values.password,
+        });
         setLoading(false);
-
-        if (!res.success) {
-          setErrorMessages([res.message]);
+        if (!res || res.error) {
+          setErrorMessages([res?.error || "Login failed"]);
           toast.error("Login failed");
           return;
         }
-        if (res.success) {
-          localStorage.setItem("access_token", res.accessToken);
-          formik.resetForm();
-          toast.success("Login successful");
-          setTimeout(() => {
-            router.push("/");
-          }, 500);
-        }
-      } catch (error) {
+        toast.success("Login successful");
+        router.push("/");
+      } catch (err) {
+        console.error(err);
         setLoading(false);
-        setErrorMessages([
-          "An unexpected error occurred. Please try again later.",
-        ]);
-        console.error(error);
+        setErrorMessages(["Unexpected error"]);
       }
     },
   });
@@ -65,40 +52,37 @@ const LoginPage = () => {
     <div className="w-full p-6 flex flex-col justify-between">
       <div className="text-2xl text-gray-800 mb-4 relative font-extrabold">
         Login
-        <div className="absolute left-0 bottom-0 h-[3px] w-6 bg-green-500"></div>
+        <div className="absolute left-0 bottom-0 h-[3px] w-6 bg-green-500" />
       </div>
 
       <form onSubmit={formik.handleSubmit}>
         <div className="mt-6">
-          {loading && (
+          {loading ? (
             <div className="flex justify-center items-center my-[56px]">
               <Loader className="animate-spin text-green-500" size={48} />
             </div>
-          )}
-          {!loading && (
+          ) : (
             <>
               <div className="flex items-center relative mb-4">
-                <User2Icon className="text-green-500 text-lg absolute left-4 w-6" />
+                <User2Icon className="text-green-500 absolute left-4 w-6 h-6" />
                 <input
                   type="text"
                   name="username"
                   onChange={formik.handleChange}
                   value={formik.values.username}
-                  placeholder="Enter your username"
+                  placeholder="Enter your username or email"
                   className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
                   required
-                  aria-label="Username"
-                  onBlur={() => formik.setFieldTouched("username", true)} // Mark as touched on blur
                 />
               </div>
-              {formik.touched.username && formik.errors.username && (
+              {formik.errors.username && (
                 <div className="text-red-500 text-sm mb-4">
                   {formik.errors.username}
                 </div>
               )}
 
               <div className="flex items-center relative mb-6">
-                <PasswordOutlined className="text-green-500 text-lg absolute left-4 w-6" />
+                <PasswordOutlined className="text-green-500 absolute left-4 w-6 h-6" />
                 <input
                   type="password"
                   name="password"
@@ -107,26 +91,26 @@ const LoginPage = () => {
                   placeholder="Enter your password"
                   className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
                   required
-                  aria-label="Password"
-                  onBlur={() => formik.setFieldTouched("password", true)} // Mark as touched on blur
                 />
               </div>
-              {formik.touched.password && formik.errors.password && (
+              {formik.errors.password && (
                 <div className="text-red-500 text-sm mb-4">
                   {formik.errors.password}
                 </div>
               )}
             </>
           )}
-          {errorMessages.length > 0 &&
-            errorMessages.map((error, index) => (
-              <div className="text-red-500 text-sm" key={index}>
-                {error}
-              </div>
-            ))}
+
+          {errorMessages.map((msg, i) => (
+            <div className="text-red-500 text-sm" key={i}>
+              {msg}
+            </div>
+          ))}
+
           <div className="text-sm text-gray-600 mt-2">
             <a href="/forgotPassword">Forgot password?</a>
           </div>
+
           <div className="mt-6">
             <button
               disabled={loading}
@@ -136,6 +120,7 @@ const LoginPage = () => {
               Log In
             </button>
           </div>
+
           <GoogleBtn />
         </div>
       </form>
@@ -145,13 +130,11 @@ const LoginPage = () => {
         <button
           disabled={loading}
           className="text-green-500 cursor-pointer hover:underline"
-          onClick={() => redirect("/register")}
+          onClick={() => router.push("/register")}
         >
           Sign up now
         </button>
       </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

@@ -142,6 +142,7 @@ const ActionForm = ({ type }) => {
   }
 
   const isBusy = creating || updating || deleting || isFetching;
+  const allDisabled = isBusy || isDelete; // <<— delete modunda hər şey disable
 
   return (
     <div className="pt-6">
@@ -152,7 +153,10 @@ const ActionForm = ({ type }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={isBusy ? "opacity-75 pointer-events-none" : ""}
+          // isBusy olanda opacity, amma yalnız isBusy && !isDelete halında pointer-events-i bağla
+          className={`${isBusy ? "opacity-75" : ""} ${
+            isBusy && !isDelete ? "pointer-events-none" : ""
+          }`}
         >
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <FormField
@@ -166,6 +170,7 @@ const ActionForm = ({ type }) => {
                       className="bg-transparent border"
                       placeholder="Location title"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -187,6 +192,7 @@ const ActionForm = ({ type }) => {
                       placeholder="e.g. 49.8671"
                       {...field}
                       onChange={(e) => field.onChange(e.target.value)}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -208,6 +214,7 @@ const ActionForm = ({ type }) => {
                       placeholder="e.g. 40.4093"
                       {...field}
                       onChange={(e) => field.onChange(e.target.value)}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -227,6 +234,7 @@ const ActionForm = ({ type }) => {
                       type="text"
                       placeholder="Image URL"
                       {...field}
+                      disabled={allDisabled}
                     />
                   </FormControl>
                   <FormMessage />
@@ -253,17 +261,19 @@ const ActionForm = ({ type }) => {
           </RenderIf>
 
           <div className="flex justify-end mt-4">
+            {/* Delete modunda yalnız Delete düyməsi görünsün və aktiv olsun */}
             <RenderIf condition={isDelete}>
               <Button
                 type="submit"
                 variant="destructive"
                 className="mt-4"
-                disabled={isBusy}
+                disabled={deleting || isFetching} // yalnız async prosesdə disable
               >
                 {deleting ? "Deleting..." : "Delete"}
               </Button>
             </RenderIf>
 
+            {/* Delete DEYİLSƏ Back + Submit */}
             <RenderIf condition={!isDelete}>
               <Button asChild variant="secondary" disabled={isBusy}>
                 <Link

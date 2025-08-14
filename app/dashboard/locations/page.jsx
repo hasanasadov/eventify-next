@@ -19,7 +19,7 @@ const DashboardLocationsPage = () => {
   });
 
   if (isLoading) {
-    <LoadingComp />;
+    return <LoadingComp />;
   }
 
   if (isError) {
