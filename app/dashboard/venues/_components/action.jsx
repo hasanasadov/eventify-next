@@ -28,6 +28,8 @@ import {
   getVenueById,
 } from "@/actions/venues";
 import { toTimeInput } from "@/utils/toTimeInput";
+import CommentsSection from "@/components/sections/CommentsSection";
+import { createVenueComment, deleteVenueComment } from "@/actions/comments";
 
 // Zod schema
 const getFormSchema = ({ isEdit, isDelete }) =>
@@ -57,7 +59,11 @@ const ActionForm = ({ type }) => {
   const { id } = useParams();
   const router = useRouter();
 
-  const { data: editItem, isFetching } = useQuery({
+  const {
+    data: editItem,
+    isFetching,
+    isError,
+  } = useQuery({
     queryKey: [QUERY_KEYS.VENUE_BY_ID, id],
     queryFn: () => getVenueById(id),
     enabled: Boolean((isEdit || isDelete) && id),
@@ -394,6 +400,21 @@ const ActionForm = ({ type }) => {
           </div>
         </form>
       </Form>
+      <div className="py-4">
+        <CommentsSection
+          initialComments={editItem?.Comment}
+          isError={isError}
+          isLoading={isFetching}
+          hookOptions={{
+            resourceId: id,
+            parentField: "venueId",
+            createFn: createVenueComment,
+            deleteFn: deleteVenueComment,
+            invalidateKey: [QUERY_KEYS.VENUE_BY_ID, id],
+          }}
+          title="Comments"
+        />
+      </div>
     </div>
   );
 };

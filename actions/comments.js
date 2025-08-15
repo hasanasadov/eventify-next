@@ -114,7 +114,8 @@ export const deleteVenueComment = async ({ commentId }) => {
     });
 
     if (!existing) return { ok: false, error: "NOT_FOUND" };
-    if (existing.authorId !== user.id) return { ok: false, error: "FORBIDDEN" };
+    if (existing.authorId !== user.id && user.role !== "ADMIN")
+      return { ok: false, error: "FORBIDDEN" };
 
     await prisma.comment.delete({ where: { id: commentId } });
 
