@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import VenueItem from "./VenueItem";
-import PulseSkeleton from "@/components/shared/PulseSkeleton";
 import { getVenues } from "@/actions/venues";
 import { Container } from "@/components/ui/Container";
 import IsError from "@/components/shared/IsError";
@@ -11,15 +10,7 @@ import HeroSlider from "@/components/shared/HeroSlider";
 import HorizontalScroller from "@/components/shared/HorizontalScroller";
 import IsNone from "@/components/shared/IsNone";
 import LoadingComp from "@/components/shared/Loading";
-
-// small helper
-const titleCase = (s) =>
-  s
-    .replace(/[-_]+/g, " ")
-    .replace(
-      /\w\S*/g,
-      (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-    );
+import { titleCase } from "@/utils/titleCase";
 
 const VenuesPage = () => {
   const {
@@ -65,11 +56,10 @@ const VenuesPage = () => {
   const slides = featured.map((v) => ({
     id: v.id,
     title: v.title,
-    subtitle: v.location?.title ?? "", // show location name if available
-    // Show work hours if present, otherwise created date
+    subtitle: v.location?.title ?? "",
     date:
       v.openAT && v.closeAT
-        ? `${v.openAT} – ${v.closeAT}`
+        ? `${v.openAT} - ${v.closeAT}`
         : v.openAT || v.closeAT || new Date(v.createdAt).toLocaleDateString(),
     ctaHref: `/venues/${v.id}`,
     ctaText: "View Venue",

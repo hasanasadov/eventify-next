@@ -26,7 +26,7 @@ const VenuesSection = () => {
     return <LoadingComp />;
   }
 
-  if (!venues.length) {
+  if (!venues?.length) {
     return <IsNone text="venues" />;
   }
 

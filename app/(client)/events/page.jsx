@@ -10,15 +10,8 @@ import HorizontalScroller from "@/components/shared/HorizontalScroller";
 import HeroSlider from "@/components/shared/HeroSlider";
 import IsNone from "@/components/shared/IsNone";
 import LoadingComp from "@/components/shared/Loading";
-
-// If you have a global util, move these there
-const titleCase = (s) =>
-  s
-    .replace(/[-_]+/g, " ")
-    .replace(
-      /\w\S*/g,
-      (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
-    );
+import { titleCase } from "@/utils/titleCase";
+import { dateTo } from "@/utils/dateTo";
 
 const EventsPage = () => {
   const {
@@ -50,10 +43,10 @@ const EventsPage = () => {
   // Optional: order sections by largest count first (like “highlights” feel)
   const sections = Object.entries(grouped).sort(
     (a, b) => b[1].length - a[1].length
-  ); // [ [type, Event[]], ... ]
+  );
 
   const featured = [...events]
-    .filter((e) => e.imageURL) // must have a wide visual
+    .filter((e) => e.imageURL)
     .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())
     .slice(0, 5);
 
@@ -61,8 +54,11 @@ const EventsPage = () => {
     id: e.id,
     title: e.title,
     subtitle: e.venue?.title ?? "",
-    date: e.date.toLocaleDateString(),
-    ctaHref: `/events/${e.id}`, // change to your route (slug if you have it)
+    date:
+      e.start && e.end
+        ? `${dateTo(e.date)}  ${e.start} - ${e.end}`
+        : e.start || e.end || new Date(e.createdAt).toLocaleDateString(),
+    ctaHref: `/events/${e.id}`,
     ctaText: "Get Tickets",
     imageUrl: e.imageURL,
     badgeUrl: e.badgeUrl ?? e.organizer?.logo ?? undefined,
