@@ -23,6 +23,7 @@ export default function useComments({
   invalidateKey,
 }) {
   const [userId, setUserId] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [comments, setComments] = useState(() => initialComments || []);
@@ -35,7 +36,10 @@ export default function useComments({
     (async () => {
       try {
         const user = await getSessionUser();
-        if (mounted) setUserId(user?.id || null);
+        if (mounted) {
+          setUserId(user?.id || null);
+          setIsAdmin(user?.role === "ADMIN");
+        }
       } catch {
         if (mounted) setUserId(null);
       }
@@ -125,6 +129,7 @@ export default function useComments({
 
   return {
     userId,
+    isAdmin,
     newComment,
     setNewComment,
     showAll,

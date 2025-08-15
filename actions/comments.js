@@ -79,6 +79,7 @@ export const createVenueComment = async ({ data }) => {
 export const deleteEventComment = async ({ commentId }) => {
   try {
     const user = await getSessionUser();
+    console.log("Deleting comment:", user.role);
     if (!user?.id) return { ok: false, error: "UNAUTHORIZED" };
 
     const existing = await prisma.comment.findUnique({
@@ -87,11 +88,13 @@ export const deleteEventComment = async ({ commentId }) => {
     });
 
     if (!existing) return { ok: false, error: "NOT_FOUND" };
-    if (existing.authorId !== user.id) return { ok: false, error: "FORBIDDEN" };
+    if (existing.authorId !== user.id && user.role !== "ADMIN")
+      return { ok: false, error: "FORBIDDEN" };
 
     await prisma.comment.delete({ where: { id: commentId } });
 
     if (existing.eventId) revalidatePath(`/events/${existing.eventId}`);
+    // revalidatePath(`/dashboard/events/edit/${existing.eventId}`);
     return { ok: true, id: commentId, eventId: existing.eventId };
   } catch (e) {
     console.error(e);

@@ -3,6 +3,7 @@
 import React from "react";
 import useComments from "@/hooks/useComments";
 import { RenderIf } from "@/utils/RenderIf";
+import { Button } from "../ui/button";
 
 /**
  * Props:
@@ -21,6 +22,7 @@ export default function CommentsSection({
 }) {
   const {
     userId,
+    isAdmin,
     newComment,
     setNewComment,
     showAll,
@@ -33,7 +35,6 @@ export default function CommentsSection({
     handleAddComment,
     handleDelete,
   } = useComments({ initialComments, ...hookOptions });
-
   return (
     <section
       aria-labelledby={`${listId}-heading`}
@@ -57,6 +58,7 @@ export default function CommentsSection({
           >
             {visibleComments.map((comment) => {
               const isMine = comment?.author?.id === userId;
+              const isAllowed = isMine || isAdmin;
               const isDeleting = deletingIds.has(comment.id);
 
               return (
@@ -77,17 +79,20 @@ export default function CommentsSection({
                     </p>
                   </div>
 
-                  {isMine && (
-                    <button
+                  {isAllowed && (
+                    <Button
                       type="button"
+                      variant={isMine ? "destructive" : "outline"}
                       onClick={() => handleDelete(comment.id)}
                       disabled={isDeleting}
-                      className="btn-glass ml-4 shrink-0"
+                      className={`btn-glass ml-4 shrink-0 
+                        ${isMine ? "text-blue-500" : "text-red-600"}
+                      `}
                       aria-label="Delete your comment"
                       title="Delete"
                     >
                       {isDeleting ? "Deleting…" : "Delete"}
-                    </button>
+                    </Button>
                   )}
                 </div>
               );

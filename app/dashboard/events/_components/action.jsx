@@ -28,6 +28,12 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { paths } from "@/constants/paths";
 import { toDateTimeLocal, toTimeInput } from "@/utils/toTimeInput";
+import CommentsSection from "@/components/sections/CommentsSection";
+import {
+  createEventComment,
+  deleteEventComment,
+  deleteEventCommentDashboard,
+} from "@/actions/comments";
 
 const getFormSchema = ({ isEdit, isDelete }) =>
   z.object({
@@ -60,7 +66,11 @@ const ActionForm = ({ type }) => {
   const { id } = useParams();
   const router = useRouter();
 
-  const { data: editItem, isFetching } = useQuery({
+  const {
+    data: editItem,
+    isFetching,
+    isError,
+  } = useQuery({
     queryKey: [QUERY_KEYS.EVENT_BY_ID, id],
     queryFn: () => getEventById(id),
     enabled: Boolean((isEdit || isDelete) && id),
@@ -429,6 +439,21 @@ const ActionForm = ({ type }) => {
           </div>
         </form>
       </Form>
+      <div className="py-4">
+        <CommentsSection
+          initialComments={editItem?.Comment}
+          isError={isError}
+          isLoading={isFetching}
+          hookOptions={{
+            resourceId: id,
+            parentField: "eventId",
+            createFn: createEventComment,
+            deleteFn: deleteEventComment,
+            invalidateKey: [QUERY_KEYS.EVENT_BY_ID, id],
+          }}
+          title="Comments"
+        />
+      </div>
     </div>
   );
 };
