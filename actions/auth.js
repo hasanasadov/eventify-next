@@ -40,7 +40,7 @@ export async function forgotPasswordAction(prevState, formData) {
       data: { token, userId: user.id, expires },
     });
 
-    const url = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${token}`;
+    const url = `${process.env.NEXT_BASE_URL}/reset-password?token=${token}`;
     await sendResetEmail(user.email, url).catch(() => {});
 
     return { ok: true, message: "Əgər hesab mövcuddursa, e-poçt göndərildi." };
