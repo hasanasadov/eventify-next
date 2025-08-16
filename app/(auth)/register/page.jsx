@@ -8,6 +8,7 @@ import { PasswordOutlined, EmailOutlined } from "@mui/icons-material";
 import { User2 as User2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { handleRegister } from "@/actions/users";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterPage() {
   const [errorMessages, setErrorMessages] = React.useState([]);
@@ -60,62 +61,62 @@ export default function RegisterPage() {
     <div className="w-full p-6">
       <div className="text-2xl font-extrabold text-gray-800 mb-4 relative">
         Signup
-        <div className="absolute left-0 bottom-0 h-[3px] w-5 bg-green-500" />
+        <div className="absolute left-0 bottom-0 h-[3px] w-5 bg-cyan-500" />
       </div>
 
       <form onSubmit={formik.handleSubmit}>
         <div className="mt-6">
           {loading ? (
             <div className="flex justify-center items-center my-[210px]">
-              <Loader className="animate-spin text-green-500" size={48} />
+              <Loader className="animate-spin text-cyan-500" size={48} />
             </div>
           ) : (
             <>
               <div className="flex items-center relative mb-4">
-                <User2Icon className="text-green-500 absolute left-4 w-6 h-6" />
+                <User2Icon className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="text"
                   name="username"
                   onChange={formik.handleChange}
                   value={formik.values.username}
-                  placeholder="Username (optional)"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  placeholder="Username "
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                 />
               </div>
 
               <div className="flex items-center relative mb-4">
-                <User2Icon className="text-green-500 absolute left-4 w-6 h-6" />
+                <User2Icon className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="text"
                   name="first_name"
                   onChange={formik.handleChange}
                   value={formik.values.first_name}
-                  placeholder="First Name (optional)"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  placeholder="First Name "
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                 />
               </div>
 
               <div className="flex items-center relative mb-4">
-                <User2Icon className="text-green-500 absolute left-4 w-6 h-6" />
+                <User2Icon className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="text"
                   name="last_name"
                   onChange={formik.handleChange}
                   value={formik.values.last_name}
-                  placeholder="Last Name (optional)"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  placeholder="Last Name "
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                 />
               </div>
 
               <div className="flex items-center relative mb-4">
-                <EmailOutlined className="text-green-500 absolute left-4 w-6 h-6" />
+                <EmailOutlined className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="email"
                   name="email"
                   onChange={formik.handleChange}
                   value={formik.values.email}
                   placeholder="Enter your email"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                   required
                 />
               </div>
@@ -126,14 +127,14 @@ export default function RegisterPage() {
               )}
 
               <div className="flex items-center relative mb-4">
-                <PasswordOutlined className="text-green-500 absolute left-4 w-6 h-6" />
+                <PasswordOutlined className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="password"
                   name="password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
                   placeholder="Enter your password"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                   required
                 />
               </div>
@@ -144,14 +145,14 @@ export default function RegisterPage() {
               )}
 
               <div className="flex items-center relative mb-6">
-                <PasswordOutlined className="text-green-500 absolute left-4 w-6 h-6" />
+                <PasswordOutlined className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="password"
                   name="rePassword"
                   onChange={formik.handleChange}
                   value={formik.values.rePassword}
                   placeholder="Confirm your password"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                   required
                 />
               </div>
@@ -167,18 +168,18 @@ export default function RegisterPage() {
                   onChange={formik.handleChange}
                   checked={formik.values.is_organizer}
                   name="is_organizer"
-                  className="appearance-none ml-[18px] mr-2 w-6 h-6 rounded-full border-2 border-gray-300 checked:bg-green-500 checked:border-green-500 transition-colors cursor-pointer"
+                  className="appearance-none ml-[18px] mr-2 w-6 h-6 rounded-full border-2 border-gray-300 checked:bg-cyan-500 checked:border-cyan-500 transition-colors cursor-pointer"
                 />
                 <label
                   htmlFor="is_organizer"
-                  className="text-green-700 cursor-pointer"
+                  className="text-cyan-700 cursor-pointer"
                 >
                   I am an organizer
                 </label>
                 <span
                   onMouseEnter={() => setQmarkHover(true)}
                   onMouseLeave={() => setQmarkHover(false)}
-                  className="text-green-500 bg-gray-200 px-2 rounded-full ml-2 cursor-pointer relative"
+                  className="text-cyan-500 bg-gray-200 px-2 rounded-full ml-2 cursor-pointer relative"
                 >
                   ?
                   <div
@@ -202,25 +203,22 @@ export default function RegisterPage() {
           )}
 
           <div className="mt-6">
-            <button
+            <Button
               type="submit"
-              className="w-full bg-green-500 text-white py-3 px-4 hover:bg-green-700 transition duration-300 disabled:bg-gray-400"
+              className="w-full bg-cyan-500 text-white py-3 px-4 hover:bg-cyan-700 transition duration-300 disabled:bg-gray-400"
               disabled={loading}
             >
               Register
-            </button>
+            </Button>
           </div>
         </div>
       </form>
 
       <div className="text-center mt-6">
         Already have an account?{" "}
-        <button
-          onClick={() => router.push("/login")}
-          className="text-green-500 hover:underline"
-        >
+        <a href="/login" className="text-cyan-500 hover:underline">
           Login now
-        </button>
+        </a>
       </div>
     </div>
   );

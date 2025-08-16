@@ -8,7 +8,7 @@ import { Loader } from "lucide-react";
 import { PasswordOutlined } from "@mui/icons-material";
 import { User2 as User2Icon } from "lucide-react";
 import { signIn } from "next-auth/react";
-import GoogleBtn from "@/components/shared/GoogleBtn";
+import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -50,28 +50,28 @@ export default function LoginPage() {
 
   return (
     <div className="w-full p-6 flex flex-col justify-between">
-      <div className="text-2xl text-gray-800 mb-4 relative font-extrabold">
+      <div className="text-2xl mb-4 relative font-extrabold">
         Login
-        <div className="absolute left-0 bottom-0 h-[3px] w-6 bg-green-500" />
+        <div className="absolute left-0 bottom-0 h-[3px] w-6 bg-cyan-500" />
       </div>
 
       <form onSubmit={formik.handleSubmit}>
         <div className="mt-6">
           {loading ? (
             <div className="flex justify-center items-center my-[56px]">
-              <Loader className="animate-spin text-green-500" size={48} />
+              <Loader className="animate-spin text-cyan-500" size={48} />
             </div>
           ) : (
             <>
               <div className="flex items-center relative mb-4">
-                <User2Icon className="text-green-500 absolute left-4 w-6 h-6" />
+                <User2Icon className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="text"
                   name="username"
                   onChange={formik.handleChange}
                   value={formik.values.username}
                   placeholder="Enter your username or email"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                   required
                 />
               </div>
@@ -82,14 +82,14 @@ export default function LoginPage() {
               )}
 
               <div className="flex items-center relative mb-6">
-                <PasswordOutlined className="text-green-500 absolute left-4 w-6 h-6" />
+                <PasswordOutlined className="text-cyan-500 absolute left-4 w-6 h-6" />
                 <input
                   type="password"
                   name="password"
                   onChange={formik.handleChange}
                   value={formik.values.password}
                   placeholder="Enter your password"
-                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-green-500 transition duration-300"
+                  className="h-12 w-full pl-12 pr-4 text-lg font-bold border-b-2 border-gray-300 focus:outline-none focus:border-b-cyan-500 transition duration-300"
                   required
                 />
               </div>
@@ -107,33 +107,41 @@ export default function LoginPage() {
             </div>
           ))}
 
-          <div className="text-sm text-gray-600 mt-2">
-            <a href="/forgotPassword">Forgot password?</a>
+          <div className="text-sm text-muted-foreground mt-2">
+            <a href="/forgotPassword" className="hover:underline">
+              Forgot password?
+            </a>
           </div>
 
           <div className="mt-6">
-            <button
+            <Button
               disabled={loading}
               type="submit"
-              className="w-full bg-green-500 text-white py-3 px-4 cursor-pointer hover:bg-green-700 transition duration-300 disabled:bg-gray-400"
+              className="w-full bg-cyan-500 text-white py-3 px-4 cursor-pointer hover:bg-cyan-700 transition duration-300 disabled:bg-gray-400"
             >
               Log In
-            </button>
+            </Button>
           </div>
 
-          <GoogleBtn />
+          <Button
+            type="button"
+            onClick={() => signIn("google")}
+            className="w-full mt-3 border py-3 px-4 hover:!bg-opacity-50"
+          >
+            Continue with Google
+          </Button>
         </div>
       </form>
 
       <div className="text-center mt-6">
         Don{"'"}t have an account?{" "}
-        <button
+        <a
+          href="/register"
           disabled={loading}
-          className="text-green-500 cursor-pointer hover:underline"
-          onClick={() => router.push("/register")}
+          className="text-cyan-500 cursor-pointer hover:underline"
         >
           Sign up now
-        </button>
+        </a>
       </div>
     </div>
   );

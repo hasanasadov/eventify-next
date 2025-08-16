@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { AccountPopOver } from "./AccountPopover";
 import { NAVBAR_ITEM } from "@/constants/navbar";
 import { RenderIf } from "@/utils/RenderIf";
 import { useTheme } from "next-themes";
@@ -79,7 +78,7 @@ const HamburgerMenu = ({ isOpen, setIsOpen }) => {
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-2 font-bold "
               >
-                <Button variant="ghost" className={cn(`text-3xl `)}>
+                <Button variant="ghost" className={cn(`text-3xl text-white `)}>
                   {<item.icon />} <span>{item.title}</span>
                 </Button>
               </Link>

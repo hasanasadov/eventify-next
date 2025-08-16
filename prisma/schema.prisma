@@ -70,12 +70,15 @@ model VerificationToken {
 }
 
 model PasswordResetToken {
-    id      String   @id @default(cuid())
-    token   String   @unique
-    userId  String
-    expires DateTime
-    used    Boolean  @default(false)
-    user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id        String   @id @default(cuid())
+    token     String   @unique
+    userId    String
+    expires   DateTime
+    used      Boolean  @default(false)
+    createdAt DateTime @default(now())
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId, used])
 }
 
 model Event {

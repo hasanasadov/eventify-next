@@ -22,18 +22,18 @@ export default function DashboardLayout({ children }) {
           <span> Back To Home </span>
         </Link>
       </div>
-      <div className="bg-gray-300 w-screen h-screen flex items-center justify-center p-6">
-        <Container className="relative max-w-[850px] w-full bg-white p-0 border-2 flex">
+      <div className=" w-screen h-screen flex items-center justify-center p-6">
+        <div className="relative max-w-[850px] w-full  p-0 border-2 flex">
           <div className=" z-10 lg:w-1/2 hidden lg:flex  items-center justify-center border-r ">
             <Image
               src={AccountImage}
               alt="image"
-              className=" object-cover z-10"
+              className=" object-cover z-10 pr-4 pl-4 dark:pl-0"
             />
           </div>
 
           <div className="lg:w-1/2 w-full border-l">{children}</div>
-        </Container>
+        </div>
       </div>
     </>
   );
