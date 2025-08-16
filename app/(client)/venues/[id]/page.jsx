@@ -76,13 +76,13 @@ export default function VenueDetail() {
           {/* Hero */}
           <section
             aria-labelledby="venue-hero"
-            className="flex flex-col md:flex-row gap-6 md:gap-12"
+            className="flex flex-col lg:flex-row gap-6 md:gap-12"
           >
             <RenderIf condition={Boolean(venue?.imageURL)}>
               <img
                 src={venue?.imageURL || "/logo.png"}
                 alt={venue?.title || "Venue image"}
-                className="w-full md:max-w-[50%] glass h-full object-contain rounded-lg border-2"
+                className="w-full lg:max-w-[50%] glass h-full object-contain rounded-lg border-2"
                 loading="eager"
                 decoding="async"
               />

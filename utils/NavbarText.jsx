@@ -13,9 +13,9 @@ const NavbarText = () => {
   return (
     <div>
       {eventsPage && "Explore Events"}
-      {eventItemPage && " Event Details"}
+      {eventItemPage && " Event Detail"}
       {venuesPage && "Explore Venues"}
-      {venueItemPage && " Venue Details"}
+      {venueItemPage && " Venue Detail"}
       {mapPage && "Explore Map"}
       {searchPage && "Search All"}
       <div className="flex md:hidden">{homePage && "Explore Events"}</div>

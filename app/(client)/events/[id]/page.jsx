@@ -1,21 +1,23 @@
 "use client";
 
-import React, { useMemo } from "react";
-import Link from "next/link";
+import { createEventComment, deleteEventComment } from "@/actions/comments";
+import { getEventById } from "@/actions/events";
+
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-
-import { Container } from "@/components/ui/Container";
-import LoadingComp from "@/components/shared/Loading";
-import IsError from "@/components/shared/IsError";
-import { RenderIf } from "@/utils/RenderIf";
-
-import { getEventById } from "@/actions/events";
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import useBackgroundBlur from "@/hooks/useBackgroundBlur";
+import React, { useMemo } from "react";
+import Link from "next/link";
+
 import CommentsSection from "@/components/sections/CommentsSection";
 import LocationSection from "@/components/sections/LocationSection";
-import { createEventComment, deleteEventComment } from "@/actions/comments";
+import LoadingComp from "@/components/shared/Loading";
+import IsError from "@/components/shared/IsError";
+import { Container } from "@/components/ui/Container";
+
+import useBackgroundBlur from "@/hooks/useBackgroundBlur";
+import { dateTo } from "@/utils/dateTo";
+import { RenderIf } from "@/utils/RenderIf";
 
 export default function EventDetail() {
   const params = useParams();
@@ -36,23 +38,23 @@ export default function EventDetail() {
 
   const bgRef = useBackgroundBlur();
 
-  const eventDate = React.useMemo(() => {
-    if (!event?.date) return "Not specified";
-    try {
-      return new Date(event.date).toLocaleDateString("en-US", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-    } catch {
-      return "Not specified";
-    }
-  }, [event?.date]);
-
+  // const eventDate = React.useMemo(() => {
+  //   if (!event?.date) return "Not specified";
+  //   try {
+  //     return new Date(event.date).toLocaleDateString("en-US", {
+  //       day: "numeric",
+  //       month: "long",
+  //       year: "numeric",
+  //     });
+  //   } catch {
+  //     return "Not specified";
+  //   }
+  // }, [event?.date]);
+  const eventDate = dateTo(event?.date);
   const eventStart = event?.start ?? "—";
   const eventEnd = event?.end ?? "—";
   const eventComments = Array.isArray(event?.Comment) ? event.Comment : [];
-  const location = event?.location || {};
+  const eventLocation = event?.location || {};
 
   if (isLoading) return <LoadingComp />;
   if (isError || !event) return <IsError />;
@@ -85,13 +87,13 @@ export default function EventDetail() {
 
           <section
             aria-labelledby="event-hero"
-            className="flex flex-col md:flex-row gap-6 md:gap-12"
+            className="flex flex-col lg:flex-row gap-6 md:gap-12"
           >
             <RenderIf condition={Boolean(event?.imageURL)}>
               <img
                 src={event?.imageURL}
                 alt={event?.title ? `${event.title} poster` : "Event Poster"}
-                className="w-full md:max-w-[50%] glass h-full object-contain rounded-lg border-2"
+                className="w-full lg:max-w-[50%] glass h-full object-contain rounded-lg border-2"
                 loading="eager"
                 decoding="async"
               />
@@ -150,7 +152,7 @@ export default function EventDetail() {
           </section>
 
           <LocationSection
-            location={event?.location}
+            location={eventLocation}
             title="Location"
             listId="event-location"
           />
