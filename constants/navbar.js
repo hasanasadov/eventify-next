@@ -40,6 +40,6 @@ export const NAVBAR_ITEM = [
   {
     title: "Account",
     icon: User2Icon,
-    href: paths.LOGIN,
+    href: paths.PROFILE,
   },
 ];

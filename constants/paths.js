@@ -7,6 +7,7 @@ export const paths = {
   CHAT: "/chat",
   LOGIN: "/login",
   REGISTER: "/register",
+  PROFILE: "/profile",
   DASHBOARD: {
     MAIN: "/dashboard",
     EVENTS: {

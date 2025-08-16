@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning data-qb-installed>
-      <body className="mb-5 lg:mb-0 ">
+      <body>
         <CustomLayout>{children}</CustomLayout>
       </body>
     </html>

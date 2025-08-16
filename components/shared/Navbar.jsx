@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { AccountPopOver } from "./AccountPopover";
 import { NAVBAR_ITEM } from "@/constants/navbar";
 import { Button } from "../ui/button";
 import MobileNavbar from "./MobileNavbar";
@@ -30,21 +29,17 @@ const Navbar = () => {
         </div>
 
         <div className="md:flex md:flex-row flex-col gap-4 hidden">
-          {NAVBAR_ITEM.map((item, index) =>
-            item.title === "Account" ? (
-              <AccountPopOver key={index} />
-            ) : (
-              <Link
-                key={index}
-                href={item.href}
-                className="flex items-center !font-bold"
-              >
-                <Button variant="ghost">
-                  {<item.icon />} {item.title}
-                </Button>
-              </Link>
-            )
-          )}
+          {NAVBAR_ITEM.map((item, index) => (
+            <Link
+              key={index}
+              href={item.href}
+              className="flex items-center !font-bold"
+            >
+              <Button variant={item?.title === "Account" ? "glass" : "ghost"}>
+                {<item.icon />} {item.title}
+              </Button>
+            </Link>
+          ))}
         </div>
 
         <MobileNavbar />
