@@ -2,46 +2,69 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { paths } from "@/constants/paths";
 import { SearchIcon } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export function InputWithButton() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("s") || "");
 
+  const isSearchPage = pathname === paths.SEARCH;
+
+  // Sync search term with URL only when on search page
   useEffect(() => {
+    if (!isSearchPage) return;
+
     const handler = setTimeout(() => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (search) {
-        params.set("s", search);
+      const params = new URLSearchParams(window.location.search);
+      if (search.trim()) {
+        params.set("s", search.trim());
       } else {
         params.delete("s");
       }
-      router.replace(`?${params.toString()}`);
-    }, 500);
+      router.replace(`${pathname}?${params.toString()}`);
+    }, 400);
 
     return () => clearTimeout(handler);
-  }, [search, searchParams, router]);
+  }, [search, isSearchPage, pathname, router]);
 
   return (
-    <div className="flex items-center space-x-2 relative max-w-xl glass-border">
-      <Input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="rounded-3xl"
-        type="text"
-        placeholder="Search ..."
-      />
-      <Button
-        variant="ghost"
-        size="icon"
-        type="submit"
-        className="flex absolute rounded-full !bg-transparent right-0 top-0 items-center justify-center h-9 w-9"
-      >
-        <SearchIcon />
-      </Button>
+    <div className="flex items-center relative max-w-xl glasss w-full overflow-hidden">
+      {/* Only show input on search page */}
+      {isSearchPage && (
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className=" min-w-[200px] w-full bg-transparent border-0 focus-visible:outline-none focus-visible:ring-0"
+          type="text"
+          placeholder="Search ..."
+        />
+      )}
+
+      {/* If not on search page → clicking button goes to /search?s=term */}
+      {isSearchPage ? (
+        <Button variant="glass">
+          <SearchIcon size={24} />
+        </Button>
+      ) : (
+        <Link
+          href={
+            search.trim()
+              ? `${paths.SEARCH}?s=${encodeURIComponent(search.trim())}`
+              : paths.SEARCH
+          }
+          className="flex items-center !font-bold"
+        >
+          <Button variant="glass">
+            <SearchIcon size={24} />
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }

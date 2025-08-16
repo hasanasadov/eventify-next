@@ -11,14 +11,14 @@ const NavbarText = () => {
   const mapPage = pathName.includes("/map");
   const searchPage = pathName.includes("/search");
   return (
-    <div>
+    <div className="whitespace-nowrap overflow-hidden text-ellipsis">
       {eventsPage && "Explore Events"}
       {eventItemPage && " Event Detail"}
       {venuesPage && "Explore Venues"}
       {venueItemPage && " Venue Detail"}
       {mapPage && "Explore Map"}
       {searchPage && "Search All"}
-      <div className="flex md:hidden">{homePage && "Explore Events"}</div>
+      <div className="flex lg:hidden">{homePage && "Explore"}</div>
     </div>
   );
 };

@@ -26,7 +26,7 @@ const MobileNavbar = () => {
   return (
     <div>
       <RenderIf condition={true}>
-        <div className="md:hidden z-[999999]">
+        <div className="lg:hidden z-[999999]">
           <Hamburger
             color={bgColor}
             toggled={isOpen}

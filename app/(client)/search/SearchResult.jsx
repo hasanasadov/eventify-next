@@ -47,8 +47,9 @@ const SearchResult = () => {
 
   return (
     <Container className="flex flex-col space-y-4 ">
-      {/* InputWithButton içində router.replace/push ilə ?s=... yenilə */}
-      <InputWithButton />
+      <div className="flex items-center justify-start lg:hidden">
+        <InputWithButton />
+      </div>
       <EventsSection
         eventsData={eventsData ?? []}
         eventsLoading={eventsLoading}
