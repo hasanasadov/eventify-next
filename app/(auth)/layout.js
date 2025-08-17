@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { ArrowBack } from "@mui/icons-material";
-import { Toaster } from "sonner";
 import React from "react";
 import Image from "next/image";
 import AccountImage from "@/assets/logo.png";
-import { Container } from "@/components/ui/Container";
 
 export const metadata = {
   title: "My Events",
@@ -32,7 +30,7 @@ export default function DashboardLayout({ children }) {
             />
           </div>
 
-          <div className="lg:w-1/2 w-full border-l">{children}</div>
+          <div className="lg:w-1/2 w-full md:border-l">{children}</div>
         </div>
       </div>
     </>

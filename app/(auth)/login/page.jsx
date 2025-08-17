@@ -125,7 +125,7 @@ export default function LoginPage() {
 
           <Button
             type="button"
-            onClick={() => signIn("google")}
+            onClick={() => signIn("google", { callbackUrl: "/" })}
             className="w-full mt-3 border py-3 px-4 hover:!bg-opacity-50"
           >
             Continue with Google

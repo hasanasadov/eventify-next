@@ -122,7 +122,7 @@ const UserActionForm = ({ type }) => {
       mutateUpdate({ id, data });
     } else if (type === "delete") {
       if (confirm("Are you sure you want to delete this user?")) {
-        mutateDelete({ id });
+        mutateDelete(id);
       }
     }
   }
@@ -219,7 +219,6 @@ const UserActionForm = ({ type }) => {
               )}
             />
           </div>
-
 
           {/* Footer buttons */}
           <div className="flex justify-end mt-4">

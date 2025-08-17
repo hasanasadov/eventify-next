@@ -4,8 +4,13 @@ import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { RenderIf } from "@/utils/RenderIf";
 
 export default function Profile({ user }) {
+  const isFromGoogle = user?.image?.startsWith(
+    "https://lh3.googleusercontent.com/"
+  );
+  console.log("Is user from Google:", isFromGoogle);
   return (
     <div className="md:max-w-2xl md:mx-auto ">
       <h1 className="text-2xl font-semibold mb-6">Your Profile</h1>
@@ -47,16 +52,17 @@ export default function Profile({ user }) {
         <Link href="/dashboard">
           <Button variant="secondary">Go to Dashboard</Button>
         </Link>
-
-        <Link href="/reset-password">
-          <Button variant="outline">Change Password</Button>
-        </Link>
+        <RenderIf condition={!isFromGoogle}>
+          <Link href="/reset-password">
+            <Button variant="outline">Change Password</Button>
+          </Link>
+        </RenderIf>
 
         <Button
           className="ml-auto"
           onClick={() =>
             signOut({
-              callbackUrl: "/", // where to land after sign out
+              callbackUrl: "/",
             })
           }
         >
